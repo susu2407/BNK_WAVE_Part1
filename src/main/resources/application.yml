@@ -15,10 +15,10 @@ spring:
       max-lifetime: 1800000
       maximum-pool-size: 10
       minimum-idle: 3
-      pool-name: HikariPool-draft
-    password: 1234
-    url: jdbc:oracle:thin:@localhost:1521:xe
-    username: draft
+      pool-name: HikariPool-wave
+    password: ghktkskagyqls123
+    url: jdbc:oracle:thin:@43.203.185.0:1522:XE
+    username: wave
   devtools:
     livereload:
       enabled: true
