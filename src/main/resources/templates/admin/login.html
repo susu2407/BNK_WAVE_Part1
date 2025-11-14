@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>admin login</title>
+
+    css
+    - 바탕색 핑크
+    - 로고 크기 가로 = 로그인 입력창 가로
+    - 입력창 라운드, 테두리 색상 부여, 굵기 3?, 입력란 안에 글자 넣기
+    <style>
+        /* 전체 배경 */
+        body {
+            background-color: #FCEFEF;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+
+        /* 로고 */
+        .logo {
+            width: 500px;   /* 입력창 너비 = 로고 너비 */
+            margin-bottom: 50px;
+        }
+
+        /* 입력창 공통 스타일 */
+        .login-input {
+            width: 300px;
+            padding: 12px;
+            margin-bottom: 15px;
+            border-radius: 8px;        /* 라운드 처리 */
+            border: 3px solid #d87ca1; /* 테두리 색상 & 굵기 3 */
+            box-sizing: border-box;
+            font-size: 15px;
+        }
+
+        /* placeholder 색상 (선택) */
+        .login-input::placeholder {
+            color: #7d7d7d;  /* 입력란 안에 글씨 색 */
+        }
+
+        /* 로그인 버튼 */
+        .login-btn {
+            width: 100%;
+            padding: 12px;
+            border-radius: 8px;
+            border: none;
+            background-color: #c94f7c;
+            color: white;
+            font-size: 16px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+
+    <form action="/login" method="post">
+        <img th:src="@{/images/BNK5team-logo.png}" alt="logo" class="logo"/>
+
+        <div class="input-box">
+            <i class="icon fas fa-user"></i>
+            <input type="text" name="username" placeholder="ID" required class="login-input"/>
+        </div>
+
+        <div class="input-box">
+            <i class="icon fas fa-key"></i>
+            <input type="password" name="password" placeholder="PW" required class="login-input"/>
+        </div>
+
+        <button type="submit" class="login-btn">로그인</button>
+    </form>
+
+</body>
+</html>
