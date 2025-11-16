@@ -4,7 +4,8 @@
     <meta charset="UTF-8">
     <title>Title</title>
     <link rel="stylesheet" th:href="@{/css/common/mainContainer.css}">
-    <script th:src="@{/js/common/aside.js}"></script>
+    <script th:src="@{/js/admin/common/aside.js}"></script>
+    <script th:src="@{/js/admin/card/cardForm.js}"></script>
 </head>
 <body>
 <div th:replace="~{common/header :: header}"></div>
@@ -31,19 +32,19 @@
 
                 <!-- 연회비 -->
                 <div id="annualFeeList">
+                    <label>연회비</label>
+                    <button type="button" class="annualFee-add-btn">➕ 추가</button>
                     <div class="annualFeeContainer">
-                        <label>연회비</label>
-                        <input name="annualFeeName" type="text"> <br>
-                        <button type="button" class="annualFee-add-btn">➕ 추가</button>
+                        <input name="annualFeeName" type="text">
                         <button type="button" class="annualFee-remove-btn">➖ 삭제</button>
                     </div>
                 </div>
-                <br>
 
                 <!-- 혜택 컨테이너 -->
                 <div id="benefitList">
+                    <label>혜택</label>
+                    <button type="button" class="benefit-add-btn">➕ 추가</button>
                     <div class="benefitContainer">
-                        <label>혜택</label>
                         <select name="category" class="category" required>
                             <option value="" disabled selected hidden>카테고리 선택</option>
                             <option th:each="category : ${categoryList}"
@@ -66,12 +67,9 @@
                         <input type="text" name="benefitDescription" class="benefitDescription"
                                placeholder="예: 주유소 5% 할인"
                                required>
-                        <button type="button" class="benefit-add-btn">➕ 추가</button>
                         <button type="button" class="benefit-remove-btn">➖ 삭제</button>
                     </div>
                 </div>
-
-                <br>
 
                 <label for="description">설명</label>
                 <input id="description" type="text" name="description" required> <br>
@@ -85,61 +83,6 @@
     </div>
 </main>
 <div th:replace="~{common/footer :: footer}"></div>
-
-<script>
-    document.addEventListener("DOMContentLoaded", function () {
-        const annualFeeList = document.getElementById("annualFeeList");
-        const benefitList = document.getElementById("benefitList");
-
-        function cloneAndReset(container) {
-            const clone = container.cloneNode(true);
-            clone.querySelectorAll("input").forEach(input => {
-                input.value = "";
-                input.removeAttribute("id");
-            });
-            clone.querySelectorAll("select").forEach(select => {
-                select.selectedIndex = 0;
-            });
-            return clone;
-        }
-
-        // 연회비 추가/삭제
-        annualFeeList.addEventListener("click", function (e) {
-            if (e.target.classList.contains("annualFee-add-btn")) {
-                const current = e.target.closest(".annualFeeContainer");
-                const clone = cloneAndReset(current);
-                annualFeeList.appendChild(clone);
-            }
-
-            if (e.target.classList.contains("annualFee-remove-btn")) {
-                const allContainers = annualFeeList.querySelectorAll(".annualFeeContainer");
-                if (allContainers.length > 1) {
-                    e.target.closest(".annualFeeContainer").remove();
-                } else {
-                    alert("더 이상 삭제할 수 없습니다.");
-                }
-            }
-        });
-
-        // 혜택 추가/삭제
-        benefitList.addEventListener("click", function (e) {
-            if (e.target.classList.contains("benefit-add-btn")) {
-                const current = e.target.closest(".benefitContainer");
-                const clone = cloneAndReset(current);
-                benefitList.appendChild(clone);
-            }
-
-            if (e.target.classList.contains("benefit-remove-btn")) {
-                const allContainers = benefitList.querySelectorAll(".benefitContainer");
-                if (allContainers.length > 1) {
-                    e.target.closest(".benefitContainer").remove();
-                } else {
-                    alert("최소 1개의 혜택은 있어야 합니다.");
-                }
-            }
-        });
-    });
-</script>
 
 </body>
 </html>

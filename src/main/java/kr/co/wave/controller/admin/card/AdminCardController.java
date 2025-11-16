@@ -52,8 +52,11 @@ public class AdminCardController {
     public String cardView(@RequestParam String cardId, Model model) {
 
         CardWithInfoDTO card = cardService.getCardWithInfoById(Integer.parseInt(cardId));
+        List<Category> categoryList = categoryService.getCategoryAll();
 
         model.addAttribute("cardItem", card);
+        model.addAttribute("categoryList", categoryList);
+
         return "admin/card/view";
     }
 
@@ -73,4 +76,21 @@ public class AdminCardController {
         cardService.registerCard(cardRequestDTO);
     }
 
+    // 활성화
+    @GetMapping("/admin/card/activate")
+    public String cardActivate(@RequestParam String cardId) {
+
+        cardService.activateCard(Integer.parseInt(cardId));
+
+        return "redirect:/admin/card/list";
+    }
+
+    // 비활성화
+    @GetMapping("/admin/card/inactivate")
+    public String cardInactivate(@RequestParam String cardId, @RequestParam String reason) {
+
+        cardService.inactivateCard(Integer.parseInt(cardId), reason);
+
+        return "redirect:/admin/card/list";
+    }
 }

@@ -2,9 +2,11 @@ package kr.co.wave.service.card;
 
 import jakarta.transaction.Transactional;
 import kr.co.wave.dto.card.*;
+import kr.co.wave.entity.approval.CardApproval;
 import kr.co.wave.entity.card.AnnualFee;
 import kr.co.wave.entity.card.Benefit;
 import kr.co.wave.entity.card.Card;
+import kr.co.wave.repository.approval.CardApprovalRepository;
 import kr.co.wave.repository.card.AnnualFeeRepository;
 import kr.co.wave.repository.card.BenefitRepository;
 import kr.co.wave.repository.card.CardRepository;
@@ -27,6 +29,7 @@ public class CardService {
     private final CardRepository cardRepository;
     private final AnnualFeeRepository annualFeeRepository;
     private final BenefitRepository benefitRepository;
+    private final CardApprovalRepository cardApprovalRepository;
     private final ModelMapper modelMapper; // Entity와 DTO를 변환해주는 객체
 
     // 필요없는데 혹시나 남겨둠
@@ -46,6 +49,7 @@ public class CardService {
         return null;
     }
 
+    // 카드 하나만 가져오기 (혜택, 연회비 포함)
     @Transactional
     public CardWithInfoDTO getCardWithInfoById(int cardId) {
         Card card = cardRepository.findById(cardId).get();
@@ -63,6 +67,7 @@ public class CardService {
     }
 
 
+    // 카드 전체 페이지 타입으로 가져오기 (혜택, 연회비 포함)
     @Transactional
     public Page<CardWithInfoDTO> getCardWithInfoAllBySearch(String searchType, String keyword, int page, int size) {
         // 검색어/타입 공백 처리
@@ -144,4 +149,33 @@ public class CardService {
         }
     }
 
+    // 카드 활성화
+    @Transactional
+    public void activateCard(int cardId){
+        Optional<Card> OptionalCard = cardRepository.findById(cardId);
+
+        if(OptionalCard.isPresent()){
+            Card card = OptionalCard.get();
+            card.toggleStatus("활성");
+        }
+    }
+
+    // 카드 비활성화 요청
+    @Transactional
+    public void inactivateCard(int cardId, String reason){
+        Optional<Card> OptionalCard = cardRepository.findById(cardId);
+
+        if(OptionalCard.isPresent()){
+            Card card = OptionalCard.get();
+            card.toggleStatus("결재 대기");
+        }
+        
+        CardApproval cardApproval = CardApproval.builder().
+                cardId(cardId).
+                reason(reason).
+                status("대기").
+                build();
+
+        cardApprovalRepository.save(cardApproval);
+    }
 }

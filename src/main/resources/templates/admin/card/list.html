@@ -3,14 +3,14 @@
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
-    <link rel="stylesheet" th:href="@{/css/common/mainContainer.css}">
+    <link rel="stylesheet" th:href="@{/css/admin/common/mainContainer.css}">
     <script th:src="@{/js/common/aside.js}"></script>
 </head>
 <body>
 <div th:replace="~{admin/common/header :: header}"></div>
 <main>
     <div class="main-container">
-        <div th:replace="~{common/aside :: aside}"></div>
+        <div th:replace="~{admin/common/aside :: aside}"></div>
         <div id="main-content">
             <!-- 검색 -->
             <div class="search-form">
@@ -24,7 +24,7 @@
                         </select>
                     </div>
 
-                    <input type="text" id="keyword" name="keyword" placeholder="검색어"
+                    <input type="text" id="keyword" name="keyword" placehaolder="검색어"
                            th:value="${param.keyword != null ? param.keyword[0] : ''}"/>
 
                     <button type="submit">
@@ -79,7 +79,7 @@
                     <tr th:each="cardItem, stat : ${cardList.content}">
                         <td>[[${cardList.totalElements - (cardList.number * cardList.size + stat.index)}]]</td>
                         <td>
-                            <a th:href="@{/admin/card/view(cardId=${cardItem.card.cardId})}">[[${cardItem.card.name}]] ([[${cardItem.card.engName}]])</a>
+                            <a th:href="@{/admin/card/view(cardId=${cardItem.card.cardId})}">[[${cardItem.card.name}]] <br> ([[${cardItem.card.engName}]])</a>
                         </td>
                         <td>[[${cardItem.card.type}]]</td>
                         <!-- 혜택 -->
@@ -99,11 +99,20 @@
                                 </li>
                             </ul>
                         </td>
-
                         <td>[[${cardItem.card.status}]]</td>
                         <td>[[${#temporals.format(cardItem.card.createdAt, 'yyyy-MM-dd')}]]</td>
                         <td>[[${#temporals.format(cardItem.card.updatedAt, 'yyyy-MM-dd')}]]</td>
-                        <td><button>수정</button> <button>활성화</button> <button>삭제</button></td>
+                        <td th:if="${cardItem.card.status == '비활성'}">
+                            <a th:href="@{/admin/card/view(cardId=${cardItem.card.cardId})}">수정</a> <br>
+                            <a th:href="@{/admin/card/view(cardId=${cardItem.card.cardId})}">삭제</a> <br>
+                            <a th:href="@{/admin/card/activate(cardId=${cardItem.card.cardId})}"
+                               onclick="return confirm('활성화하면 더 이상 상품 정보를 변경할 수 없습니다.\n계속 진행하시겠습니까?');">
+                                활성화
+                            </a>
+                        </td>
+                        <td th:if="${cardItem.card.status == '활성'}">
+                            <a th:href="@{/admin/card/inactivate(cardId=${cardItem.card.cardId})}">비활성화</a>
+                        </td>
                     </tr>
                 </table>
             </div>
