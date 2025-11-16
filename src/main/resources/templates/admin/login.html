@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>CARD ADMIN</title>
+
+    <link rel="stylesheet" th:href="@{/css/admin/login.css}">
+
+</head>
+<body>
+    <form action="/login" method="post">
+        <img th:src="@{/images/BNK5team_logo.svg}" alt="logo" class="BNK-logo"/>
+
+        <div class="input-box">
+            <img th:src="@{/images/user-round.png}" alt="login-icon" class="login-icon"/>
+            <input type="text" name="username" placeholder="I  D" required class="login-input"/>
+        </div>
+
+        <div class="input-box">
+            <img th:src="@{/images/key.png}" alt="login-icon" class="login-icon"/>
+            <input type="password" name="password" placeholder="P W" required class="login-input"/>
+        </div>
+
+        <button type="submit" class="login-btn">Login</button>
+    </form>
+
+</body>
+</html>

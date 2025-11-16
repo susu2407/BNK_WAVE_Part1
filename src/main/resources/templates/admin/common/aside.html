@@ -1,38 +1,74 @@
 <aside th:fragment="aside">
     <link rel="stylesheet" th:href="@{/css/admin/common/aside.css}">
-    <div id="aside-container">
-        <ul>
-            <a th:href="@{#}" class="menu-title">환경설정</a>
-            <ul class="submenu">
-                <li><a th:href="@{/admin/config/basic}">기본설정</a></li>
-                <li><a th:href="@{/admin/config/banner}">배너관리</a></li>
-                <li><a th:href="@{/admin/config/policy}">약관관리</a></li>
-                <li><a th:href="@{/admin/config/category}">카테고리</a></li>
-                <li><a th:href="@{/admin/config/version}">버전설정</a></li>
-            </ul>
-        </ul>
+    <nav id="aside-container">
+        <img th:src="@{/images/메뉴 아이콘.svg}" alt="aside tap icon">
 
         <ul>
-            <a th:href="@{#}" class="menu-title">상품관리</a>
-            <ul class="submenu">
-                <li><a th:href="@{/admin/product/list}">상품목록</a></li>
-                <li><a th:href="@{/admin/product/register}">상품등록</a></li>
-            </ul>
+            <li>
+                <a th:href="@{#}" class="menu-title">
+                    <img th:src="@{/images/관리자_상품관리.svg}" alt="상품목록 아이콘">
+                    <span>상품관리</span>
+                </a>
+                <ul class="submenu">
+                    <li><a th:href="@{/admin/product/list}">상품목록</a></li>
+                    <!-- <li><a th:href="@{/admin/product/register}">상품등록</a></li>  등록은 목록에서 '등록'버튼을 통해 접근 가능-->
+                    <li><a th:href="@{#}">상품가입현황</a></li>
+                </ul>
+            </li>
+
+            <li>
+                <a th:href="@{#}" class="menu-title">
+                    <img th:src="@{/images/관리자_고객관리.svg}" alt="고객관리 아이콘">
+                    <span>고객관리</span>
+                </a>
+                <ul class="submenu">
+                    <li><a th:href="@{/admin/member/list}">회원목록</a></li>
+                </ul>
+            </li>
+
+            <li>
+                <a th:href="@{#}" class="menu-title">
+                    <img th:src="@{/images/관리자_운영관리.svg}" alt="운영관리 아이콘">
+                    <span>운영관리</span>
+                </a>
+                <ul class="submenu">
+                    <li><a th:href="@{#}"></a></li>
+                </ul>
+            </li>
+
+            <li>
+                <a th:href="@{#}" class="menu-title">
+                    <img th:src="@{/images/관리자_고객센터.svg}" alt="고객센터 아이콘">
+                    <span>고객센터</span>
+                </a>
+                <ul class="submenu">
+                    <li><a th:href="@{#}">게시판목록</a></li>
+                    <li><a th:href="@{#}">상품 문의 게시판</a></li>
+                </ul>
+            </li>
+
+            <li>
+                <a th:href="@{#}" class="menu-title">
+                    <img th:src="@{/images/관리자_기본설정.svg}" alt="환경설정아이콘">
+                    <span>기본설정</span>
+                </a>
+                <ul class="submenu">
+                    <li><a th:href="@{/admin/config/basic}">기본설정</a></li>
+                    <li><a th:href="@{/admin/config/banner}">배너관리</a></li>
+                    <li><a th:href="@{/admin/config/policy}">약관관리</a></li>
+                    <li><a th:href="@{#}">검색어관리</a></li>
+                    <li><a th:href="@{#}">알림설정</a></li>
+                    <li><a th:href="@{/admin/config/category}">카테고리</a></li>
+                    <li><a th:href="@{/admin/config/version}">버전설정</a></li>
+                </ul>
+            </li>
         </ul>
 
-        <ul>
-            <a th:href="@{#}" class="menu-title">고객센터</a>
-            <ul class="submenu">
-                <li><a th:href="@{#}">게시판목록</a></li>
-                <li><a th:href="@{#}">상품 문의 게시판</a></li>
-            </ul>
-        </ul>
+        <!-- 고정 switch -->
+        <label class="aside-switch">
+            <input type="checkbox" role="switch">
+            <span></span>
+        </label>
 
-        <ul>
-            <a th:href="@{#}" class="menu-title">회원관리</a>
-            <ul class="submenu">
-                <li><a th:href="@{/admin/member/list}">회원목록</a></li>
-            </ul>
-        </ul>
-    </div>
+    </nav>
 </aside>
