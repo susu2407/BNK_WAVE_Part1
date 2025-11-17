@@ -1,6 +1,7 @@
 package kr.co.wave.service.card;
 
 import jakarta.transaction.Transactional;
+import kr.co.wave.dto.approval.CardApprovalDTO;
 import kr.co.wave.dto.card.*;
 import kr.co.wave.entity.approval.CardApproval;
 import kr.co.wave.entity.card.AnnualFee;
@@ -95,6 +96,11 @@ public class CardService {
             List<AnnualFee> annualFees = annualFeeRepository.findByCard_CardId(cardDTO.getCardId());
             dto.setAnnualFeeList(annualFees);
 
+            CardApprovalDTO cardApprovalDTO = cardApprovalRepository.findCardApprovalPendingByCardId(cardDTO.getCardId());
+            if(cardApprovalDTO != null){
+                dto.setApprovalStatus("결재진행중");
+            } else dto.setApprovalStatus("");
+
             adminCardList.add(dto);
         }
 
@@ -163,13 +169,7 @@ public class CardService {
     // 카드 비활성화 요청
     @Transactional
     public void inactivateCard(int cardId, String reason){
-        Optional<Card> OptionalCard = cardRepository.findById(cardId);
 
-        if(OptionalCard.isPresent()){
-            Card card = OptionalCard.get();
-            card.toggleStatus("결재 대기");
-        }
-        
         CardApproval cardApproval = CardApproval.builder().
                 cardId(cardId).
                 reason(reason).

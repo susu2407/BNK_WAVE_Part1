@@ -18,9 +18,7 @@
                     <div th:with="st=${param.searchType != null ? param.searchType[0] : ''}">
                         <select name="searchType" id="searchType">
                             <option value="" th:selected="${st == ''}">전체</option>
-                            <option value="name" th:selected="${st == 'name'}">상품명</option>
-                            <option value="engName" th:selected="${st == 'engName'}">영어명</option>
-                            <option value="type" th:selected="${st == 'type'}">카드유형</option>
+                            <option value="status" th:selected="${st == 'status'}">상태</option>
                         </select>
                     </div>
 
@@ -64,64 +62,31 @@
                     <thead>
                     <tr>
                         <th>번호</th>
-                        <th>상품명</th>
-                        <th>카드유형</th>
-                        <th>혜택</th>
-                        <th>연회비</th>
+                        <th>카드번호</th>
+                        <th>사유</th>
+                        <th>요청일</th>
+                        <th>결재일</th>
                         <th>상태</th>
-                        <th>등록일</th>
-                        <th>수정일</th>
                         <th>관리</th>
                     </tr>
                     </thead>
 
                     <!-- 페이지 객체의 content 리스트를 반복 -->
-                    <tr th:each="cardItem, stat : ${cardList.content}">
-                        <td>[[${cardList.totalElements - (cardList.number * cardList.size + stat.index)}]]</td>
+                    <tr th:each="approval, stat : ${cardApprovalList.content}">
+                        <td>[[${cardApprovalList.totalElements - (cardApprovalList.number * cardApprovalList.size + stat.index)}]]</td>
                         <td>
-                            <a th:href="@{/admin/card/view(cardId=${cardItem.card.cardId})}">[[${cardItem.card.name}]]
-                                <br> ([[${cardItem.card.engName}]])</a>
+                            [[${approval.cardId}]]
                         </td>
-                        <td>[[${cardItem.card.type}]]</td>
-                        <!-- 혜택 -->
-                        <td>
-                            <ul>
-                                <li th:each="benefit : ${cardItem.benefitList}">
-                                    [[${benefit.benefitCategory}]] [[${benefit.value}]] [[${benefit.unit}]]
-                                    [[${benefit.benefitType}]]
-                                </li>
-                            </ul>
+                        <td>[[${approval.reason}]]</td>
+                        <td>[[${#temporals.format(approval.requestedAt, 'yyyy-MM-dd')}]]</td>
+                        <td>[[${#temporals.format(approval.approvedAt, 'yyyy-MM-dd')}]]</td>
+                        <td>[[${approval.status}]]</td>
+                        <td th:if="${approval.status == '대기'}">
+                            <a th:href="@{/admin/approval/card/approval(cardId=${approval.approvalId})}">승인</a> <br>
+                            <a th:href="@{/admin/approval/card/rejection(cardId=${approval.approvalId})}">반려</a> <br>
                         </td>
-
-                        <!-- 연회비 -->
-                        <td>
-                            <ul>
-                                <li th:each="fee : ${cardItem.annualFeeList}">
-                                    [[${fee.annualName}]]원
-                                </li>
-                            </ul>
-                        </td>
-                        <td>[[${cardItem.card.status}]]</td>
-                        <td>[[${#temporals.format(cardItem.card.createdAt, 'yyyy-MM-dd')}]]</td>
-                        <td>[[${#temporals.format(cardItem.card.updatedAt, 'yyyy-MM-dd')}]]</td>
-                        <td th:if="${cardItem.card.status == '비활성'}">
-                            <a th:href="@{/admin/card/view(cardId=${cardItem.card.cardId})}">수정</a> <br>
-                            <a th:href="@{/admin/card/view(cardId=${cardItem.card.cardId})}">삭제</a> <br>
-                            <a th:href="@{/admin/card/activate(cardId=${cardItem.card.cardId})}"
-                               onclick="return confirm('활성화하면 더 이상 상품 정보를 변경할 수 없습니다.\n계속 진행하시겠습니까?');">
-                                활성화
-                            </a>
-                        </td>
-                        <td th:if="${cardItem.card.status == '활성'}">
-                            <div th:if="${cardItem.approvalStatus == '결재진행중'}">
-                                <a>[[${cardItem.approvalStatus}]]</a>
-                            </div>
-                            <div th:unless="${cardItem.approvalStatus == '결재진행중'}">
-                                <a href="#"
-                                   th:onclick="|openInactivateModal(${cardItem.card.cardId})|">
-                                    비활성화
-                                </a>
-                            </div>
+                        <td th:unless="${approval.status == '대기' }">
+                            <a>결재완료 - [[${approval.status}]]</a>
                         </td>
                     </tr>
                 </table>
@@ -130,7 +95,7 @@
 
             <!-- 페이징 -->
             <div class="pagination" th:with="
-                page=${cardList},
+                page=${cardApprovalList},
                 now=${page.number},
                 total=${page.totalPages},
                 size=${page.size},
@@ -164,41 +129,7 @@
             </div>
         </div>
     </div>
-
-    <!-- 비활성화 사유 입력 모달 -->
-    <div id="inactivateModal" style="display:none; position:fixed;
-    top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.4);">
-
-        <div style="background:white; padding:20px; width:400px; margin:100px auto; border-radius:8px;">
-            <h3>카드 비활성화</h3>
-
-            <form id="inactivateForm" th:action="@{/admin/card/inactivate}" method="post">
-                <input type="hidden" name="cardId" id="modalCardId">
-
-                <label>비활성화 사유</label><br>
-                <textarea name="reason" required style="width:100%; height:80px;"></textarea>
-
-                <div style="margin-top:15px; text-align:right;">
-                    <button type="button" onclick="closeInactivateModal()">취소</button>
-                    <button type="submit">확인</button>
-                </div>
-            </form>
-        </div>
-    </div>
-
 </main>
 <div th:replace="~{admin/common/footer :: footer}"></div>
-
-<script>
-    function openInactivateModal(cardId) {
-        document.getElementById('modalCardId').value = cardId;
-        document.getElementById('inactivateModal').style.display = 'block';
-    }
-
-    function closeInactivateModal() {
-        document.getElementById('inactivateModal').style.display = 'none';
-    }
-</script>
-
 </body>
 </html>

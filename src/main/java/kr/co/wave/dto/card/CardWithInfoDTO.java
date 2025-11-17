@@ -17,4 +17,5 @@ public class CardWithInfoDTO {
     CardDTO card;
     List<Benefit> benefitList;
     List<AnnualFee> annualFeeList;
+    String approvalStatus;
 }
