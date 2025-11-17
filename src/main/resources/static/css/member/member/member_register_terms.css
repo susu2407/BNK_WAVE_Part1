@@ -1,0 +1,205 @@
+@media (min-width: 1024px) {
+    html {
+        zoom: 125%;
+    }
+}
+
+/* 공통 컨테이너 */
+.content {
+    max-width: 800px;
+    margin: 80px auto;
+    padding: 0 10px;
+}
+
+/* 카드 박스 */
+.terms-wrap {
+    max-width: 695px;
+    margin: auto;
+    background: #fff;
+    border: 1px solid #eee;
+    border-radius: 18px;
+    box-shadow: 0 8px 30px rgba(0, 0, 0, .03);
+    padding: 28px 24px 24px;
+}
+
+/* 제목 */
+.terms-title {
+    margin: 0 0 16px;
+    font-size: 26px;
+    font-weight: 800;
+}
+
+/* ===== 약관 영역 (product_register2 구조) ===== */
+
+.agree-section {
+    margin-top: 6px;
+}
+
+/* 위쪽 전체 동의 박스 */
+.agree-all-row {
+    background: #f4f4f4;
+    border-radius: 18px 18px 0 0;
+    padding: 14px 16px 10px;
+    border: 1px solid #e2e2e2
+}
+
+.agree-all-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    border: none;
+    background: transparent;
+    cursor: pointer;
+    font-weight: 700;
+}
+
+.agree-all-title {
+    font-size: 15px;
+}
+
+.agree-all-desc {
+    font-size: 12px;
+    color: #616161;
+    margin: 6px 0 0;
+}
+
+/* 체크 동그라미 (전체/개별 공용) */
+.agree-check {
+    width: 22px;
+    height: 22px;
+    border-radius: 999px;
+    background: #d1d5db;
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 13px;
+    color: #fff;
+}
+
+.agree-check.on {
+    background: #334155;
+}
+
+.agree-check.on::after {
+    content: "✓";
+}
+
+/* 아래 개별 약관 박스 */
+.agree-list-box {
+    background: #fff;
+    border: 1px solid #e2e2e2;
+    border-top: none;
+    border-radius: 0 0 18px 18px;
+    overflow: hidden;
+}
+
+.agree-row {
+    border-bottom: 1px solid #ededed;
+}
+
+.agree-row:last-child {
+    border-bottom: none;
+}
+
+/* 각 약관 헤더 */
+.agree-head {
+    width: 100%;
+    border: none;
+    background: #fff;
+    padding: 14px 16px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 12px;
+}
+
+.agree-head .left {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 13px;
+    cursor: pointer;
+    /* 왼쪽은 체크 토글 */
+}
+
+.agree-head .right {
+    font-size: 18px;
+    color: #999;
+    cursor: pointer;
+    /* 오른쪽은 펼치기 */
+    transition: transform .2s;
+}
+
+/* 펼쳐졌을 때 화살표 회전 */
+.agree-head[aria-expanded="true"] .right {
+    transform: rotate(90deg);
+}
+
+/* [필수] 뱃지 */
+.required-badge {
+    font-size: 11px;
+    color: #fff;
+    background: #ef4444;
+    border-radius: 6px;
+    padding: 2px 6px;
+    margin-left: 6px;
+}
+
+/* === 스르륵 내려오는 본문 (product_register3 느낌) === */
+.agree-body {
+    background: #f6f6f6;
+    overflow: hidden;
+    max-height: 0;
+    padding: 0 16px;
+    transition: max-height .25s ease, padding .25s ease;
+}
+
+.agree-body.open {
+    max-height: 500px;
+    /* 충분히 큰 값 */
+    padding: 12px 16px 14px;
+}
+
+.agree-body-desc {
+    font-size: 12px;
+    color: #555;
+    line-height: 1.5;
+    margin-bottom: 6px;
+}
+
+.agree-body ul {
+    margin: 0;
+    padding-left: 16px;
+}
+
+.agree-body li {
+    font-size: 12px;
+    line-height: 1.45;
+    margin-bottom: 3px;
+}
+
+/* 진행 버튼 */
+.btn-submit {
+    width: 100%;
+    height: 52px;
+    border: none;
+    border-radius: 14px;
+    background: #d4d4d4;
+    color: #fff;
+    font-weight: 800;
+    cursor: not-allowed;
+    margin-top: 14px;
+    font-size: 16px;
+}
+
+.btn-submit:not(:disabled) {
+    background: #CB2B11;
+    cursor: pointer;
+}
+
+/* 모바일 폰트 살짝 줄이기 */
+@media (max-width:600px) {
+    .terms-title {
+        font-size: 22px;
+    }
+}

@@ -1,0 +1,182 @@
+/* ===== 공통 배율 & 레이아웃(다른 register 페이지와 동일) ===== */
+@media (min-width:1024px) {
+    html {
+        zoom: 125%;
+    }
+}
+
+.content {
+    max-width: 800px;
+    margin: 80px auto;
+    padding: 0 10px;
+}
+
+/* ===== 카드형 래퍼: product_register6 톤과 통일 ===== */
+.pin-wrap {
+    background: #fff;
+    border: 1px solid #eee;
+    border-radius: 18px;
+    box-shadow: 0 8px 30px rgba(0, 0, 0, .03);
+    padding: 28px 24px 24px;
+    max-width: 695px;
+    margin: auto;
+}
+
+.pin-title {
+    margin: 0 0 18px;
+    font-size: 26px;
+    font-weight: 800;
+    line-height: 1.35;
+}
+
+/* ===== 필드 ===== */
+.pin-field {
+    margin: 16px 0 22px;
+}
+
+.pin-field label {
+    display: block;
+    font-size: 14px;
+    font-weight: 800;
+    margin-bottom: 8px;
+}
+
+/* 동그라미 인디케이터 */
+/* 화면에 보이지 않지만 포커스 가능한 인풋 */
+.visually-hidden-input {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    margin: -1px;
+    padding: 0;
+    border: 0;
+    clip: rect(0 0 0 0);
+    clip-path: inset(50%);
+    overflow: hidden;
+}
+
+/* 점 입력 패드 */
+.pin-dots.pad {
+    display: flex;
+    gap: 14px;
+    padding: 10px 4px;
+    border-bottom: 2px solid #d3d3d3;
+    width: 70%;
+    outline: none;
+    cursor: text;
+}
+
+.pin-dots.pad:focus {
+    border-bottom-color: #111;
+}
+
+/* 점 크기 조금 크게 */
+.pin-dots .dot {
+    width: 14px;
+    height: 14px;
+    border-radius: 999px;
+    background: #e5e7eb;
+}
+
+.pin-dots .dot.on {
+    background: #111;
+}
+
+/* 스크린리더 전용 */
+.sr-only {
+    position: absolute !important;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border: 0;
+}
+
+/* 실제 입력(밑줄형) */
+.secret-input {
+    width: 100%;
+    border: none;
+    outline: none;
+    background: transparent;
+    padding: 4px 0 6px;
+    font-size: 18px;
+    letter-spacing: 8px;
+    /* 키패드 느낌 */
+    -webkit-text-security: disc;
+    /* 마스킹 */
+}
+
+.underline {
+    height: 2px;
+    background: #d3d3d3;
+}
+
+.secret-input:focus+.underline {
+    background: #111;
+}
+
+/* 결과 메시지 */
+.pin-error{
+  min-height: 18px;
+  margin: 6px 0 2px;
+  font-size: 13px;
+  color: #cb2b11;     /* 에러색 */
+  font-weight: 700;
+}
+
+/* 유효성 피드백 */
+.pin-dots.pad.success{ border-bottom-color:#16a34a; } /* 초록 */
+.pin-dots.pad.error{   border-bottom-color:#cb2b11; } /* 빨강 */
+
+/* 살짝 흔들림 */
+@keyframes shakeX{
+  0%,100%{transform:translateX(0)}
+  20%{transform:translateX(-4px)}
+  40%{transform:translateX(4px)}
+  60%{transform:translateX(-3px)}
+  80%{transform:translateX(3px)}
+}
+.shake{ animation: shakeX .3s ease-in-out; }
+
+/* 버튼들 – 다른 등록 페이지와 동일 규격 */
+.btn-submit {
+    width: 100%;
+    height: 56px;
+    margin-top: 8px;
+    border: none;
+    border-radius: 14px;
+    background: #CB2B11;
+    color: #fff;
+    font-weight: 800;
+    font-size: 16px;
+    cursor: pointer;
+}
+
+.btn-submit[disabled] {
+    background: #d4d4d4;
+    cursor: not-allowed;
+}
+
+.btn-later {
+    display: block;
+    width: 100%;
+    text-align: center;
+    margin-top: 10px;
+    padding: 12px 0;
+    background: transparent;
+    border: none;
+    color: #6b7280;
+    font-weight: 700;
+    font-size: 14px;
+    cursor: pointer;
+}
+
+/* 모바일 글자 크기 살짝 다운 */
+@media (max-width:600px) {
+    .pin-title {
+        font-size: 22px;
+    }
+}
