@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>카드 수령 주소 입력</title>
+
+    <!-- 공통 -->
+    <link rel="stylesheet" href="../css/common/product_header_style.css" />
+    <link rel="stylesheet" href="../css/common/footer_style.css" />
+    <link rel="stylesheet" href="../css/product/product_register9.css" />
+
+    <!-- 다음(카카오) 주소 API -->
+    <script src="https://t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
+</head>
+
+<body>
+    <div id="header"></div>
+
+    <main class="content">
+        <section class="addr-wrap">
+            <h1 class="addr-title">입력된 자택 주소가 맞는지 확인해 주세요.</h1>
+
+            <div class="addr-desc">카드를 수령하실 <strong>자택 주소</strong>를 입력해 주세요.</div>
+
+            <!-- 우편번호 -->
+            <div class="field">
+                <label for="zip" class="label">우편번호</label>
+                <div class="row">
+                    <input id="zip" type="text" inputmode="numeric" maxlength="5" readonly
+                        placeholder="주소 검색으로 자동 입력" />
+                    <button type="button" class="btn-search" id="btnSearch" aria-label="주소 검색">🔍</button>
+                </div>
+                <div class="underline"></div>
+            </div>
+
+            <!-- 기본주소 -->
+            <div class="field">
+                <label for="addr1" class="label">기본주소</label>
+                <input id="addr1" type="text" readonly placeholder="주소 검색으로 자동 입력" />
+                <div class="underline"></div>
+            </div>
+
+            <!-- 상세주소 -->
+            <div class="field">
+                <label for="addr2" class="label">상세주소</label>
+                <input id="addr2" type="text" placeholder="동/호수, 건물, 층 등을 입력해 주세요." />
+                <div class="underline"></div>
+            </div>
+
+            <!-- 안내문 -->
+            <p class="guide">주소가 맞게 입력되었는지 다시 한 번 확인해 주세요.</p>
+
+            <!-- 확인 버튼 -->
+            <button class="btn-submit" id="btnConfirm" disabled>확인</button>
+        </section>
+    </main>
+
+    <div id="footer"></div>
+
+    <script>
+        // 공통 헤더/푸터 로드
+        document.addEventListener('DOMContentLoaded', () => {
+            fetch('../common/product_header.html')
+                .then(r => r.text()).then(h => {
+                    document.getElementById('header').innerHTML = h;
+                    const headerEl = document.querySelector('.header');
+                    if (headerEl) {
+                        window.addEventListener('scroll', () => {
+                            if (window.scrollY > 10) headerEl.classList.add('scrolled');
+                            else headerEl.classList.remove('scrolled');
+                        });
+                    }
+                });
+            fetch('../common/footer.html')
+                .then(r => r.text()).then(h => document.getElementById('footer').innerHTML = h);
+        });
+
+        // 주소 검색 열기
+        function openPostcode() {
+            new daum.Postcode({
+                oncomplete: function (data) {
+                    // 기본 주소(도로명 우선, 없으면 지번)
+                    const road = data.roadAddress || '';
+                    const jibun = data.jibunAddress || '';
+                    const base = road || jibun;
+
+                    // 참고항목(건물명/법정동 등)
+                    let extra = '';
+                    if (data.bname && /[동|로|가]$/g.test(data.bname)) extra += data.bname;
+                    if (data.buildingName && data.apartment === 'Y') extra += (extra ? ', ' : '') + data.buildingName;
+                    const fullBase = extra ? `${base} (${extra})` : base;
+
+                    document.getElementById('zip').value = data.zonecode || '';
+                    document.getElementById('addr1').value = fullBase;
+                    document.getElementById('addr2').focus();
+                    validate();
+                }
+            }).open();
+        }
+
+        // 이벤트 바인딩
+        const zip = document.getElementById('zip');
+        const addr1 = document.getElementById('addr1');
+        const addr2 = document.getElementById('addr2');
+        const btn = document.getElementById('btnConfirm');
+
+        document.getElementById('btnSearch').addEventListener('click', openPostcode);
+        zip.addEventListener('click', openPostcode);
+        addr1.addEventListener('click', openPostcode);
+
+        // 상세주소 입력 시 버튼 활성화
+        function validate() {
+            const ok =
+                zip.value.trim().length > 0 &&
+                addr1.value.trim().length > 0;   // addr2는 체크하지 않음
+            btn.disabled = !ok;
+        }
+        addr2.addEventListener('input', validate);
+
+        // 제출 (데모)
+        btn.addEventListener('click', () => {
+            const payload = {
+                zip: zip.value.trim(),
+                addr1: addr1.value.trim(),
+                addr2: addr2.value.trim()
+            };
+            console.log('배송지:', payload);
+            alert('주소가 저장되었습니다.');
+            // TODO: 실제 저장 로직 추가 (fetch/axios)
+        });
+    </script>
+</body>
+
+</html>

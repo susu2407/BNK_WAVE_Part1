@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>결제 계좌 정보 입력</title>
+    <link rel="stylesheet" href="../css/common/product_header_style.css" />
+    <link rel="stylesheet" href="../css/product/product_register6.css" />
+    <link rel="stylesheet" href="../css/common/footer_style.css" />
+</head>
+
+<body>
+    <div id="header"></div>
+
+    <main class="content">
+        <section class="acc-wrap">
+
+            <!-- STEP 1 : 계좌 입력 -->
+            <div id="accStep1">
+                <h1 class="acc-title">결제 계좌 정보를 입력해 주세요.</h1>
+                <p class="acc-billday">카드 이용대금 결제일은 <strong>매월 15일</strong> 입니다.</p>
+
+                <!-- 은행 선택 -->
+                <div class="field">
+                    <label for="bank" class="label">은행</label>
+                    <div class="select-like">
+                        <select id="bank">
+                            <option value="">은행을 선택하세요</option>
+                            <option>신한은행</option>
+                            <option>국민은행</option>
+                            <option>우리은행</option>
+                            <option>하나은행</option>
+                            <option>농협은행</option>
+                            <option>기업은행</option>
+                            <option>부산은행</option>
+                            <option>경남은행</option>
+                            <option>대구은행</option>
+                            <option>SC제일은행</option>
+                            <option>카카오뱅크</option>
+                            <option>케이뱅크</option>
+                            <option>토스뱅크</option>
+                        </select>
+                        <span class="chev">▼</span>
+                    </div>
+                </div>
+
+                <!-- 계좌번호 -->
+                <div class="field">
+                    <label for="accNo" class="label">계좌번호</label>
+                    <input id="accNo" type="text" inputmode="numeric" placeholder="숫자만 입력" />
+                    <div class="underline"></div>
+                </div>
+
+                <!-- 안내 -->
+                <ul class="notes">
+                    <li>반드시 본인 명의 계좌를 입력해 주세요.</li>
+                    <li>사업자 계좌 및 평생계좌(임의번호를 활용해 원계좌에 연결해 둔 계좌)는 입력할 수 없습니다.</li>
+                </ul>
+
+                <button type="button" class="btn-next" id="btnNext" disabled>다음</button>
+            </div>
+
+            <!-- STEP 2 : 1원 인증 -->
+            <section class="micro-wrap" id="accStep2" style="display:none;">
+                <h1 class="acc-title">입력된 계좌로 1원을 보냈습니다</h1>
+                <p class="micro-desc">인증 계좌 입금 내역에 표시된<br>3자리 숫자를 입력하세요.</p>
+
+                <div class="micro-card">
+                    <div class="left">
+                        <!-- 뱃지 제거됨: <span class="bank-badge" id="vBankBadge">S</span> -->
+                        <span class="bank-name" id="vBankName">국민은행</span>
+                        <span class="acc-mask" id="vAccMask">545**********4</span>
+                    </div>
+                    <div class="amount">1원</div>
+                </div>
+
+                <label class="label" for="authCode">인증번호 3자리</label>
+                <div class="code-row">
+                    <input id="authCode" type="text" inputmode="numeric" maxlength="3" />
+                    <button type="button" class="btn-ghost" id="btnResend">재요청</button>
+                </div>
+                <div class="underline"></div>
+
+                <button type="button" class="btn-submit" id="btnVerify" disabled>확인</button>
+                
+            </section>
+
+
+        </section>
+    </main>
+
+    <div id="footer"></div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            // 헤더/푸터 로드
+            fetch('../common/product_header.html')
+                .then(r => r.text()).then(h => {
+                    document.getElementById('header').innerHTML = h;
+                    const headerEl = document.querySelector('.header');
+                    if (headerEl) {
+                        window.addEventListener('scroll', () => {
+                            headerEl.classList.toggle('scrolled', window.scrollY > 10);
+                        });
+                    }
+                });
+            fetch('../common/footer.html')
+                .then(r => r.text()).then(h => document.getElementById('footer').innerHTML = h);
+
+            const bank = document.getElementById('bank');
+            const accNo = document.getElementById('accNo');
+            const next = document.getElementById('btnNext');
+            const step1 = document.getElementById('accStep1');
+            const step2 = document.getElementById('accStep2');
+
+            // STEP2 요소
+            const vBank = document.getElementById('vBankName');
+            const vBadge = document.getElementById('vBankBadge');
+            const vMask = document.getElementById('vAccMask');
+            const codeInp = document.getElementById('authCode');
+            const btnVerify = document.getElementById('btnVerify');
+            const btnResend = document.getElementById('btnResend');
+
+            const minLen = 8, maxLen = 14;
+
+            function sanitizeAcc() {
+                let v = accNo.value.replace(/\D/g, '');
+                if (v.length > maxLen) v = v.slice(0, maxLen);
+                accNo.value = v;
+            }
+
+            function refresh() {
+                const okBank = bank.value.trim().length > 0;
+                const len = accNo.value.length;
+                const okAcc = len >= minLen && len <= maxLen;
+                next.disabled = !(okBank && okAcc);
+            }
+
+            accNo.addEventListener('input', () => { sanitizeAcc(); refresh(); });
+            bank.addEventListener('change', refresh);
+            refresh();
+
+            // STEP1 -> STEP2 전환
+            next.addEventListener('click', () => {
+                vBank.textContent = bank.value;
+                vMask.textContent = maskAcc(accNo.value);
+                step1.style.display = 'none';
+                step2.style.display = 'block';
+            });
+            // 계좌번호 마스킹
+            function maskAcc(num) {
+                const s = (num || '').replace(/\D/g, '');
+                if (s.length <= 4) return s;
+                const head = s.slice(0, 3);
+                const tail = s.slice(-1);
+                return head + '*'.repeat(Math.max(0, s.length - 4)) + tail;
+            }
+
+            // 인증번호 3자리 입력 시 버튼 활성화
+            codeInp.addEventListener('input', () => {
+                codeInp.value = codeInp.value.replace(/\D/g, '').slice(0, 3);
+                btnVerify.disabled = (codeInp.value.length !== 3);
+            });
+
+            btnResend.addEventListener('click', () => {
+                alert('인증번호를 다시 발송했습니다.');
+            });
+
+            btnVerify.addEventListener('click', () => {
+                alert('계좌 인증이 완료되었습니다.');
+            });
+        });
+    </script>
+</body>
+
+</html>

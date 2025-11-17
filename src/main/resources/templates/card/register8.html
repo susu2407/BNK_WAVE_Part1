@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>카드 비밀번호 등록</title>
+
+    <!-- 공통 헤더/푸터, 페이지 CSS -->
+    <link rel="stylesheet" href="../css/common/product_header_style.css" />
+    <link rel="stylesheet" href="../css/product/product_register8.css" />
+    <link rel="stylesheet" href="../css/common/footer_style.css" />
+</head>
+
+<body>
+    <div id="header"></div>
+
+    <main class="content">
+        <section class="pin-wrap">
+            <h1 class="pin-title">
+                사용할 카드 비밀번호<br />숫자 4자리를 입력해 주세요.
+            </h1>
+
+            <!-- 비밀번호 입력 -->
+            <div class="pin-field">
+                <label class="sr-only" for="pin1">비밀번호 입력</label>
+
+                <!-- 점 자체가 입력 포커스를 받는 UI -->
+                <div class="pin-dots pad" id="dots1" tabindex="0" aria-describedby="pin1Help" role="group"
+                    aria-label="비밀번호 4자리 입력">
+                    <span class="dot" aria-hidden="true"></span>
+                    <span class="dot" aria-hidden="true"></span>
+                    <span class="dot" aria-hidden="true"></span>
+                    <span class="dot" aria-hidden="true"></span>
+                </div>
+                <p id="pin1Help" class="sr-only">숫자만 입력, 백스페이스로 삭제</p>
+
+                <!-- 보이지 않는 실제 입력 -->
+                <input id="pin1" type="text" inputmode="numeric" maxlength="4" autocomplete="one-time-code"
+                    class="visually-hidden-input" />
+            </div>
+
+            <!-- 비밀번호 확인 -->
+            <div class="pin-field">
+                <label class="sr-only" for="pin2">비밀번호 확인</label>
+                <div class="pin-dots pad" id="dots2" tabindex="0" aria-describedby="pin2Help" role="group"
+                    aria-label="비밀번호 4자리 확인 입력">
+                    <span class="dot" aria-hidden="true"></span>
+                    <span class="dot" aria-hidden="true"></span>
+                    <span class="dot" aria-hidden="true"></span>
+                    <span class="dot" aria-hidden="true"></span>
+                </div>
+                <p id="pin2Help" class="sr-only">숫자만 입력, 백스페이스로 삭제</p>
+
+                <input id="pin2" type="text" inputmode="numeric" maxlength="4" autocomplete="one-time-code"
+                    class="visually-hidden-input" />
+            </div>
+
+            <p class="pin-error" id="pinError" aria-live="polite"></p>
+
+            <button class="btn-submit" id="btnConfirm" disabled>확인</button>
+            <button class="btn-later" type="button" id="btnLater">다음에 하기</button>
+
+        </section>
+    </main>
+
+    <div id="footer"></div>
+
+    <script>
+        // 공통 헤더/푸터 로드
+        document.addEventListener('DOMContentLoaded', () => {
+            fetch('../common/product_header.html')
+                .then(r => r.text()).then(h => {
+                    document.getElementById('header').innerHTML = h;
+                    const headerEl = document.querySelector('.header');
+                    if (headerEl) {
+                        window.addEventListener('scroll', () => {
+                            if (window.scrollY > 10) headerEl.classList.add('scrolled');
+                            else headerEl.classList.remove('scrolled');
+                        });
+                    }
+                });
+            fetch('../common/footer.html')
+                .then(r => r.text()).then(h => document.getElementById('footer').innerHTML = h);
+        });
+
+        // 숫자만 허용 + 도트/버튼 상태 갱신
+        document.addEventListener('DOMContentLoaded', () => {
+            const pin1 = document.getElementById('pin1');
+            const pin2 = document.getElementById('pin2');
+            const dots1 = document.querySelectorAll('#dots1 .dot');
+            const dots2 = document.querySelectorAll('#dots2 .dot');
+            const pad1 = document.getElementById('dots1');
+            const pad2 = document.getElementById('dots2');
+            const btn = document.getElementById('btnConfirm');
+            const err = document.getElementById('pinError');
+
+            const onlyNum = v => v.replace(/\D/g, '').slice(0, 4);
+
+            function paint(nodes, len) {
+                nodes.forEach((d, i) => d.classList.toggle('on', i < len));
+            }
+
+            function clearState() {
+                pad1.classList.remove('success', 'error');
+                pad2.classList.remove('success', 'error');
+                pin1.removeAttribute('aria-invalid');
+                pin2.removeAttribute('aria-invalid');
+                err.textContent = '';
+            }
+
+            function setError(msg) {
+                pad1.classList.remove('success'); pad2.classList.remove('success');
+                pad1.classList.add('error'); pad2.classList.add('error');
+                pin1.setAttribute('aria-invalid', 'true');
+                pin2.setAttribute('aria-invalid', 'true');
+                err.textContent = msg || '두 비밀번호가 일치하지 않습니다.';
+            }
+
+            function setSuccess() {
+                pad1.classList.remove('error'); pad2.classList.remove('error');
+                pad1.classList.add('success'); pad2.classList.add('success');
+                pin1.removeAttribute('aria-invalid');
+                pin2.removeAttribute('aria-invalid');
+                err.textContent = '';
+            }
+
+            function validatePins() {
+                const a = pin1.value, b = pin2.value;
+                const okLen = a.length === 4 && b.length === 4;
+                const okEq = a === b;
+                if (!okLen) {
+                    clearState();
+                    return false;
+                }
+                if (!okEq) {
+                    setError();
+                    return false;
+                }
+                setSuccess();
+                return true;
+            }
+
+            function sync() {
+                paint(dots1, pin1.value.length);
+                paint(dots2, pin2.value.length);
+                const ok = validatePins();
+                btn.disabled = !ok;
+            }
+
+            // 점 영역 클릭/포커스 -> 숨은 인풋 포커스
+            pad1.addEventListener('click', () => pin1.focus());
+            pad2.addEventListener('click', () => pin2.focus());
+            pad1.addEventListener('focus', () => pin1.focus());
+            pad2.addEventListener('focus', () => pin2.focus());
+
+            // 입력 처리 (숫자/삭제만 허용)
+            [pin1, pin2].forEach(inp => {
+                inp.addEventListener('input', () => { inp.value = onlyNum(inp.value); sync(); });
+                inp.addEventListener('keydown', e => {
+                    const allow = ['Backspace', 'Tab', 'ArrowLeft', 'ArrowRight', 'Delete'];
+                    if (/^[0-9]$/.test(e.key) || allow.includes(e.key)) return;
+                    e.preventDefault();
+                });
+            });
+
+            // 제출 가드
+            btn.addEventListener('click', () => {
+                if (!validatePins()) {
+                    // 에러일 때 살짝 흔들림
+                    [pad1, pad2].forEach(p => {
+                        p.classList.add('shake');
+                        setTimeout(() => p.classList.remove('shake'), 320);
+                    });
+                    return;
+                }
+                alert('비밀번호가 설정되었습니다.');
+            });
+
+            document.getElementById('btnLater').addEventListener('click', () => {
+                alert('다음에 설정할 수 있어요.');
+            });
+
+            sync(); // 초기 상태 반영
+        });
+    </script>
+
+</body>
+
+</html>

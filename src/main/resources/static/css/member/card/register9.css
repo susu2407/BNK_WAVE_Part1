@@ -1,0 +1,121 @@
+@media (min-width:1024px) {
+    html {
+        zoom: 125%;
+    }
+}
+
+/* 공통 레이아웃 */
+.content {
+    max-width: 800px;
+    margin: 80px auto;
+    padding: 0 10px;
+}
+
+/* 카드형 컨테이너 – product_register6 과 톤 맞춤 */
+.addr-wrap {
+    background: #fff;
+    border: 1px solid #eee;
+    border-radius: 18px;
+    box-shadow: 0 8px 30px rgba(0, 0, 0, .03);
+    padding: 28px 24px 24px;
+    max-width: 695px;
+    margin: auto;
+}
+
+.addr-title {
+    margin: 0 0 10px;
+    font-size: 26px;
+    font-weight: 800;
+    line-height: 1.3;
+}
+
+.addr-desc {
+    font-size: 14px;
+    color: #374151;
+    margin-bottom: 18px;
+}
+
+/* 필드 */
+.field {
+    margin-bottom: 20px;
+}
+
+.label {
+    display: block;
+    font-size: 14px;
+    font-weight: 800;
+    margin-bottom: 8px;
+}
+
+.row {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+}
+
+.field input {
+    width: 100%;
+    border: none;
+    background: transparent;
+    padding: 8px 0 6px;
+    font-size: 16px;
+    outline: none;
+}
+
+.underline {
+    height: 2px;
+    background: #d3d3d3;
+}
+
+.field input:focus+.underline,
+.field .row+.underline {
+    background: #d3d3d3;
+}
+
+.field input:focus~.underline {
+    background: #111;
+}
+
+/* 검색 버튼 */
+.btn-search {
+    flex: 0 0 auto;
+    height: 38px;
+    padding: 0 12px;
+    border: 1.6px solid #cbd5e1;
+    border-radius: 10px;
+    background: #fff;
+    font-size: 16px;
+    cursor: pointer;
+}
+
+/* 안내 */
+.guide {
+    color: #6b7280;
+    font-size: 13px;
+    margin: 6px 0 12px;
+}
+
+/* 확인 버튼 – 톤 맞춤 */
+.btn-submit {
+    width: 100%;
+    height: 56px;
+    margin-top: 10px;
+    border: none;
+    border-radius: 14px;
+    background: #CB2B11;
+    color: #fff;
+    font-weight: 800;
+    font-size: 16px;
+    cursor: pointer;
+}
+
+.btn-submit[disabled] {
+    background: #d4d4d4;
+    cursor: not-allowed;
+}
+
+@media (max-width:600px) {
+    .addr-title {
+        font-size: 22px;
+    }
+}
