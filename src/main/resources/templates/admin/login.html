@@ -2,18 +2,25 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-
+    <link rel="stylesheet" th:href="@{/css/admin/login.css}">
 
 </head>
 <body>
     <form action="/login" method="post">
+        <img th:src="@{/images/BNK5team-logo.png}" alt="부산은행카드팀로고" class="BNK-logo">
 
         <div class="input-box">
+            <img th:src="@{/images/user-round.svg}" alt="아이디아이콘" class="login-icon">
             <input type="text" name="username" placeholder="I  D" required class="login-input"/>
         </div>
 
         <div class="input-box">
+            <img th:src="@{/images/user-key.svg}" alt="비밀번호아이콘" class="login-icon">
             <input type="password" name="password" placeholder="P W" required class="login-input"/>
+        </div>
+
+        <div class="input-box">
+            <button class="login-btn">Login</button>
         </div>
 
     </form>
