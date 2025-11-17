@@ -9,8 +9,8 @@ body {
     --sb-width: 5rem;
 }
 
-/* sb-expanded가 사용될 때마다 10rem으로 업데이트 됨 */
-body.sb-expanded {
+/* sb-expanded(확장)가 사용될 때마다 10rem으로 업데이트 됨 */
+body.sb-expanded{
     --sb-width: 10rem;
 }
 
@@ -67,8 +67,6 @@ aside {
     line-height: 1;
     color: #ffffff;
     text-decoration: none;
-
-    border-radius: 0.375rem;
     transition:
             background-color 0.5s ease-in-out,
             color0.5s ease-in-out;
@@ -84,12 +82,11 @@ aside {
         visibility 0.3s ease-in-out; /* 펼쳐질 때 에니메이션 세부 조정 */
 }
 
-/* sb-expaned 활성되면, 숨겨졌던 span이 화면에 표시되도록 함 */
+/* sb-expanded 활성되면, 숨겨졌던 span이 화면에 표시되도록 함 */
 .sb-expanded #aside-container a span {
     opacity: 1;
     visibility: visible;
 }
-
 
 .submenu {
     list-style: none;
@@ -102,24 +99,15 @@ aside {
 }
 
 /* === aside가 확장되었을 때 ============================== */
-
-#aside-container a.active,
-#aside-container a:hover,
-#aside-container a:focus-visible {
-    outline: none;
-    color: white;
-    background-color: #262626;
-}
-
-main {
-    margin-left: 5rem; /* 사이드바가 펼쳐졌을 때의 영역 */
-    padding: 1rem 2rem;
+main, header, footer {
+    margin-left: 10rem; /* 사이드바가 펼쳐졌을 때의 영역 */
+    padding: 1rem 1rem;
     transition: margin-left 0.5s ease-in-out; /* 효과를 미세하게 조정하기 위해 전환을 적용 */
 }
 
 /* 768px 보다 큰 화면에서는 여배이 앞서 정의한 변수 값에 따라 동적으로 조정 (768px보다 작으면 main영역으로 올라가게 함, 충분한 너비이면 main을 밀어냄.)*/
 @media (min-width: 768px) {
-    main {
+    main, header, footer {
         margin-left: var(--sb-width);
     }
 }
@@ -151,7 +139,7 @@ main {
     transition: left 250ms linear; /* 애니메이션 속성 추가 */
 }
 
-/* on state */
+/* on state(스위치 오른쪽으로 이동했을 때) */
 [type="checkbox"]:checked::before {
     background-color: #CB2B11;
     left: 1.5em;
@@ -160,10 +148,3 @@ main {
 [type="checkbox"]:checked {
     background-color: #AA210A;
 }
-
-
-/* 그리드 여역 */
-
-
-
-
