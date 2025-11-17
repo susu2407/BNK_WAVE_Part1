@@ -4,6 +4,11 @@ server:
     context-path: /wave
 
 spring:
+  web:
+    resources:
+      static-locations:
+        - classpath:/static/
+        - file:uploads/
   application:
     name: wave
   datasource:
@@ -45,3 +50,5 @@ jwt:
 file:
   upload:
     path: uploads
+
+

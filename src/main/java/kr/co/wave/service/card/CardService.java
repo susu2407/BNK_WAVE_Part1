@@ -11,6 +11,7 @@ import kr.co.wave.repository.approval.CardApprovalRepository;
 import kr.co.wave.repository.card.AnnualFeeRepository;
 import kr.co.wave.repository.card.BenefitRepository;
 import kr.co.wave.repository.card.CardRepository;
+import kr.co.wave.service.board.util.FileUploadUtil;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.data.domain.Page;
@@ -32,7 +33,7 @@ public class CardService {
     private final BenefitRepository benefitRepository;
     private final CardApprovalRepository cardApprovalRepository;
     private final ModelMapper modelMapper; // Entity와 DTO를 변환해주는 객체
-
+    private final FileUploadUtil fileUploadUtil; // 저기 util 불러오는 객체
     // 필요없는데 혹시나 남겨둠
     public Page<CardDTO> getCardAllBySearch(String searchType, String keyword, int page, int size){
         String st = (searchType == null) ? "" : searchType.trim();
@@ -109,8 +110,13 @@ public class CardService {
     }
 
     // 카드 등록
+    // 카드 이미지 등록 추가 ( 11.17 박효빈)
     @Transactional
     public void registerCard(CardRequestDTO cardRequestDTO){
+
+        // 추가 코드 ( TMI:이미지 저장하는 코드 )
+        String thumbnailPath = fileUploadUtil.saveFile(cardRequestDTO.getThumbnail(),"card");
+        String backgroundPath = fileUploadUtil.saveFile(cardRequestDTO.getBackground(),"card");
 
         // 카드
         Card card = Card.builder()
@@ -119,6 +125,9 @@ public class CardService {
                 .type(cardRequestDTO.getType())
                 .isCompany(cardRequestDTO.isCompany())
                 .description(cardRequestDTO.getDescription())
+                // 카드 이미지 업로드 추가 (11.17)
+                .thumbnail(thumbnailPath)
+                .background(backgroundPath)
                 .status("비활성")
                 .build();
 
