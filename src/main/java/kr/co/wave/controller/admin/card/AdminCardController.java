@@ -86,7 +86,7 @@ public class AdminCardController {
     }
 
     // 비활성화
-    @GetMapping("/admin/card/inactivate")
+    @PostMapping("/admin/card/inactivate")
     public String cardInactivate(@RequestParam String cardId, @RequestParam String reason) {
 
         cardService.inactivateCard(Integer.parseInt(cardId), reason);

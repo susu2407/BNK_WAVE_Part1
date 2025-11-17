@@ -18,7 +18,7 @@ public class CardApproval {
     // 카드 결재 내역 테이블
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int ApprovalId;
+    private int approvalId;
 
     @Column
     private int cardId;
@@ -26,6 +26,8 @@ public class CardApproval {
     @Column
     private String reason;
 
+    // 요청자
+    // 결재자
     @Column
     private String status; // 결재 상태 (대기, 승인, 반려)
 
