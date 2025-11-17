@@ -37,16 +37,26 @@ document.addEventListener('DOMContentLoaded', function () {
     if(aside) {
         // 마우스가 영역 안으로 오면 확대
         aside.addEventListener('mouseenter', function () {
-            if(!aside.classList.contains('sb-fixed')) {
+            if(!asideSwitch.checked) {
                 body.classList.add('sb-expanded');
             }
         });
 
         // 마우스가 영역 밖으로 가면 축소
         aside.addEventListener('mouseleave', function () {
-            if (!aside.classList.contains('sb-fixed')) {
+            if(!asideSwitch.checked) {
                 body.classList.remove('sb-expanded');
             }
+
+            // aside를 벗어나면 확장 여부와 관계없이 모든 서브메뉴 닫기
+            menuTitles.forEach(menuTitle => {
+                menuTitle.classList.remove('active-menu');
+                const submenu = menuTitle.parentElement.querySelector('.submenu');
+                if (submenu) {
+                    submenu.style.maxHeight = null;
+                }
+            });
+
         });
     }
 
@@ -78,7 +88,9 @@ document.addEventListener('DOMContentLoaded', function () {
                     submenu.style.maxHeight = null;
                 } else {
                     // 닫혀 있으면 열기 (스크롤 높이를 이용해 정확한 애니메이션 구현)
-                    console.log('서브메뉴 높이 측정값:', submenu.scrollHeight);
+                    submenu.style.maxHeight = 'fit-contatent'
+                    let finalHeigh = submenu.scrollHeight;
+                    console.log('최종 높이 측정값:', finalHeigh);
                     submenu.style.maxHeight = submenu.scrollHeight + 'px';
                 }
             }
@@ -90,8 +102,15 @@ document.addEventListener('DOMContentLoaded', function () {
         submenuLink.addEventListener('click', function(e) {
             // 페이지 이동은 기본적으로 허용합니다.
 
+            // 모든 2차 메뉴 링크의 active-submenu 클래스를 제거
+            document.querySelectorAll('.submenu a').forEach(link => {
+                link.classList.remove('active-submenu');
+            });
+
+            //  현재 클릭된 링크에 active-submenu 클래스를 추가 (활성화 상태)
+            this.classList.add('active-submenu');
+
             // 고정 상태가 아니면 페이지 이동 후 사이드바를 축소합니다.
-            // asideSwitch.checked를 사용하여 고정 상태를 확인하는 것이 더 정확합니다.
             if (!asideSwitch || !asideSwitch.checked) {
                 body.classList.remove('sb-expanded');
             }
