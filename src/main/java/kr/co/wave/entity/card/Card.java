@@ -55,4 +55,7 @@ public class Card {
     @Column(name="UPDATED_AT")
     private LocalDate updatedAt; // 카드 만료일
 
+    public void toggleStatus(String status) {
+        this.status = status;
+    }
 }
