@@ -36,9 +36,9 @@ public class CardController {
 
 
     @GetMapping("/card/view")
-    public String cardview(int cardId, Model model) {
+    public String cardView(int cardId, Model model) {
         CardWithInfoDTO card = cardService.getCardWithInfoById(cardId);
-        model.addAttribute("card", card);
+        model.addAttribute("fff", card);
 
         return "card/view";
     }

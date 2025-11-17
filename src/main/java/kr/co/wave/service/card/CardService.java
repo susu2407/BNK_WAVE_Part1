@@ -78,7 +78,7 @@ public class CardService {
         Pageable pageable = PageRequest.of(page, size);
 
         // DB에서 검색 + 페이징된 카드 목록 가져오기
-        Page<CardDTO> cardPage = cardRepository.findCardAllBySearch(st, kw, pageable);
+        Page<CardDTO> cardPage = cardRepository.findCardAllBySearch2(st, kw, pageable);
 
         // 각 카드에 혜택 / 연회비 정보 붙이기
         List<CardWithInfoDTO> adminCardList = new ArrayList<>();
@@ -92,6 +92,13 @@ public class CardService {
             // 혜택 목록
             List<Benefit> benefits = benefitRepository.findByCard_CardId(cardDTO.getCardId());
             dto.setBenefitList(benefits);
+
+            // 추가 11.17 박효빈 혜택 카테고리 - Thymeleaf에서 처리 못하는 부분 service에서 해결
+            List<String> categoryList = benefits.stream()
+                    .map(Benefit::getBenefitCategory)
+                    .toList();
+            dto.setCategoryString(String.join(",", categoryList));
+
 
             // 연회비 목록
             List<AnnualFee> annualFees = annualFeeRepository.findByCard_CardId(cardDTO.getCardId());
