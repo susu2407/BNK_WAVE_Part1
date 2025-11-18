@@ -116,7 +116,7 @@
                                 <!-- 상세보기 -->
                                 <div class="card-actions">
                                     <a class="detail-btn"
-                                       th:href="@{/card/view(cardId=${item.card.cardId})}">
+                                       th:href="@{/card/view2(cardId=${item.card.cardId})}">
                                         자세히 보기
                                     </a>
                                 </div>
@@ -180,32 +180,45 @@
                 .filter(cb => cb.checked)                              // 체크된 것만
                 .map(cb => cb.getAttribute("data-filter"));            // data-filter 값 배열로
 
-            // 2. 제목 변경
-            if (listTitle) {
-                if (selectedCategories.length === 0) {
-                    // 아무것도 선택 안 했을 때 = "추천 카드" (전체)
-                    listTitle.textContent = "추천 카드";
-                } else {
-                    // 선택된 카테고리들을 쉼표로 이어서 보여주기
-                    listTitle.textContent = selectedCategories.join(", ") + " 카드";
-                }
-            }
+            // 2. 카드 보여주기 / 숨기기 + 보이는 카드 개수 세기
+            let visibleCount = 0; // 화면에 보여지는 카드 개수
 
-            // 3. 카드 보여주기 / 숨기기
             cards.forEach(card => {
                 const categoryData = card.getAttribute("data-category") || ""; // "여행,음식,주유" 이런 문자열
 
                 // 아무것도 선택 안 했으면 전체 보여주기
                 if (selectedCategories.length === 0) {
                     card.style.display = "";
+                    visibleCount++;        // 보여주니까 +1
                     return;
                 }
 
                 // 하나라도 포함되면 보여주기 (OR 조건)
                 const shouldShow = selectedCategories.some(cat => categoryData.includes(cat));
 
-                card.style.display = shouldShow ? "" : "none";
+                if (shouldShow) {
+                    card.style.display = "";
+                    visibleCount++;        // 보여주는 카드면 +1
+                } else {
+                    card.style.display = "none";
+                }
             });
+
+            // 3. 제목 변경: "선택된 N개의 카드"
+            if (listTitle) {
+
+                if (selectedCategories.length ===0) {
+                    // 체크 카드 모두 미선택 -> "추천카드" (임시)
+                    listTitle.textContent = "추천 카드"
+
+                }else if (visibleCount === 0) {
+                    // 필터는 선택됐는데, 조건에 맞는 카드가 하나도 없을 때
+                    listTitle.textContent = "조건에 맞는 카드가 없습니다";
+                } else {
+                    listTitle.textContent = `선택된 ${visibleCount}개의 카드`;
+                    // 예: 선택된 3개의 카드
+                }
+            }
 
             // 4. 체크된 체크박스의 label에 active 클래스 달아주기 (스타일용)
             checkboxes.forEach(cb => {
