@@ -34,6 +34,7 @@ public class CardService {
     private final CardApprovalRepository cardApprovalRepository;
     private final ModelMapper modelMapper; // Entity와 DTO를 변환해주는 객체
     private final FileUploadUtil fileUploadUtil; // 저기 util 불러오는 객체
+
     // 필요없는데 혹시나 남겨둠
     public Page<CardDTO> getCardAllBySearch(String searchType, String keyword, int page, int size){
         String st = (searchType == null) ? "" : searchType.trim();

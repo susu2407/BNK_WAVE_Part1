@@ -13,15 +13,22 @@
         <div th:replace="~{admin/common/aside :: aside}"></div>
         <div id="main-content">
 
-            <form th:action="@{/admin/config/policy/register}" method="post">
-            <label>약관명</label>
-            <input type="text">
+            <form th:action="@{/admin/config/policy/register}" method="post" enctype="multipart/form-data">
+                <label>약관명</label>
+                <input type="text" name="title">
 
-            <label>약관내용</label>
-            <input type="text">
+                <label>약관내용</label>
+                <input type="text" name="content">
 
-            <label>약관파일</label>
-            <input type="file" id="termsFile" accept="application/pdf">  <!-- PDF 파일만 업로드 가능하게 제한 -->
+                <label>
+                    필수여부 <input type="checkbox" name="isRequired" >
+                </label>
+
+                <br>
+                <label>약관파일</label>
+                <input type="file" name="pdfFile" id="termsFile" accept="application/pdf">  <!-- PDF 파일만 업로드 가능하게 제한 -->
+
+                <button type="submit">제출</button>
             </form>
             <div id="preview">
                 <p>파일 미리보기</p>

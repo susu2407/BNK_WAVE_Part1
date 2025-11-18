@@ -1,8 +1,9 @@
 package kr.co.wave.dto.config;
 
-import jakarta.persistence.*;
-import lombok.*;
-import org.hibernate.annotations.CreationTimestamp;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.time.LocalDate;
@@ -11,7 +12,7 @@ import java.time.LocalDate;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class TermsDTO {
+public class TermsRepositoryDTO {
 
     private int termsId;
 
@@ -31,10 +32,6 @@ public class TermsDTO {
 
     private LocalDate updatedAt; // 수정일
 
-    private MultipartFile pdfFile;
-
-    public void setIsRequired(boolean isRequired) {
-        this.isRequired = isRequired;
-    }
+    private String pdfFile;
 
 }
