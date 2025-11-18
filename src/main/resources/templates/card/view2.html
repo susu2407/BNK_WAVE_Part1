@@ -102,9 +102,8 @@
                             <p class="label">현재 보고 있는 카드</p>
                             <div class="card-box"
                                  th:data-card-img="@{${cardItem.card.background != null ? '/' + cardItem.card.background : '/' + cardItem.card.thumbnail}}"
-                                 th:data-card-benefit="${'대표 혜택: ' + cardItem.benefitList[0].benefitCategory + ', ' + cardItem.benefitList[1].benefitCategory + ', ' + cardItem.benefitList[2].benefitCategory + ',' + cardItem.benefitList[3].benefitCategory}"
-                                 data-card-benefits="비즈니스 업종 10%|주유 5%|통신요금 5%">
-                                <!-- 데이터 임시 채워둠, 타임리프 변환 시 삭제 -->
+                                 th:data-card-name="${cardItem.card.name}"
+                                 th:data-card-benefit="${cardItem.benefitList[0].benefitCategory + ', ' + cardItem.benefitList[1].benefitCategory + ', ' + cardItem.benefitList[2].benefitCategory}"
                             </div>
                         </div>
 
@@ -136,7 +135,6 @@
                             </div>
                         </div>
                     </section>
-
                 </section>
 
 
