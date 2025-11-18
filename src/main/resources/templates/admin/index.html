@@ -13,20 +13,53 @@
 </head>
 <body>
 <div th:replace="~{admin/common/header :: header}"></div>
-        <div th:replace="~{admin/common/aside :: aside}"></div>
+<div th:replace="~{admin/common/aside :: aside}"></div>
 <main>
     <div class="main-container">
         <div id="main-content">
 
             <div class="main-grid">
                 <div class="kpi-card">
-                    오늘 신규 상품 등록
-                    <a href="">More Info +</a>
+                    <div class="kpi-count-name">
+                        <span class="kpi-num">2</span>
+                        <span>이번 달 신규 상품 등록수</span>
+                    </div>
+                    <img th:src="@{/images/calendar-check.svg}" alt="kpi-icon">
+                    <div class="kpi-more-brn-area">
+                        <a th:href="@{#}">More Info +</a>
+                    </div>
                 </div>
                 <!-- 상단 KPI 카드 -->
-                <div class="kpi-card">승인 요청 건수</div>
-                <div class="kpi-card">발급 완료 건수</div>
-                <div class="kpi-card">판매 중인 상품 수</div>
+                <div class="kpi-card">
+                    <div class="kpi-count-name">
+                        <span class="kpi-num">2</span>
+                        <span>승인 요청 건수</span>
+                    </div>
+                    <img th:src="@{/images/credit-card.svg}" alt="kpi-icon">
+                    <div class="kpi-more-brn-area">
+                        <a th:href="@{#}">More Info +</a>
+                    </div>
+                </div>
+                <div class="kpi-card">
+                    <div class="kpi-count-name">
+                        <span class="kpi-num">2</span>
+                        <span>발급 완료 건수</span>
+                    </div>
+                    <img th:src="@{/images/clipboard-check.svg}" alt="kpi-icon">
+                    <div class="kpi-more-brn-area">
+                        <a th:href="@{#}">More Info +</a>
+                    </div>
+                </div>
+                <div class="kpi-card">
+                    <div class="kpi-count-name">
+                        <span class="kpi-num">2</span>
+                        <span>판매 중인 상품수</span>
+                    </div>
+                    <img th:src="@{/images/play.svg}" alt="kpi-icon">
+                    <div class="kpi-more-brn-area">
+                        <a th:href="@{#}">More Info +</a>
+                    </div>
+                </div>
 
                 <!-- 중간 그래프 영역 -->
                 <div class="chart-bar">메인영역1<br>막대차트-월별 발급추이(막대그래프)</div>

@@ -4,14 +4,18 @@
     <meta charset="UTF-8">
     <title>Title</title>
     <link rel="stylesheet" th:href="@{/css/admin/common/mainContainer.css}">
-    <script th:src="@{/js/common/aside.js}"></script>
+    <link rel="stylesheet" th:href="@{/css/admin/card/list.css}">
 </head>
 <body>
 <div th:replace="~{admin/common/header :: header}"></div>
+<div th:replace="~{admin/common/aside :: aside}"></div>
 <main>
     <div class="main-container">
-        <div th:replace="~{admin/common/aside :: aside}"></div>
+    <div th:replace="~{admin/common/mainHeader :: mainHeader}"></div>
         <div id="main-content">
+            <!-- 등록버튼 -->
+            <button class="register-btn btn">상품 등록</button>
+
             <!-- 검색 -->
             <div class="search-form">
                 <form method="get" th:action="@{/admin/card/list}">
@@ -24,12 +28,11 @@
                         </select>
                     </div>
 
-                    <input type="text" id="keyword" name="keyword" placehaolder="검색어"
-                           th:value="${param.keyword != null ? param.keyword[0] : ''}"/>
-
-                    <button type="submit">
-                        <img th:src="@{/images/magnifier.png}" alt="돋보기"/>
-                    </button>
+                    <label for="keyword">
+                        <input type="text" id="keyword" name="keyword" placeholder="검색어"
+                               th:value="${param.keyword != null ? param.keyword[0] : ''}"/>
+                    </label>
+                    <button type="submit" class="btn search-btn">검색</button>
                 </form>
             </div>
 
@@ -63,7 +66,7 @@
                 <table>
                     <thead>
                     <tr>
-                        <th>번호</th>
+                        <th>No</th>
                         <th>상품명</th>
                         <th>카드유형</th>
                         <th>혜택</th>
@@ -74,56 +77,57 @@
                         <th>관리</th>
                     </tr>
                     </thead>
+                    <tbody>
+                        <!-- 페이지 객체의 content 리스트를 반복 -->
+                        <tr th:each="cardItem, stat : ${cardList.content}">
+                            <td>[[${cardList.totalElements - (cardList.number * cardList.size + stat.index)}]]</td>
+                            <td>
+                                <a th:href="@{/admin/card/view(cardId=${cardItem.card.cardId})}">[[${cardItem.card.name}]]
+                                    <br> ([[${cardItem.card.engName}]])</a>
+                            </td>
+                            <td>[[${cardItem.card.type}]]</td>
+                            <!-- 혜택 -->
+                            <td>
+                                <ul>
+                                    <li th:each="benefit : ${cardItem.benefitList}">
+                                        [[${benefit.benefitCategory}]] [[${benefit.value}]] [[${benefit.unit}]]
+                                        [[${benefit.benefitType}]]
+                                    </li>
+                                </ul>
+                            </td>
 
-                    <!-- 페이지 객체의 content 리스트를 반복 -->
-                    <tr th:each="cardItem, stat : ${cardList.content}">
-                        <td>[[${cardList.totalElements - (cardList.number * cardList.size + stat.index)}]]</td>
-                        <td>
-                            <a th:href="@{/admin/card/view(cardId=${cardItem.card.cardId})}">[[${cardItem.card.name}]]
-                                <br> ([[${cardItem.card.engName}]])</a>
-                        </td>
-                        <td>[[${cardItem.card.type}]]</td>
-                        <!-- 혜택 -->
-                        <td>
-                            <ul>
-                                <li th:each="benefit : ${cardItem.benefitList}">
-                                    [[${benefit.benefitCategory}]] [[${benefit.value}]] [[${benefit.unit}]]
-                                    [[${benefit.benefitType}]]
-                                </li>
-                            </ul>
-                        </td>
-
-                        <!-- 연회비 -->
-                        <td>
-                            <ul>
-                                <li th:each="fee : ${cardItem.annualFeeList}">
-                                    [[${fee.annualName}]]원
-                                </li>
-                            </ul>
-                        </td>
-                        <td>[[${cardItem.card.status}]]</td>
-                        <td>[[${#temporals.format(cardItem.card.createdAt, 'yyyy-MM-dd')}]]</td>
-                        <td>[[${#temporals.format(cardItem.card.updatedAt, 'yyyy-MM-dd')}]]</td>
-                        <td th:if="${cardItem.card.status == '비활성'}">
-                            <a th:href="@{/admin/card/view(cardId=${cardItem.card.cardId})}">수정</a> <br>
-                            <a th:href="@{/admin/card/view(cardId=${cardItem.card.cardId})}">삭제</a> <br>
-                            <a th:href="@{/admin/card/activate(cardId=${cardItem.card.cardId})}"
-                               onclick="return confirm('활성화하면 더 이상 상품 정보를 변경할 수 없습니다.\n계속 진행하시겠습니까?');">
-                                활성화
-                            </a>
-                        </td>
-                        <td th:if="${cardItem.card.status == '활성'}">
-                            <div th:if="${cardItem.approvalStatus == '결재진행중'}">
-                                <a>[[${cardItem.approvalStatus}]]</a>
-                            </div>
-                            <div th:unless="${cardItem.approvalStatus == '결재진행중'}">
-                                <a href="#"
-                                   th:onclick="|openInactivateModal(${cardItem.card.cardId})|">
-                                    비활성화
+                            <!-- 연회비 -->
+                            <td>
+                                <ul>
+                                    <li th:each="fee : ${cardItem.annualFeeList}">
+                                        [[${fee.annualName}]]원
+                                    </li>
+                                </ul>
+                            </td>
+                            <td>[[${cardItem.card.status}]]</td>
+                            <td>[[${#temporals.format(cardItem.card.createdAt, 'yyyy-MM-dd')}]]</td>
+                            <td>[[${#temporals.format(cardItem.card.updatedAt, 'yyyy-MM-dd')}]]</td>
+                            <td th:if="${cardItem.card.status == '비활성'}">
+                                <a th:href="@{/admin/card/view(cardId=${cardItem.card.cardId})}">수정</a> <br>
+                                <a th:href="@{/admin/card/view(cardId=${cardItem.card.cardId})}">삭제</a> <br>
+                                <a th:href="@{/admin/card/activate(cardId=${cardItem.card.cardId})}"
+                                   onclick="return confirm('활성화하면 더 이상 상품 정보를 변경할 수 없습니다.\n계속 진행하시겠습니까?');">
+                                    활성화
                                 </a>
-                            </div>
-                        </td>
-                    </tr>
+                            </td>
+                            <td th:if="${cardItem.card.status == '활성'}">
+                                <div th:if="${cardItem.approvalStatus == '결재진행중'}">
+                                    <a>[[${cardItem.approvalStatus}]]</a>
+                                </div>
+                                <div th:unless="${cardItem.approvalStatus == '결재진행중'}">
+                                    <a href="#"
+                                       th:onclick="|openInactivateModal(${cardItem.card.cardId})|">
+                                        비활성화
+                                    </a>
+                                </div>
+                            </td>
+                        </tr>
+                    </tbody>
                 </table>
             </div>
 
@@ -188,7 +192,7 @@
 
 </main>
 <div th:replace="~{admin/common/footer :: footer}"></div>
-
+<script th:src="@{/js/admin/common/aside.js}"></script>
 <script>
     function openInactivateModal(cardId) {
         document.getElementById('modalCardId').value = cardId;
