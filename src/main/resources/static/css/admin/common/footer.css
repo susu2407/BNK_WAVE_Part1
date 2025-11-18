@@ -1,10 +1,11 @@
 /*
     날짜 : 2025-11-18
     내용 : 관리자 footer CSS
+    참고 : mainContainer.css에 전역 리셋 및 기본설정 있음
 */
 
 footer {
-    position: fixed;
+    /*position: fixed;*/
     bottom: 0;
     left: 0;
     width: 100%;

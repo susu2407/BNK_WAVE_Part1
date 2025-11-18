@@ -1,15 +1,8 @@
 /*
     날짜 : 2025-11-18
     내용 : admin header CSS
+    참고 : mainContainer.css에 전역 리셋 및 기본설정 있음
 */
-
-
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-}
-
 header {
     background-color: white;
     width: auto;
