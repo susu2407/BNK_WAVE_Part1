@@ -49,4 +49,7 @@ public class Terms {
 
     @Column(name="UPDATED_AT")
     private LocalDate updatedAt; // 수정일
+
+    @Column(name="PDF_FILE")
+    private String pdfFile;
 }
