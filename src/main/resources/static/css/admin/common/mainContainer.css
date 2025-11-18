@@ -16,7 +16,6 @@ body {
     width: 100%;
     max-width: 1920px;
     margin: 0 auto; /* 가운데 정렬 */
-    display: flex;
 }
 
 #main-content {
