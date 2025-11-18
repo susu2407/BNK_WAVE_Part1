@@ -32,7 +32,7 @@
                         <p class="card-sub" th:text="${cardItem.card.description}"></p>
 
                         <div class="top-benefits">
-                            <p th:each="b, stat : ${cardItem.benefitList}" th:if="${stat.index <3}">
+                            <p th:each="b, stat : ${cardItem.benefitList}" th:if="${stat.index <4}">
                             <!-- 혜택 카테고리 -->
                                 <span>[[${b.benefitCategory}]]</span>
                                 <strong>
@@ -79,29 +79,10 @@
                 <!-- 안내 박스 -->
                 <section class="benefit-section">
                     <div class="benefit-grid">
-                        <article class="benefit-card">
-                            <h4>Time Plan 서비스</h4>
+                        <article class="benefit-card" th:each="ben : ${cardItem.benefitList}">
+                            <h4>[[${ben.benefitCategory}]]</h4>
                             <ul>
-                                <li>DAY 10% 할인 : 카페 / 음식점</li>
-                                <li>NIGHT 10% 할인 : 편의점 / 배달앱</li>
-                            </ul>
-                            <span class="card-more">›</span>
-                        </article>
-
-                        <article class="benefit-card">
-                            <h4>Daily Plan 서비스</h4>
-                            <ul>
-                                <li>쇼핑 10% 할인 : 마트 / 온라인쇼핑 / 잡화</li>
-                                <li>이동 5% 할인 : 주유 / 카셰어링 / 택시</li>
-                                <li>생활 5% 할인 : 병원·약국 / 미용실 / 온라인서점</li>
-                            </ul>
-                            <span class="card-more">›</span>
-                        </article>
-
-                        <article class="benefit-card">
-                            <h4>Plan Day 서비스</h4>
-                            <ul>
-                                <li>매월 1일 Time Plan, Daily Plan 서비스 2배 할인(서비스당 1회)</li>
+                                <li>[[${ben.benefitDescription}]]</li>
                             </ul>
                             <span class="card-more">›</span>
                         </article>
@@ -120,8 +101,8 @@
                         <div class="compare-card current-card" id="currentCard">
                             <p class="label">현재 보고 있는 카드</p>
                             <div class="card-box"
-                                 data-card-img="https://i.namu.wiki/i/IAJvonqqxo949GavmMtyQOX05yvPs8vXZpJWZ5orEB4ZUMzsEUpj3D6osRLF8WbcXVbpB05ZGwriavHWsSGRbg.webp"
-                                 data-card-name="삼성카드 BIZ 6 V2" data-card-benefit="대표 혜택: 비즈니스, 주유, 통신"
+                                 th:data-card-img="@{${cardItem.card.background != null ? '/' + cardItem.card.background : '/' + cardItem.card.thumbnail}}"
+                                 th:data-card-benefit="${'대표 혜택: ' + cardItem.benefitList[0].benefitCategory + ', ' + cardItem.benefitList[1].benefitCategory + ', ' + cardItem.benefitList[2].benefitCategory + ',' + cardItem.benefitList[3].benefitCategory}"
                                  data-card-benefits="비즈니스 업종 10%|주유 5%|통신요금 5%">
                                 <!-- 데이터 임시 채워둠, 타임리프 변환 시 삭제 -->
                             </div>
@@ -219,7 +200,8 @@
         </div>
     </div>
 </main>
-<div class="fee-modal" id="feeModal"><!-- 연회비 모달창-->
+<div class="fee-modal" id="feeModal">
+    <!-- 연회비 모달창-->
     <div class="fee-modal-dim" id="feeDim"></div>
 
     <div class="fee-modal-box">
@@ -228,19 +210,19 @@
             <button type="button" class="fee-modal-close" id="feeClose">✕</button>
         </div>
 
-        <div class="fee-modal-body">
+        <div class="fee-modal-body" th:each="fee : ${cardItem.annualFeeList}">
             <div class="fee-item">
-                <h3>국내외겸용(Visa Signature) 300,000원</h3>
-                <p class="fee-sub">(기본연회비 100,000원 + 제휴연회비 200,000원)</p>
-                <p class="fee-sub">가족카드 100,000원(기본연회비 0원 + 제휴연회비 100,000원)</p>
+                <h3>[[${fee.annualName}]]</h3>
+<!--                <p class="fee-sub">(기본연회비 100,000원 + 제휴연회비 200,000원)</p>-->
+<!--                <p class="fee-sub">가족카드 100,000원(기본연회비 0원 + 제휴연회비 100,000원)</p>-->
             </div>
 
             <div class="fee-line"></div>
 
             <div class="fee-item">
-                <h3>국내전용 300,000원</h3>
-                <p class="fee-sub">(기본연회비 100,000원 + 제휴연회비 200,000원)</p>
-                <p class="fee-sub">가족카드 100,000원(기본연회비 0원 + 제휴연회비 100,000원)</p>
+<!--                <h3>국내전용 300,000원</h3>-->
+<!--                <p class="fee-sub">(기본연회비 100,000원 + 제휴연회비 200,000원)</p>-->
+<!--                <p class="fee-sub">가족카드 100,000원(기본연회비 0원 + 제휴연회비 100,000원)</p>-->
             </div>
 
             <ul class="fee-notice">
