@@ -1,8 +1,23 @@
+/*
+    날짜 : 2025-11-18
+    내용 : 관리자 footer CSS
+*/
+
+footer {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 30px;
+    z-index: 100;
+    background-color: #F9F9F9;
+}
+
 #footer-container{
     border-top: 2px solid #CB2B11;
 }
 
 #footer-wrap {
-    max-width: 1200px; /* 가로 크기 1200px */
+    width: 100%;
     margin: 0 auto; /* 가운데 정렬 */
 }
