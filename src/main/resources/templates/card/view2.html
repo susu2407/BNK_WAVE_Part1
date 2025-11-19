@@ -99,14 +99,21 @@
                     <div class="compare-body">
                         <!-- 현재 카드 -->
                         <div class="compare-card current-card" id="currentCard">
-                            <p class="label">현재 보고 있는 카드</p>
-                            <div class="card-box"
-                                 th:data-card-img="@{${cardItem.card.background != null ? '/' + cardItem.card.background : '/' + cardItem.card.thumbnail}}"
-                                 th:data-card-benefit="${'대표 혜택: ' + cardItem.benefitList[0].benefitCategory + ', ' + cardItem.benefitList[1].benefitCategory + ', ' + cardItem.benefitList[2].benefitCategory + ',' + cardItem.benefitList[3].benefitCategory}"
-                                 data-card-benefits="비즈니스 업종 10%|주유 5%|통신요금 5%">
-                                <!-- 데이터 임시 채워둠, 타임리프 변환 시 삭제 -->
-                            </div>
-                        </div>
+                        <p class="label">현재 보고 있는 카드</p>
+
+                        <div class="card-box">
+
+                            <img th:src="@{${cardItem.card.background != null ? '/' + cardItem.card.background : '/' + cardItem.card.thumbnail}}"
+                                 th:alt="${cardItem.card.name}"
+                                 class="card-img"/> <h3 class="card-name">[[${cardItem.card.name}]]</h3>
+
+                            <p class="card-benefit">
+                                <span th:each="ben, stat : ${cardItem.benefitList}">[[${ben.benefitCategory}]]<span th:unless="${stat.last}">, </span>
+                                </span>
+                            </p>
+                        </div> <span id="currentCardBenefitsData" style="display: none;"
+                                     th:data-benefits-str="${cardItem.categoryString}"></span>
+                    </div>
 
                         <div class="compare-plus">+</div>
 
@@ -136,7 +143,6 @@
                             </div>
                         </div>
                     </section>
-
                 </section>
 
 
@@ -368,7 +374,7 @@ document.addEventListener('DOMContentLoaded', function () {
 <script> // 카드 비교 모달+결과창 JS
 document.addEventListener('DOMContentLoaded', function () {
 
-    /* ===== 공통 함수 ===== */
+    /* ===== 공통 함수 (유지) ===== */
     function renderCardBox(boxEl, data) {
         const { img, name, benefit } = data;
         const thumbHtml = img
@@ -397,7 +403,7 @@ document.addEventListener('DOMContentLoaded', function () {
         });
     }
 
-    /* ===== 요소 가져오기 ===== */
+    /* ===== 요소 가져오기 (유지) ===== */
     const modal = document.getElementById('cardModal');
     const openBtn = document.getElementById('openModalBtn');
     const closeBtn = document.getElementById('closeModalBtn');
@@ -409,17 +415,33 @@ document.addEventListener('DOMContentLoaded', function () {
     const targetBenefitsUl = document.querySelector('#targetBenefits .benefit-list');
     const benefitCompareSec = document.getElementById('benefitCompare');
 
-    /* ===== 페이지 처음에 현재 카드 채우기 ===== */
-    if (currentBox) {
-        renderCardBox(currentBox, {
-            img: currentBox.dataset.cardImg || '',
-            name: currentBox.dataset.cardName || '',
-            benefit: currentBox.dataset.cardBenefit || ''
-        });
-        renderBenefits(currentBenefitsUl, currentBox.dataset.cardBenefits || '');
-    }
+    /* ===== 페이지 처음에 현재 카드 채우기 (수정됨) ===== */
 
-    /* ===== 모달 열기/닫기 ===== */
+    // Thymeleaf에서 고정된 상세 혜택 데이터 요소를 가져옵니다.
+    // (이전 대화에서 제안한 <span id="currentCardBenefitsData" th:data-benefits-str="..."></span> 가정)
+    const currentCardBenefitsData = document.getElementById('currentCardBenefitsData');
+
+    // 💡 변경 사항:
+    // 1. currentBox에 대한 renderCardBox 호출을 제거하여 Thymeleaf 내용을 덮어쓰지 않도록 합니다.
+    // 2. 혜택 비교 목록만 렌더링하도록 수정합니다.
+
+    // 기존 코드:
+    // if (currentBox) {
+    //     renderCardBox(currentBox, {
+    //         img: currentBox.dataset.cardImg || '',
+    //         name: currentBox.dataset.cardName || '',
+    //         benefit: currentBox.dataset.cardBenefit || ''
+    //     });
+    //     renderBenefits(currentBenefitsUl, currentBox.dataset.cardBenefits || '');
+    // }
+
+    // 수정 후 (혜택 상세 목록만 JS로 렌더링):
+    if (currentCardBenefitsData) {
+        renderBenefits(currentBenefitsUl, currentCardBenefitsData.dataset.benefitsStr || '');
+    }
+    // ----------------------------------------------------------------------------------
+
+    /* ===== 모달 열기/닫기 (유지) ===== */
     if (openBtn) {
         openBtn.addEventListener('click', () => {
             modal.style.display = 'flex';
@@ -431,7 +453,7 @@ document.addEventListener('DOMContentLoaded', function () {
         });
     }
 
-    /* ===== 모달에서 카드 선택 ===== */
+    /* ===== 모달에서 카드 선택 (유지) ===== */
     if (modal) {
         modal.addEventListener('click', function (e) {
             // 배경 클릭 시 닫기
