@@ -104,7 +104,7 @@ aside {
 /* ===== 2차 카테고리 CSS =============================== */
 #aside-container .menu-title.active-menu {
     background-color: #CB2B11; /* 2차 메뉴와 동일한 배경색 */
-    border-radius: 0.5rem 0 0 0; /* 상단 모서리만 둥글게 */
+    border-radius: 2rem 0 0 0; /* 상단 모서리만 둥글게 */
 }
 
 .submenu {
@@ -112,7 +112,7 @@ aside {
     padding: 0;
     margin: 0;
     background-color: #cb2b11;
-    border-radius: 0 0 0.5rem 0;
+    border-radius: 0 0 2rem 0;
     overflow: hidden;
     max-height: 0;  /* 높이를 0으로 설정하고 내용 숨김 */
     transition: max-height 0.5s ease-out; /* 애니메이션 적용 */
@@ -130,6 +130,11 @@ aside {
 
     transition: background-color 0.2s; /* 호버 애니메이션 */
 }
+
+.submenu-a:last-child {
+    margin-bottom: 5px;
+}
+
 
 /* 굵은 구분선 (강조 표시) 및 배경색 적용 */
 
