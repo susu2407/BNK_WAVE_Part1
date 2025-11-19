@@ -45,8 +45,13 @@ public class CardController {
 
     @GetMapping("/card/view2")
     public String viewCard(int cardId, Model model) {
+
+        // 상세보기 페이지 메인쪽을 담당 cardId를 통해 "1개의 카드에 대한 정보 가져옴"
         CardWithInfoDTO cardInfo = cardService.getCardWithInfoById(cardId);
         model.addAttribute("cardItem", cardInfo);
+
+        // 상세보기 페이지 메인 아래의 카드 비교함 - 비교카드 가져오기를 위해 전체 카드(status="활성")만 가져오기
+        model.addAttribute("compareCards",cardService.getCardWithInfoAllBySearch2("","",0,100).getContent());
 
         return "card/view2";
     }
