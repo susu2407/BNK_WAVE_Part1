@@ -29,9 +29,8 @@
                         <td>[[${term.title}]]</td>
                         <td>[[${term.content}]]</td>
                         <td>[[${term.isRequired}]]</td>
-                        <td><a th:href="@{/terms/download/{id}(id=${term.termsId})}"
-                               class="btn btn-sm btn-primary">
-                            PDF 다운로드
+                        <td><a th:href="@{/terms/download/{id}(id=${term.termsId})}">
+                            [[${term.originalName}]]
                         </a></td>
                     </tr>
                 </tbody>

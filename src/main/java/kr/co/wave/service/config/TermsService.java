@@ -6,7 +6,7 @@ import kr.co.wave.dto.config.TermsDTO;
 import kr.co.wave.dto.config.TermsRepositoryDTO;
 import kr.co.wave.entity.config.Terms;
 import kr.co.wave.repository.config.TermsRepository;
-import kr.co.wave.service.board.util.FileUploadUtil;
+import kr.co.wave.service.util.FileUploadUtil;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Value;
@@ -25,7 +25,6 @@ import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.util.ArrayList;
 import java.util.List;
 
 @Service

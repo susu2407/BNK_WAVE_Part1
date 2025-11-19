@@ -12,7 +12,7 @@ spring:
   application:
     name: wave
   datasource:
-    driver-class-name: oracle.jdbc.driver.OracleDriver
+    driver-class-name: oracle.jdbc.OracleDriver
     hikari:
       auto-commit: true
       connection-timeout: 20000
