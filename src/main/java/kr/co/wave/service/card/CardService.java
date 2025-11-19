@@ -11,7 +11,7 @@ import kr.co.wave.repository.approval.CardApprovalRepository;
 import kr.co.wave.repository.card.AnnualFeeRepository;
 import kr.co.wave.repository.card.BenefitRepository;
 import kr.co.wave.repository.card.CardRepository;
-import kr.co.wave.service.board.util.FileUploadUtil;
+import kr.co.wave.service.util.FileUploadUtil;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.data.domain.Page;
