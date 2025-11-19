@@ -34,4 +34,7 @@ public class TermsRepositoryDTO {
 
     private String pdfFile;
 
+    private String originalName;
+
+    private String termStatus;
 }
