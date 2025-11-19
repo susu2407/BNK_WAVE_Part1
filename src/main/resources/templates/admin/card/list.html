@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <title>Title</title>
     <link rel="stylesheet" th:href="@{/css/admin/common/mainContainer.css}">
-    <link rel="stylesheet" th:href="@{/css/admin/card/list.css}">
+    <link rel="stylesheet" th:href="@{/css/admin/common/commonActionBarTable.css}">
 </head>
 <body>
 <div th:replace="~{admin/common/header :: header}"></div>
@@ -13,11 +13,11 @@
     <div class="main-container">
     <div th:replace="~{admin/common/mainHeader :: mainHeader}"></div>
         <div id="main-content">
-            <!-- 등록버튼 -->
-            <button class="register-btn btn">상품 등록</button>
-
-            <!-- 검색 -->
-            <div class="search-form">
+            <!-- 주요 액션 영역 -->
+            <div class="action-bar">
+                <!-- 등록버튼 -->
+                <button class="btn register-btn">상품 등록</button>
+                <!-- 검색 -->
                 <form method="get" th:action="@{/admin/card/list}">
                     <div th:with="st=${param.searchType != null ? param.searchType[0] : ''}">
                         <select name="searchType" id="searchType">
@@ -29,7 +29,7 @@
                     </div>
 
                     <label for="keyword">
-                        <input type="text" id="keyword" name="keyword" placeholder="검색어"
+                        <input type="text" id="keyword" name="keyword" placeholder="입력하세요."
                                th:value="${param.keyword != null ? param.keyword[0] : ''}"/>
                     </label>
                     <button type="submit" class="btn search-btn">검색</button>
@@ -75,11 +75,21 @@
                         <th>등록일</th>
                         <th>수정일</th>
                         <th>관리</th>
+<!--                        <th style="width: 30px;">No</th>-->
+<!--                        <th style="width: 200px;">상품명</th>-->
+<!--                        <th style="width: 55px;">카드유형</th>-->
+<!--                        <th style="width: 300px;">혜택</th>-->
+<!--                        <th style="width: 200px;">연회비</th>-->
+<!--                        <th style="width: 100px;">상태</th>-->
+<!--                        <th style="width: 50px;">등록일</th>-->
+<!--                        <th style="width: 50px;">수정일</th>-->
+<!--                        <th style="width: 80px;">관리</th>-->
                     </tr>
                     </thead>
                     <tbody>
                         <!-- 페이지 객체의 content 리스트를 반복 -->
-                        <tr th:each="cardItem, stat : ${cardList.content}">
+                        <tr th:each="cardItem, stat : ${cardList.content}"
+                            th:class="${stat.even} ? 'even-row' : 'odd-row'">
                             <td>[[${cardList.totalElements - (cardList.number * cardList.size + stat.index)}]]</td>
                             <td>
                                 <a th:href="@{/admin/card/view(cardId=${cardItem.card.cardId})}">[[${cardItem.card.name}]]

@@ -54,10 +54,8 @@ header {
     background-color: #FCEFEF;
 }
 
-
 .search-box input {
-    width: 100%;
-    padding-right: 40px; /* 오른쪽에 아이콘 들어갈 공간 확보 */
+    width: 550px;
     height: 40px;
     margin-left: 10px;
     font-size: 16px;
