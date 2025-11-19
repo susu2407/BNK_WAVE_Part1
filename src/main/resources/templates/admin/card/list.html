@@ -2,9 +2,10 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>CARD ADMIN</title>
     <link rel="stylesheet" th:href="@{/css/admin/common/mainContainer.css}">
     <link rel="stylesheet" th:href="@{/css/admin/common/commonActionBarTable.css}">
+    <script th:src="@{/js/admin/common/aside.js}"></script>
 </head>
 <body>
 <div th:replace="~{admin/common/header :: header}"></div>
@@ -65,26 +66,26 @@
             <div class="content">
                 <table>
                     <thead>
-                    <tr>
-                        <th>No</th>
-                        <th>상품명</th>
-                        <th>카드유형</th>
-                        <th>혜택</th>
-                        <th>연회비</th>
-                        <th>상태</th>
-                        <th>등록일</th>
-                        <th>수정일</th>
-                        <th>관리</th>
-<!--                        <th style="width: 30px;">No</th>-->
-<!--                        <th style="width: 200px;">상품명</th>-->
-<!--                        <th style="width: 55px;">카드유형</th>-->
-<!--                        <th style="width: 300px;">혜택</th>-->
-<!--                        <th style="width: 200px;">연회비</th>-->
-<!--                        <th style="width: 100px;">상태</th>-->
-<!--                        <th style="width: 50px;">등록일</th>-->
-<!--                        <th style="width: 50px;">수정일</th>-->
-<!--                        <th style="width: 80px;">관리</th>-->
-                    </tr>
+                        <tr>
+                            <th>No</th>
+                            <th>상품명</th>
+                            <th>카드유형</th>
+                            <th>혜택</th>
+                            <th>연회비</th>
+                            <th>상태</th>
+                            <th>등록일</th>
+                            <th>수정일</th>
+                            <th>관리</th>
+    <!--                        <th style="width: 30px;">No</th>-->
+    <!--                        <th style="width: 200px;">상품명</th>-->
+    <!--                        <th style="width: 55px;">카드유형</th>-->
+    <!--                        <th style="width: 300px;">혜택</th>-->
+    <!--                        <th style="width: 200px;">연회비</th>-->
+    <!--                        <th style="width: 100px;">상태</th>-->
+    <!--                        <th style="width: 50px;">등록일</th>-->
+    <!--                        <th style="width: 50px;">수정일</th>-->
+    <!--                        <th style="width: 80px;">관리</th>-->
+                        </tr>
                     </thead>
                     <tbody>
                         <!-- 페이지 객체의 content 리스트를 반복 -->
@@ -202,7 +203,6 @@
 
 </main>
 <div th:replace="~{admin/common/footer :: footer}"></div>
-<script th:src="@{/js/admin/common/aside.js}"></script>
 <script>
     function openInactivateModal(cardId) {
         document.getElementById('modalCardId').value = cardId;
@@ -213,6 +213,5 @@
         document.getElementById('inactivateModal').style.display = 'none';
     }
 </script>
-
 </body>
 </html>

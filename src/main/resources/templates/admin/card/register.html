@@ -8,10 +8,10 @@
     <script th:src="@{/js/admin/card/cardForm.js}"></script>
 </head>
 <body>
-<div th:replace="~{common/header :: header}"></div>
+<div th:replace="~{admin/common/header :: header}"></div>
+<div th:replace="~{admin/common/aside :: aside}"></div>
 <main>
     <div class="main-container">
-        <div th:replace="~{common/aside :: aside}"></div>
         <div id="main-content">
             <form th:action="@{/admin/card/register}" method="post" enctype="multipart/form-data">
                 <label for="name">상품명</label>

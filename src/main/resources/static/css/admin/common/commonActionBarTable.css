@@ -47,13 +47,12 @@ table {
     border-collapse: collapse;  /* 테이블 셀 간의 여백 제거 및 테두리 하나로 합치기 */
     border-bottom: 2px solid #ccc;
 }
-
-/* 모든 셀에 적용될 기본 패딩 */
 th, td {
     padding: 12px 15px;
     text-align: center;
     border: none;
 }
+ul li, table tbody td a {list-style: none;}
 
 /* 모든 테이블 헤더(th)에 적용 */
 table thead th {
@@ -66,7 +65,6 @@ table thead th {
     border-left: none;
     border-right: none;
 }
-
 
 /* ** 테이블 바디 영역 **
     - 테이블 바디(tbody) 내 모든 행(tr)에 적용
@@ -81,9 +79,6 @@ table tbody tr:hover {background-color: #FDEAE7;}
 /* 테이블 바디 셀(td)에는 별도의 테두리를 적용 안함 */
 table tbody td {border: none;}
 table tbody td {border: none;}
-
-
-ul li, a {list-style: none;}
 
 
 

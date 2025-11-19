@@ -8,9 +8,9 @@
 </head>
 <body>
 <div th:replace="~{common/header :: header}"></div>
+<div th:replace="~{admin/common/aside :: aside}"></div>
 <main>
     <div class="main-container">
-        <div th:replace="~{admin/common/aside :: aside}"></div>
         <div id="main-content">
             <form th:action="@{/admin/product/register}" method="post">
                 <section class="section">

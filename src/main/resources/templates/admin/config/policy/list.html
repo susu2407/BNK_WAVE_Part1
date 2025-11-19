@@ -4,32 +4,37 @@
     <meta charset="UTF-8">
     <title>Title</title>
     <link rel="stylesheet" th:href="@{/css/admin/common/mainContainer.css}">
+    <link rel="stylesheet" th:href="@{/css/admin/common/commonActionBarTable.css}">
     <script th:src="@{/js/admin/common/aside.js}"></script>
 </head>
 <div th:replace="~{admin/common/header :: header}"></div>
+<div th:replace="~{admin/common/aside :: aside}"></div>
 <body>
 <main>
     <div class="main-container">
-        <div th:replace="~{admin/common/aside :: aside}"></div>
         <div id="main-content">
             <table>
                 <thead>
-                <th>번호</th>
-                <th>약관명</th>
-                <th>약관내용</th>
-                <th>필수여부</th>
-                <th>PDF파일</th>
-                </thead>
-                <tr th:each="term, stat : ${termsList.content}">
-                    <td>[[${termsList.totalElements - (termsList.number * termsList.size + stat.index)}]]</td>
-                    <td>[[${term.title}]]</td>
-                    <td>[[${term.content}]]</td>
-                    <td>[[${term.isRequired}]]</td>
-                    <td><a th:href="@{/terms/download/{id}(id=${term.termsId})}"
-                           class="btn btn-sm btn-primary">
-                        PDF 다운로드
-                    </a></td>
+                <tr>
+                    <th>번호</th>
+                    <th>약관명</th>
+                    <th>약관내용</th>
+                    <th>필수여부</th>
+                    <th>PDF파일</th>
                 </tr>
+                </thead>
+                <tbody>
+                    <tr th:each="term, stat : ${termsList.content}">
+                        <td>[[${termsList.totalElements - (termsList.number * termsList.size + stat.index)}]]</td>
+                        <td>[[${term.title}]]</td>
+                        <td>[[${term.content}]]</td>
+                        <td>[[${term.isRequired}]]</td>
+                        <td><a th:href="@{/terms/download/{id}(id=${term.termsId})}"
+                               class="btn btn-sm btn-primary">
+                            PDF 다운로드
+                        </a></td>
+                    </tr>
+                </tbody>
             </table>
         </div>
     </div>
