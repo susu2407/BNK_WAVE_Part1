@@ -7,9 +7,9 @@
         날짜 : 2025-11-17
         내용 : 관리자 메인(index) 화면
     -->
-
     <link rel="stylesheet" th:href="@{/css/admin/common/mainContainer.css}">
     <link rel="stylesheet" th:href="@{/css/admin/index.css}">
+    <script th:src="@{/js/admin/common/aside.js}"></script>
 </head>
 <body>
 <div th:replace="~{admin/common/header :: header}"></div>
@@ -77,6 +77,5 @@
     </div>
 </main>
 <div th:replace="~{admin/common/footer :: footer}"></div>
-<script th:src="@{/js/admin/common/aside.js}"></script>
 </body>
 </html>
