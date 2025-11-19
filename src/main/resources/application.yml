@@ -22,7 +22,7 @@ spring:
       minimum-idle: 3
       pool-name: HikariPool-wave
     password: ghktkskagyqls123
-    url: jdbc:oracle:thin:@43.203.185.0:1522:XE
+    url: jdbc:oracle:thin:@3.39.242.126:1522:XE
     username: wave
   devtools:
     livereload:
