@@ -335,9 +335,11 @@
 }
 
 .orig-item img {
-    width: 100%;
+    width: 140px;
+    height: 220px;
     border-radius: 12px;
     display: block;
+
 }
 
 .orig-name {

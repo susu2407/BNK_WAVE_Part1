@@ -143,48 +143,48 @@
                 <div class="orig-left">
                     <h2 class="orig-title">BNK<br>추천카드</h2>
                     <p class="orig-text">
-                        추천카드 항목<br>
-                        추천카드를 넣은 이유는 추천하기때문에..
+                        무친 혜택을 가진<br>
+                        레전드 카드(유희왕 아님)
                     </p>
-                    <a th:href="@{/card/list}" class="orig-more">전체보기 ›</a>
+                    <a href="/cards/originals" class="orig-more">전체보기 ›</a>
                 </div>
 
                 <!-- 오른쪽 카드 리스트 -->
                 <div class="orig-list">
                     <!-- 카드 1 -->
-                    <article class="orig-item" th:each="item : ${cardPage}">
-                        <a th:href="@{/card/view2(cardId=${item.card.cardId})}">
-                            <img th:src="@{${item.card.background != null ? '/' + item.card.background : '/' + item.card.thumbnail}}">
-
+                    <article class="orig-item">
+                        <a href="https://example.com/the-red">
+                            <img src="https://static11.samsungcard.com/wcms/home/scard/image/personal/IDON_AAP1731.gif"
+                                alt="카드1">
                         </a>
-                        <h3 class="orig-name" th:text="${item.card.name}">Blue Eyes White Dragon</h3>
+                        <h3 class="orig-name">Blue Eyes White Dragon</h3>
                     </article>
 
                     <!-- 카드 2 -->
-<!--                    <article class="orig-item">-->
-<!--                        <a href="https://example.com/the-pink">-->
-<!--                            <img src="	https://static11.samsungcard.com/wcms/home/scard/image/personal/DN_AAP1877.gif"-->
-<!--                                alt="카드2">-->
-<!--                        </a>-->
-<!--                        <h3 class="orig-name">파멸의 예언자</h3>-->
-<!--                    </article>-->
+                    <article class="orig-item">
+                        <a href="https://example.com/the-pink">
+                            <img src="	https://static11.samsungcard.com/wcms/home/scard/image/personal/DN_AAP1877.gif"
+                                alt="카드2">
+                        </a>
+                        <h3 class="orig-name">파멸의 예언자</h3>
+                    </article>
 
-<!--                    &lt;!&ndash; 카드 3 &ndash;&gt;-->
-<!--                    <article class="orig-item">-->
-<!--                        <a href="https://example.com/summit">-->
-<!--                            <img src="https://static11.samsungcard.com/wcms/home/scard/image/personal/DN_AAP1742.gif"-->
-<!--                                alt="카드3">-->
-<!--                        </a>-->
-<!--                        <h3 class="orig-name">Summit</h3>-->
-<!--                    </article>-->
+                    <!-- 카드 3 -->
+                    <article class="orig-item">
+                        <a href="https://example.com/summit">
+                            <img src="https://static11.samsungcard.com/wcms/home/scard/image/personal/DN_AAP1742.gif"
+                                alt="카드3">
+                        </a>
+                        <h3 class="orig-name">Summit</h3>
+                    </article>
 
-<!--                    &lt;!&ndash; 카드 4 &ndash;&gt;-->
-<!--                    <article class="orig-item">-->
-<!--                        <a href="https://example.com/boutique">-->
-<!--                            <img src="https://static11.samsungcard.com/wcms/home/scard/image/personal/DN_AAP1767.gif"-->
-<!--                                alt="카드4">-->
-<!--                        </a>-->
-<!--                        <h3 class="orig-name">Boutique – Copper</h3>-->
+                    <!-- 카드 4 -->
+                    <article class="orig-item">
+                        <a href="https://example.com/boutique">
+                            <img src="https://static11.samsungcard.com/wcms/home/scard/image/personal/DN_AAP1767.gif"
+                                alt="카드4">
+                        </a>
+                        <h3 class="orig-name">Boutique – Copper</h3>
                     </article>
                 </div>
             </div>

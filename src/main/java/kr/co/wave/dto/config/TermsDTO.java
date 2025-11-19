@@ -33,6 +33,10 @@ public class TermsDTO {
 
     private MultipartFile pdfFile;
 
+    private String originalName;
+
+    private String termStatus;
+
     public void setIsRequired(boolean isRequired) {
         this.isRequired = isRequired;
     }

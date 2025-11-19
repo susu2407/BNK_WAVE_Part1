@@ -2,13 +2,8 @@ package kr.co.wave.service.config;
 
 
 import jakarta.transaction.Transactional;
-import kr.co.wave.dto.approval.CardApprovalDTO;
-import kr.co.wave.dto.card.CardDTO;
-import kr.co.wave.dto.card.CardWithInfoDTO;
 import kr.co.wave.dto.config.TermsDTO;
 import kr.co.wave.dto.config.TermsRepositoryDTO;
-import kr.co.wave.entity.card.AnnualFee;
-import kr.co.wave.entity.card.Benefit;
 import kr.co.wave.entity.config.Terms;
 import kr.co.wave.repository.config.TermsRepository;
 import kr.co.wave.service.board.util.FileUploadUtil;
@@ -18,7 +13,6 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.UrlResource;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpHeaders;
@@ -52,13 +46,15 @@ public class TermsService {
 
     // 약관 등록
     public void registerTerms(TermsDTO termsDTO){
-        String pdfPath = fileUploadUtil.saveFile(termsDTO.getPdfFile(),"terms");
+        String originalName = termsDTO.getPdfFile().getOriginalFilename(); // 파일 원래 이름
+        String pdfPath = fileUploadUtil.saveFile(termsDTO.getPdfFile(),"terms"); // 저장할 상대 경로 반환 , terms = 저장할 폴더 이름
 
         Terms terms = Terms.builder().
                 title(termsDTO.getTitle()).
                 content(termsDTO.getContent()).
                 isRequired(termsDTO.isRequired()).
                 pdfFile(pdfPath).
+                originalName(originalName).
                 build();
 
         termsRepository.save(terms);
@@ -91,6 +87,7 @@ public class TermsService {
             throw new RuntimeException("파일 다운로드 중 오류가 발생했습니다: " + e.getMessage(), e);
         }
     }
+
     @Transactional
     public Page<TermsRepositoryDTO> getTermsAllBySearch(String searchType, String keyword, int page, int size) {
         // 검색어/타입 공백 처리
