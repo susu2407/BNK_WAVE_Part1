@@ -10,4 +10,9 @@ public class MyController {
     public String myPage() {
         return "my/index";
     }
+
+    @GetMapping("/my/apiTest")
+    public String myApiTestPage() {
+        return "my/apiTest";
+    }
 }

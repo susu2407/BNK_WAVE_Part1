@@ -52,4 +52,11 @@ public class Terms {
 
     @Column(name="PDF_FILE")
     private String pdfFile;
+
+    @Column(name="ORIGINAL_NAME")
+    private String originalName;
+
+    @Column(name="STATUS")
+    private String termStatus;
+
 }
