@@ -166,7 +166,7 @@
                        th:classappend="${page.first} ? ' disabled'">« 처음</a>
 
                     <a th:href="@{|?page=${prev}&size=${size}&searchType=${st}&keyword=${kw}}"
-                       th:classappend="${page.first} ? ' disabled'">‹ 이전</a>
+                       th:classappend="${page.first} ? ' disabled'">&lt;</a>
 
                     <th:block th:each="i : ${#numbers.sequence(start, end)}">
                         <a th:href="@{|?page=${i}&size=${size}&searchType=${st}&keyword=${kw}}"
@@ -174,7 +174,7 @@
                     </th:block>
 
                     <a th:href="@{|?page=${next}&size=${size}&searchType=${st}&keyword=${kw}}"
-                       th:classappend="${page.last} ? ' disabled'">다음 ›</a>
+                       th:classappend="${page.last} ? ' disabled'">&gt;</a>
 
                     <a th:href="@{|?page=${total - 1}&size=${size}&searchType=${st}&keyword=${kw}}"
                        th:classappend="${page.last} ? ' disabled'">마지막 »</a>
