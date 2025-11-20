@@ -27,8 +27,8 @@
 
     height: 35px;
 }
-.register-btn   {width: 120px;}
-.search-btn     {width: 50px; margin: 0 10px}
+.register-btn   {width: 120px; margin: 0 20px}
+.search-btn     {width: 50px;}
 
 .action-bar select,
 .action-bar input {
