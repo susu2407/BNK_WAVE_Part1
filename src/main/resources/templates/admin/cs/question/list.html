@@ -15,11 +15,10 @@
     <div th:replace="~{admin/common/mainHeader :: mainHeader}"></div>
         <div id="main-content">
             <!-- 주요 액션 영역 -->
+            <!-- 주요 액션 영역 -->
             <div class="action-bar">
-                <!-- 등록버튼 -->
-                <button class="btn register-btn">상품 등록</button>
                 <!-- 검색 -->
-                <form method="get" th:action="@{/admin/cs/question/list}">
+                <form method="get" th:action="@{/admin/card/list}">
                     <div th:with="st=${param.searchType != null ? param.searchType[0] : ''}">
                         <select name="searchType" id="searchType">
                             <option value="" th:selected="${st == ''}">전체</option>
@@ -71,9 +70,10 @@
                     <th>작성자</th>
                     <th>날짜</th>
                     </thead>
-                    <tr th:each="notice, stat : ${noticeList.getContent()}" th:class="${stat.even} ? 'even-row' : 'odd-row'">>
+                    <tr th:each="notice, stat : ${noticeList.getContent()}" th:class="${stat.even} ? 'even-row' : 'odd-row'">
                         <td>[[${noticeList.totalElements - (noticeList.number * noticeList.size +
-                            stat.index)}]]</a></td>
+                            stat.index)}]]
+                        </td>
                         <td><a th:href="@{/admin/cs/question/view/{noticeId}(noticeId=${notice.noticeId})}">[[${notice.title}]]</a>
                         </td>
                         <td>[[${notice.writer}]]</td>

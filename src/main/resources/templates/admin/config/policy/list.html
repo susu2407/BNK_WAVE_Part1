@@ -12,23 +12,18 @@
 <body>
 <main>
     <div class="main-container">
+        <div th:replace="~{admin/common/mainHeader :: mainHeader}"></div>
         <div id="main-content">
             <!-- 주요 액션 영역 -->
             <div class="action-bar">
-                <!-- 등록버튼 -->
-
-                <a th:href="@{/admin/config/policy/register}" class="btn register-btn">
-                    약관 등록
-                </a>
-
                 <!-- 검색 -->
-                <form method="get" th:action="@{/admin/config/policy/list}">
+                <form method="get" th:action="@{/admin/card/list}">
                     <div th:with="st=${param.searchType != null ? param.searchType[0] : ''}">
                         <select name="searchType" id="searchType">
                             <option value="" th:selected="${st == ''}">전체</option>
-                            <option value="title" th:selected="${st == 'title'}">약관명</option>
-                            <option value="content" th:selected="${st == 'content'}">약관내용</option>
-                            <option value="originalName" th:selected="${st == 'originalName'}">문서이름</option>
+                            <option value="name" th:selected="${st == 'name'}">상품명</option>
+                            <option value="engName" th:selected="${st == 'engName'}">영어명</option>
+                            <option value="type" th:selected="${st == 'type'}">카드유형</option>
                         </select>
                     </div>
 
@@ -38,6 +33,10 @@
                     </label>
                     <button type="submit" class="btn search-btn">검색</button>
                 </form>
+                <!-- 등록버튼 -->
+                <div class="btn register-btn">
+                    <a th:href="@{/admin/card/register}">약관 등록</a>
+                </div>
             </div>
 
             <table>
