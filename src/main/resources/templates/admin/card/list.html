@@ -3,7 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <title>CARD ADMIN</title>
-    <link rel="stylesheet" th:href="@{/css/admin/common/mainContainer.css}">
+    <!-- 상품 목록 -->
+    <link rel="stylesheet" th:href="@{/css/admin/common/commonCSS.css}">
     <link rel="stylesheet" th:href="@{/css/admin/common/commonActionBarTable.css}">
     <script th:src="@{/js/admin/common/aside.js}"></script>
 </head>
@@ -39,6 +40,10 @@
                     </label>
                     <button type="submit" class="btn search-btn">검색</button>
                 </form>
+                <!-- 등록버튼 -->
+                <div class="btn register-btn">
+                    <a th:href="@{/admin/card/register}">상품 등록</a>
+                </div>
             </div>
 
             <!-- 정렬
