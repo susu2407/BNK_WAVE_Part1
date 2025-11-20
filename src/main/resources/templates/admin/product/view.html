@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <title>Title</title>
     <link rel="stylesheet" th:href="@{/css/admin/common/commonCSS.css}">
+    <link rel="stylesheet" th:href="@{/css/admin/common/commonActionBarTable.css}">
     <script th:src="@{/js/admin/common/aside.js}"></script>
 </head>
 <body>
@@ -11,18 +12,23 @@
 <div th:replace="~{admin/common/aside :: aside}"></div>
 <main>
     <div class="main-container">
+        <div th:replace="~{admin/common/mainHeader :: mainHeader}"></div>
         <div id="main-content">
             <table>
                 <thead>
-                <th>번호</th>
-                <th>제품명</th>
-                <th>설명</th>
-                </thead>
                 <tr>
-                    <td>[[${product.proId}]]</td>
-                    <td>[[${product.name}]]</td>
-                    <td>[[${product.description}]]</td>
+                    <th>번호</th>
+                    <th>제품명</th>
+                    <th>설명</th>
                 </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>[[${product.proId}]]</td>
+                        <td>[[${product.name}]]</td>
+                        <td>[[${product.description}]]</td>
+                    </tr>
+                </tbody>
             </table>
         </div>
     </div>

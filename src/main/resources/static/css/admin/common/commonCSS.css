@@ -29,8 +29,9 @@ body {
 
 a {
     text-decoration: none;
-    clear: inherit;
+    color: inherit;
     cursor: pointer;
+    font-size: 14px;
 }
 
 /* ㅡㅡㅡㅡㅡ 페이징 ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ */

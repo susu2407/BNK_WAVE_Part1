@@ -29,9 +29,7 @@
                     <input type="text" id="keyword" name="keyword" placeholder="검색어"
                            th:value="${param.keyword != null ? param.keyword[0] : ''}"/>
 
-                    <button type="submit">
-                        <img th:src="@{/images/magnifier.png}" alt="돋보기"/>
-                    </button>
+                    <button type="submit" class="btn search-btn">검색</button>
                 </form>
             </div>
 

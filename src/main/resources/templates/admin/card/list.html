@@ -17,12 +17,6 @@
         <div id="main-content">
             <!-- 주요 액션 영역 -->
             <div class="action-bar">
-                <!-- 등록버튼 -->
-
-                <a th:href="@{/admin/card/register}" class="btn register-btn">
-                    상품 등록
-                </a>
-
                 <!-- 검색 -->
                 <form method="get" th:action="@{/admin/card/list}">
                     <div th:with="st=${param.searchType != null ? param.searchType[0] : ''}">
@@ -120,7 +114,7 @@
                             <td>
                                 <ul>
                                     <li th:each="fee : ${cardItem.annualFeeList}">
-                                        [[${fee.annualName}]]원
+                                        [[${fee.annualName}]]
                                     </li>
                                 </ul>
                             </td>

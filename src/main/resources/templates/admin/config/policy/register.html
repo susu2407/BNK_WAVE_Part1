@@ -11,6 +11,7 @@
 <body>
 <main>
     <div class="main-container">
+        <div th:replace="~{admin/common/mainHeader :: mainHeader}"></div>
         <div id="main-content">
 
             <form th:action="@{/admin/config/policy/register}" method="post" enctype="multipart/form-data">

@@ -12,7 +12,33 @@
 <div th:replace="~{admin/common/aside :: aside}"></div>
 <main>
     <div class="main-container">
+        <div th:replace="~{admin/common/mainHeader :: mainHeader}"></div>
         <div id="main-content">
+            <!-- 주요 액션 영역 -->
+            <div class="action-bar">
+                <!-- 검색 -->
+                <form method="get" th:action="@{/admin/card/list}">
+                    <div th:with="st=${param.searchType != null ? param.searchType[0] : ''}">
+                        <select name="searchType" id="searchType">
+                            <option value="" th:selected="${st == ''}">전체</option>
+                            <option value="name" th:selected="${st == 'name'}">상품명</option>
+                            <option value="engName" th:selected="${st == 'engName'}">영어명</option>
+                            <option value="type" th:selected="${st == 'type'}">카드유형</option>
+                        </select>
+                    </div>
+
+                    <label for="keyword">
+                        <input type="text" id="keyword" name="keyword" placeholder="입력하세요."
+                               th:value="${param.keyword != null ? param.keyword[0] : ''}"/>
+                    </label>
+                    <button type="submit" class="btn search-btn">검색</button>
+                </form>
+                <!-- 등록버튼 -->
+                <div class="btn register-btn">
+                    <a th:href="@{/admin/card/register}">상품 등록</a>
+                </div>
+            </div>
+            <!-- 본문 -->
             <table>
                 <thead>
                     <tr>
