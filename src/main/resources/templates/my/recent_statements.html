@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>이용내역 명세서</title>
+
+    <!-- 이 페이지 전용 스타일 -->
+    <link rel="stylesheet" href="../../static/css/member/my/recent_statements.css">
+    <link rel="stylesheet" href="../../static/css/common/header.css">
+    <link rel="stylesheet" href="../../static/css/common/footer.css">
+    <link rel="stylesheet" th:href="@{/css/member/my/recent_statements.css}">
+</head>
+
+<body>
+    <div id="header"></div>
+    <div th:replace="~{common/header :: header}"></div>
+
+    <main class="content recent-content">
+
+        <!-- 상단 제목 + 기간 -->
+        <section class="recent-top">
+            <h1 class="recent-title">최근 이용 내역</h1>
+            <p class="recent-period">10월 20일 ~ 11월 20일</p>
+        </section>
+
+        <hr class="recent-divider">
+
+        <!-- 좌측 필터 + 우측 이용내역 2컬럼 -->
+        <section class="recent-layout">
+            <!-- 왼쪽: 필터 패널 -->
+            <aside class="recent-filter">
+                <!-- 보유카드 -->
+                <div class="rf-block">
+                    <p class="rf-title">보유카드</p>
+                    <button type="button" class="rf-select">
+                        보유카드 전체 <span class="rf-select-arrow">▼</span>
+                    </button>
+                </div>
+
+                <!-- 승인 상태 -->
+                <div class="rf-block">
+                    <p class="rf-title">승인 상태</p>
+                    <div class="filter-chip-row" data-select="single">
+                        <button type="button" class="filter-chip filter-chip-active">실시간 승인</button>
+                        <button type="button" class="filter-chip">결제 확정</button>
+                    </div>
+                </div>
+
+                <!-- 이용기간 -->
+                <div class="rf-block">
+                    <p class="rf-title">이용기간<small class="rf-caption"> (최근 3개월까지 조회 가능)</small></p>
+                    <div class="filter-chip-row" data-select="single">
+                        <button type="button" class="filter-chip filter-chip-active">당일</button>
+                        <button type="button" class="filter-chip">1개월</button>
+                        <button type="button" class="filter-chip">3개월</button>
+                        <button type="button" class="filter-chip">직접입력</button>
+                    </div>
+                </div>
+
+                <!-- 이용 지역 -->
+                <div class="rf-block">
+                    <p class="rf-title">이용 지역</p>
+                    <div class="filter-chip-row" data-select="single">
+                        <button type="button" class="filter-chip filter-chip-active">전체</button>
+                        <button type="button" class="filter-chip">국내</button>
+                        <button type="button" class="filter-chip">해외</button>
+                    </div>
+                </div>
+
+                <!-- 이용 구분 -->
+                <div class="rf-block">
+                    <p class="rf-title">이용 구분</p>
+                    <div class="filter-chip-row" data-select="single">
+                        <button type="button" class="filter-chip filter-chip-active">전체</button>
+                        <button type="button" class="filter-chip">일시불</button>
+                        <button type="button" class="filter-chip">할부</button>
+                    </div>
+                </div>
+
+                <!-- 필터 적용 버튼 -->
+                <button type="button" class="rf-apply-btn">필터 적용</button>
+
+                <p class="rf-note">
+                    선결제 충전·조회<br>
+                    선결제 카드 이용내역은 여기에서 확인할 수 있어요.
+                </p>
+            </aside>
+
+            <!-- 오른쪽: 이용내역 (기존 usage-history 재사용) -->
+            <section class="usage-history">
+                <header class="usage-header">
+                    <div class="usage-header-left">
+                        <h2 class="section-title">이용내역</h2>
+                        <div class="usage-sort">
+                            <button type="button" class="sort-btn sort-active" data-sort="recent">최신순</button>
+                            <span class="sort-divider">|</span>
+                            <button type="button" class="sort-btn" data-sort="amount">고액순</button>
+                        </div>
+                    </div>
+
+                    <div class="statement-top-actions">
+                        <button type="button" class="icon-btn" aria-label="엑셀 저장">
+                            <img src="https://www.hyundaicard.com/docfiles/resources/pc/images/common/icon/w32/ico_paperDown.png"
+                                alt="엑셀 저장">
+                        </button>
+                        <button type="button" class="icon-btn" aria-label="인쇄">
+                            <img src="https://www.hyundaicard.com/docfiles/resources/pc/images/common/icon/w32/ico_print.png"
+                                alt="인쇄">
+                        </button>
+                    </div>
+                </header>
+
+                <!-- 총 건수 -->
+                <div class="usage-list-head">
+                    <span class="usage-count">총 3건</span>
+                    <span class="usage-total">9,100원</span>
+                </div>
+
+                <!-- 리스트 -->
+                <ul class="usage-list">
+                    <li class="usage-item">
+                        <div class="usage-item-main">
+                            <div class="usage-item-left">
+                                <p class="usage-merchant">씨유수비사거리점</p>
+                                <p class="usage-meta">
+                                    현대카드M CHECK · 25.11.18 · 18:26 · 일시불
+                                </p>
+                            </div>
+                            <p class="usage-amount">5,100원</p>
+                        </div>
+                    </li>
+
+                    <li class="usage-item">
+                        <div class="usage-item-main">
+                            <div class="usage-item-left">
+                                <p class="usage-merchant">패스오더 - 주식회사 페이타랩</p>
+                                <p class="usage-meta">
+                                    현대카드M CHECK · 25.11.18 · 08:38 · 일시불
+                                </p>
+                            </div>
+                            <p class="usage-amount">2,000원</p>
+                        </div>
+                    </li>
+
+                    <li class="usage-item">
+                        <div class="usage-item-main">
+                            <div class="usage-item-left">
+                                <p class="usage-merchant">패스오더 - 주식회사 페이타랩</p>
+                                <p class="usage-meta">
+                                    현대카드M CHECK · 25.11.17 · 08:37 · 일시불
+                                </p>
+                            </div>
+                            <p class="usage-amount">2,000원</p>
+                        </div>
+                    </li>
+                </ul>
+
+                <!-- 3개월까지 더보기 바 -->
+                <button type="button" class="usage-more-bar">
+                    3개월까지 더보기
+                </button>
+
+                <!-- 이용안내 링크 -->
+                <a href="#" class="usage-help-link">이용안내</a>
+            </section>
+        </section>
+    </main>
+
+
+    <div id="footer"></div>
+    <div th:replace="~{common/footer :: footer}"></div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            // 공통 헤더 로드
+            fetch('../common/header.html')
+                .then(res => res.text())
+                .then(html => {
+                    document.getElementById('header').innerHTML = html;
+                    const headerEl = document.querySelector('.header');
+                    if (headerEl) {
+                        window.addEventListener('scroll', () => {
+                            if (window.scrollY > 10) headerEl.classList.add('scrolled');
+                            else headerEl.classList.remove('scrolled');
+                        });
+                    }
+                });
+
+            // 공통 푸터 로드
+            fetch('../common/footer.html')
+                .then(res => res.text())
+                .then(html => document.getElementById('footer').innerHTML = html);
+
+            // 최신순 / 고액순 정렬 탭
+            const sortContainer = document.querySelector('.usage-sort');
+            if (sortContainer) {
+                sortContainer.addEventListener('click', function (e) {
+                    const btn = e.target.closest('.sort-btn');
+                    if (!btn) return;
+
+                    sortContainer.querySelectorAll('.sort-btn').forEach(b => {
+                        b.classList.remove('sort-active');
+                    });
+                    btn.classList.add('sort-active');
+
+                    const sortType = btn.dataset.sort;  // 'recent' or 'amount'
+                    console.log('정렬 변경:', sortType);
+                    // TODO: sortType에 따라 실제 정렬 로직 추가
+                });
+            }
+
+            // 좌측 필터칩(승인 상태 / 이용기간 / 이용 지역 / 이용 구분) 단일 선택
+            document.querySelectorAll('.filter-chip-row[data-select="single"]').forEach(function (row) {
+                row.addEventListener('click', function (e) {
+                    const btn = e.target.closest('.filter-chip');
+                    if (!btn) return;
+
+                    row.querySelectorAll('.filter-chip').forEach(function (chip) {
+                        chip.classList.remove('filter-chip-active');
+                    });
+                    btn.classList.add('filter-chip-active');
+
+                    console.log('선택된 값:', btn.textContent.trim());
+                    // TODO: 여기서 선택 값 읽어서 실제 필터 파라미터로 사용하면 됨
+                });
+            });
+
+        });
+    </script>
+
+</body>
+
+</html>
