@@ -16,14 +16,16 @@
                 <div class="hero-slider" id="heroSlider">
                     <div class="hero-track">
                         <!-- 1번 슬라이드 -->
-                        <article class="hero-slide hero1">
+                        <article class="hero-slide hero1" th:each="item : ${cardPage}" >
                             <div class="hero-text">
-                                <h2>매달 내는 이동통신요금<br>아파트 관리비 10% 할인</h2>
+                                <h2>[[${item.card.description}]]</h2>
                                 <p>넷플릭스, 웨이브, 티빙 등<br>스트리밍 30% 할인까지</p>
                             </div>
                             <div class="hero-visual">
                                 <!-- 여기 카드/이미지 들어가는 자리 -->
-                                <div class="fake-card"></div>
+                                <div class="fake-card">
+                                    <img th:src="@{${item.card.background != null ? '/' + item.card.background : '/' + item.card.thumbnail}}">
+                                </div>
                             </div>
                         </article>
 
