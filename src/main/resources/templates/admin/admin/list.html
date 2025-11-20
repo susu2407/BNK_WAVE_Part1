@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <title>CARD ADMIN</title>
-    <link rel="stylesheet" th:href="@{/css/admin/common/mainContainer.css}">
+    <link rel="stylesheet" th:href="@{/css/admin/common/commonCSS.css}">
     <link rel="stylesheet" th:href="@{/css/admin/common/commonActionBarTable.css}">
     <script th:src="@{/js/admin/common/aside.js}"></script>
 </head>
@@ -16,15 +16,14 @@
         <div id="main-content">
             <!-- 주요 액션 영역 -->
             <div class="action-bar">
-                <!-- 등록버튼 -->
-                <button class="btn register-btn">관리자 등록</button>
                 <!-- 검색 -->
-                <form method="get" th:action="@{/admin/admin/list}">
+                <form method="get" th:action="@{/admin/card/list}">
                     <div th:with="st=${param.searchType != null ? param.searchType[0] : ''}">
                         <select name="searchType" id="searchType">
                             <option value="" th:selected="${st == ''}">전체</option>
-                            <option value="name" th:selected="${st == 'name'}">이름</option>
-                            <option value="role" th:selected="${st == 'role'}">역할</option>
+                            <option value="name" th:selected="${st == 'name'}">상품명</option>
+                            <option value="engName" th:selected="${st == 'engName'}">영어명</option>
+                            <option value="type" th:selected="${st == 'type'}">카드유형</option>
                         </select>
                     </div>
 
@@ -34,6 +33,10 @@
                     </label>
                     <button type="submit" class="btn search-btn">검색</button>
                 </form>
+                <!-- 등록버튼 -->
+                <div class="btn register-btn">
+                    <a th:href="@{/admin/card/register}">관리자 등록</a>
+                </div>
             </div>
 
             <!-- 정렬
