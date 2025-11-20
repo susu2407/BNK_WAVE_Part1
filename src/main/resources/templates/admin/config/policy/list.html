@@ -13,6 +13,33 @@
 <main>
     <div class="main-container">
         <div id="main-content">
+            <!-- 주요 액션 영역 -->
+            <div class="action-bar">
+                <!-- 등록버튼 -->
+
+                <a th:href="@{/admin/config/policy/register}" class="btn register-btn">
+                    약관 등록
+                </a>
+
+                <!-- 검색 -->
+                <form method="get" th:action="@{/admin/config/policy/list}">
+                    <div th:with="st=${param.searchType != null ? param.searchType[0] : ''}">
+                        <select name="searchType" id="searchType">
+                            <option value="" th:selected="${st == ''}">전체</option>
+                            <option value="title" th:selected="${st == 'title'}">약관명</option>
+                            <option value="content" th:selected="${st == 'content'}">약관내용</option>
+                            <option value="originalName" th:selected="${st == 'originalName'}">문서이름</option>
+                        </select>
+                    </div>
+
+                    <label for="keyword">
+                        <input type="text" id="keyword" name="keyword" placeholder="입력하세요."
+                               th:value="${param.keyword != null ? param.keyword[0] : ''}"/>
+                    </label>
+                    <button type="submit" class="btn search-btn">검색</button>
+                </form>
+            </div>
+
             <table>
                 <thead>
                 <tr>
@@ -35,6 +62,41 @@
                     </tr>
                 </tbody>
             </table>
+
+            <!-- 페이징 -->
+            <div class="pagination" th:with="
+                page=${termsList},
+                now=${page.number},
+                total=${page.totalPages},
+                size=${page.size},
+                block=${5},
+                start=${(now / block) * block},
+                end=${ ((total - 1) < (start + block - 1)) ? (total - 1) : (start + block - 1) },
+                prev=${ (now > 0) ? (now - 1) : 0 },
+                next=${ ((now + 1) < total) ? (now + 1) : (total - 1) },
+                st=${param.searchType != null ? param.searchType[0] : ''},
+                kw=${param.keyword != null ? param.keyword[0] : ''},
+                ans=${param.answered != null ? param.answered[0] : ''}
+             ">
+                <div th:if="${total > 0}">
+                    <a th:href="@{|?page=0&size=${size}&searchType=${st}&keyword=${kw}}"
+                       th:classappend="${page.first} ? ' disabled'">« 처음</a>
+
+                    <a th:href="@{|?page=${prev}&size=${size}&searchType=${st}&keyword=${kw}}"
+                       th:classappend="${page.first} ? ' disabled'">‹ 이전</a>
+
+                    <th:block th:each="i : ${#numbers.sequence(start, end)}">
+                        <a th:href="@{|?page=${i}&size=${size}&searchType=${st}&keyword=${kw}}"
+                           th:classappend="${i == now} ? ' active'">[[${i + 1}]]</a>
+                    </th:block>
+
+                    <a th:href="@{|?page=${next}&size=${size}&searchType=${st}&keyword=${kw}}"
+                       th:classappend="${page.last} ? ' disabled'">다음 ›</a>
+
+                    <a th:href="@{|?page=${total - 1}&size=${size}&searchType=${st}&keyword=${kw}}"
+                       th:classappend="${page.last} ? ' disabled'">마지막 »</a>
+                </div>
+            </div>
         </div>
     </div>
 </main>
