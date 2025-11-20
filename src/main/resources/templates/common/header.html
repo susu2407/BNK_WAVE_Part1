@@ -50,8 +50,8 @@
                         <div class="mega-col">
                             <h4>카드신청</h4>
                             <ul>
-                                <li><a href="#">체크카드</a></li>
-                                <li><a href="#">신용카드</a></li>
+                                <li><a th:href="@{/card/list}">체크카드</a></li>
+                                <li><a th:href="@{/card/list}">신용카드</a></li>
                             </ul>
                         </div>
                     </div>
@@ -84,10 +84,12 @@
             </li>
         </ul>
         <div class="util">
+            <form th:action="@{/card/list}" method="get">
             <div class="search-box">
                 <span class="search-ico">🔍</span>
-                <input type="text" placeholder="카드, 메뉴, 혜택을 검색해 보세요">
+                <input type="text" name="keyword" th:value="${keyword}" placeholder="카드, 메뉴, 혜택을 검색해 보세요">
             </div>
+            </form>
             <button class="all-nav-btn" id="allNavOpen" aria-label="전체 메뉴 열기">☰</button>
         </div>
     </div>
