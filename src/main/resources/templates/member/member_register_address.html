@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>회원가입 - 주소 입력</title>
+
+    <!-- 공통 -->
+    <link rel="stylesheet" href="../css/common/product_header_style.css" />
+    <link rel="stylesheet" href="../css/common/footer_style.css" />
+    <!-- 회원가입용 주소 CSS -->
+    <link rel="stylesheet" href="../css/member/member_register_address.css" />
+
+    <!-- 다음(카카오) 주소 API -->
+    <script src="https://t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
+</head>
+
+<body>
+    <div id="header"></div>
+
+    <main class="content">
+        <section class="addr-wrap">
+            <h1 class="addr-title">회원가입 주소 입력</h1>
+
+            <div class="addr-desc">회원가입을 위해 사용할 <strong>기본 주소</strong>를 입력해 주세요.</div>
+
+            <!-- 우편번호 -->
+            <div class="field">
+                <label for="zip" class="label">우편번호</label>
+                <div class="row">
+                    <input id="zip" type="text" inputmode="numeric" maxlength="5" readonly placeholder="" />
+                    <button type="button" class="btn-search" id="btnSearch" aria-label="주소 검색">주소 검색</button>
+                </div>
+                <div class="underline"></div>
+            </div>
+
+            <!-- 기본주소 -->
+            <div class="field">
+                <label for="addr1" class="label">기본주소</label>
+                <input id="addr1" type="text" readonly placeholder="" />
+                <div class="underline"></div>
+            </div>
+
+            <!-- 상세주소 -->
+            <div class="field">
+                <label for="addr2" class="label">상세주소</label>
+                <input id="addr2" type="text" placeholder="상세주소를 입력해 주세요." />
+                <div class="underline"></div>
+            </div>
+
+            <!-- 안내문 -->
+            <p class="guide">주소가 맞게 입력되었는지 다시 한 번 확인해 주세요.</p>
+
+            <!-- 확인 버튼 -->
+            <button class="btn-submit" id="btnConfirm" disabled>확인</button>
+        </section>
+    </main>
+
+    <div id="footer"></div>
+
+    <script>
+        // 공통 헤더/푸터 로드
+        document.addEventListener('DOMContentLoaded', () => {
+            fetch('../common/product_header.html')
+                .then(r => r.text()).then(h => {
+                    document.getElementById('header').innerHTML = h;
+                    const headerEl = document.querySelector('.header');
+                    if (headerEl) {
+                        window.addEventListener('scroll', () => {
+                            if (window.scrollY > 10) headerEl.classList.add('scrolled');
+                            else headerEl.classList.remove('scrolled');
+                        });
+                    }
+                });
+
+            fetch('../common/footer.html')
+                .then(r => r.text()).then(h => document.getElementById('footer').innerHTML = h);
+        });
+
+        // 주소 검색 열기
+        function openPostcode() {
+            new daum.Postcode({
+                oncomplete: function (data) {
+                    const road = data.roadAddress || '';
+                    const jibun = data.jibunAddress || '';
+                    const base = road || jibun;
+
+                    let extra = '';
+                    if (data.bname && /[동|로|가]$/g.test(data.bname)) extra += data.bname;
+                    if (data.buildingName && data.apartment === 'Y')
+                        extra += (extra ? ', ' : '') + data.buildingName;
+
+                    const fullBase = extra ? `${base} (${extra})` : base;
+
+                    document.getElementById('zip').value = data.zonecode || '';
+                    document.getElementById('addr1').value = fullBase;
+                    document.getElementById('addr2').focus();
+                    validate();
+                }
+            }).open();
+        }
+
+        // 이벤트 바인딩
+        const zip = document.getElementById('zip');
+        const addr1 = document.getElementById('addr1');
+        const addr2 = document.getElementById('addr2');
+        const btnConfirm = document.getElementById('btnConfirm');
+
+        // 검색 버튼에서만 주소창 열기
+        document.getElementById('btnSearch').addEventListener('click', openPostcode);
+
+        // 상세주소 입력 시 버튼 활성화
+        function validate() {
+            const ok =
+                zip.value.trim().length > 0 &&
+                addr1.value.trim().length > 0;
+            btnConfirm.disabled = !ok;
+        }
+
+        addr2.addEventListener('input', validate);
+
+        // 저장 (회원가입 주소용)
+        btnConfirm.addEventListener('click', () => {
+            const payload = {
+                zip: zip.value.trim(),
+                addr1: addr1.value.trim(),
+                addr2: addr2.value.trim()
+            };
+            console.log('회원가입 주소:', payload);
+            alert('주소가 저장되었습니다. 다음 단계로 진행해 주세요.');
+            // TODO: 실제 회원가입 주소 저장/다음 단계 이동 로직 추가
+        });
+    </script>
+
+</body>
+
+</html>
