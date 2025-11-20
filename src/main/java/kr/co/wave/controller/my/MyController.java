@@ -17,7 +17,7 @@ public class MyController {
 
     @GetMapping({"/my","/my/"})
     public String myPage() {
-        return "my/index";
+        return "my/index(new)";
     }
 
     @GetMapping("/my/apiTest")
@@ -28,5 +28,10 @@ public class MyController {
         model.addAttribute("historyList", historyList);
 
         return "my/apiTest";
+    }
+
+    @GetMapping({"/my/BillingStates"})
+    public String myBillingState(){
+        return "my/billing_statements";
     }
 }
