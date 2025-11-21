@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>회원가입</title>
+    <link rel="stylesheet" href="../css/common/product_header_style.css" />
+    <link rel="stylesheet" href="../css/member/member_register_information.css" />
+    <link rel="stylesheet" href="../css/common/footer_style.css" />
+</head>
+
+<body>
+    <div id="header"></div>
+
+    <main class="content">
+        <section class="apply-form-wrap">
+            <div class="apply-form-box">
+                <header class="apply-form-header">
+                    <h1>회원가입</h1>
+                </header>
+
+                <div class="apply-form-body">
+                    <!-- 이름 -->
+                    <div class="form-item">
+                        <label for="memberName">이름</label>
+                        <input id="memberName" type="text" placeholder="이름을 입력해 주세요." />
+                    </div>
+
+                    <!-- 아이디 -->
+                    <div class="form-item">
+                        <label for="memberId">아이디</label>
+                        <input id="memberId" type="text" placeholder="아이디를 입력해 주세요." />
+                    </div>
+
+                    <!-- 비밀번호 / 비밀번호 확인 -->
+                    <div class="form-2col">
+                        <div class="form-item">
+                            <label for="memberPw">비밀번호</label>
+                            <input id="memberPw" type="password" placeholder="비밀번호를 입력해 주세요." />
+                            <p class="field-help">영문, 숫자 포함 8자 이상을 권장합니다.</p>
+                        </div>
+                        <div class="form-item">
+                            <label for="memberPwConfirm">비밀번호 확인</label>
+                            <input id="memberPwConfirm" type="password" placeholder="비밀번호를 다시 입력해 주세요." />
+                            <p class="field-help pw-message" id="pwMessage"></p>
+                        </div>
+                    </div>
+
+                    <!-- 주민등록번호 -->
+                    <div class="form-item">
+                        <label>주민등록번호</label>
+                        <div class="rrn-field">
+                            <!-- 앞 6자리 -->
+                            <input id="rrnFront" type="text" class="rrn-front" inputmode="numeric" maxlength="6"
+                                placeholder="생년월일 6자리">
+
+                            <span class="dash">-</span>
+
+                            <!-- 뒤 7자리 (마스킹) -->
+                            <input id="rrnBack" type="text" class="rrn-back secret-input" inputmode="numeric"
+                                maxlength="7" aria-label="주민등록번호 뒤 7자리 입력">
+                        </div>
+                    </div>
+
+                    <!-- 이메일  -->
+                    <div class="form-item">
+                        <label for="email">이메일</label>
+                        <input id="email" type="email" placeholder="이메일을 입력해 주세요." />
+                    </div>
+
+                    <!-- 하단 버튼 영역 -->
+                    <section class="agree-section">
+                        <button class="btn-submit" id="submitBtn" disabled>계속하기</button>
+                    </section>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <div id="footer"></div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            /* 1) 헤더/푸터 로드 */
+            fetch('../common/product_header.html')
+                .then(res => res.text())
+                .then(html => {
+                    document.getElementById('header').innerHTML = html;
+                    const headerEl = document.querySelector('.header');
+                    if (headerEl) {
+                        window.addEventListener('scroll', () => {
+                            if (window.scrollY > 10) headerEl.classList.add('scrolled');
+                            else headerEl.classList.remove('scrolled');
+                        });
+                    }
+                });
+
+            fetch('../common/footer.html')
+                .then(res => res.text())
+                .then(html => (document.getElementById('footer').innerHTML = html));
+
+            /* === 폼 요소 참조 === */
+            const nameInput = document.getElementById('memberName');
+            const idInput = document.getElementById('memberId');
+            const pwInput = document.getElementById('memberPw');
+            const pwConfirmInput = document.getElementById('memberPwConfirm');
+            const rrnFrontInput = document.getElementById('rrnFront');
+            const rrnBackInput = document.getElementById('rrnBack');
+            const emailInput = document.getElementById('email');
+            const submitBtn = document.getElementById('submitBtn');
+            const pwMessage = document.getElementById('pwMessage');
+
+            /* === 주민번호: 숫자만 + 길이 제한 === */
+            function numericOnly(e) {
+                let v = e.target.value.replace(/\D/g, '');
+                const max = e.target.maxLength || v.length;
+                if (v.length > max) v = v.slice(0, max);
+                e.target.value = v;
+            }
+
+            rrnFrontInput.addEventListener('input', numericOnly);
+            rrnBackInput.addEventListener('input', numericOnly);
+
+            /* === 비밀번호 일치 여부 표시 === */
+            function updatePwMessage() {
+                const pw = pwInput.value;
+                const pw2 = pwConfirmInput.value;
+
+                pwMessage.textContent = '';
+                pwMessage.classList.remove('ok', 'error');
+
+                // 둘 다 비어 있으면 메시지 없음
+                if (!pw && !pw2) return;
+
+                if (pw && pw2) {
+                    if (pw === pw2) {
+                        pwMessage.textContent = '비밀번호가 일치합니다.';
+                        pwMessage.classList.add('ok');
+                    } else {
+                        pwMessage.textContent = '비밀번호가 일치하지 않습니다.';
+                        pwMessage.classList.add('error');
+                    }
+                }
+            }
+
+            /* === 전체 유효성 검사 → 버튼 활성화 === */
+            function refreshSubmit() {
+                const nameOk = nameInput.value.trim().length > 0;
+                const idOk = idInput.value.trim().length > 0;
+
+                // 비밀번호는 최소 8자 기준(원하면 숫자+영문 정규식으로 더 강화 가능)
+                const pwOk = pwInput.value.length >= 8;
+                const pwMatch = pwInput.value !== '' &&
+                    pwInput.value === pwConfirmInput.value;
+
+                const rrnFrontOk = rrnFrontInput.value.length === 6;
+                const rrnBackOk = rrnBackInput.value.length === 7;
+                const emailOk = emailInput.value.trim().length > 0;
+
+                const formValid = nameOk && idOk && pwOk && pwMatch &&
+                    rrnFrontOk && rrnBackOk && emailOk;
+
+                submitBtn.disabled = !formValid;
+            }
+
+            /* === 입력 이벤트 바인딩 === */
+            const inputs = [
+                nameInput,
+                idInput,
+                pwInput,
+                pwConfirmInput,
+                rrnFrontInput,
+                rrnBackInput,
+                emailInput
+            ];
+
+            inputs.forEach(el => {
+                if (!el) return;
+                el.addEventListener('input', () => {
+                    if (el === pwInput || el === pwConfirmInput) {
+                        updatePwMessage();
+                    }
+                    refreshSubmit();
+                });
+            });
+
+            // 초기 상태
+            updatePwMessage();
+            refreshSubmit();
+        });
+    </script>
+
+</body>
+
+</html>

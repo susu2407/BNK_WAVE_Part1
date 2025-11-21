@@ -1,0 +1,655 @@
+/* ========= 최근 이용 내역 전용 레이아웃 ========= */
+
+/* 공통 content 폭 – 명세서 페이지와 톤 맞춤 */
+.content.recent-content {
+    max-width: 1200px;
+    margin: 150px auto 120px;
+    padding: 0 24px 80px;
+    box-sizing: border-box;
+    font-size: 14px;
+}
+
+/* 상단 제목/기간 */
+.recent-top {
+    text-align: center;
+    margin-bottom: 16px;
+}
+
+.recent-title {
+    font-size: 24px;
+    font-weight: 700;
+    margin-bottom: 6px;
+}
+
+.recent-period {
+    font-size: 13px;
+    color: #555;
+}
+
+.recent-divider {
+    border: none;
+    border-top: 1px solid #e3e3e3;
+    margin: 16px 0 24px;
+}
+
+/* ===== 좌우 2컬럼 레이아웃(필터 + 이용내역) ===== */
+
+.recent-layout {
+    display: flex;
+    gap: 32px;
+    align-items: flex-start;
+}
+
+/* ========= 좌측 필터 패널 ========= */
+
+.recent-filter {
+    width: 280px;
+    background: #fff;
+    border-radius: 20px;
+    border: 1px solid #ededed;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.03);
+    padding: 20px 18px 18px;
+    box-sizing: border-box;
+    font-size: 13px;
+}
+
+.rf-block+.rf-block {
+    margin-top: 18px;
+}
+
+.rf-title {
+    font-size: 13px;
+    font-weight: 600;
+    margin-bottom: 8px;
+}
+
+.rf-caption {
+    font-size: 11px;
+    font-weight: 400;
+    color: #888;
+    margin-left: 4px;
+}
+
+/* 셀렉트 박스 */
+.rf-select {
+    width: 100%;
+    text-align: left;
+    padding: 8px 10px;
+    border-radius: 8px;
+    border: 1px solid #d1d5db;
+    background: #f9fafb;
+    font-size: 13px;
+    cursor: pointer;
+    box-sizing: border-box;
+}
+
+.rf-select-arrow {
+    float: right;
+    font-size: 11px;
+    color: #555;
+}
+
+/* 필터 칩 공통 */
+.filter-chip-row {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+}
+
+.filter-chip-col {
+    margin-top: 6px;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+.filter-chip {
+    min-width: 70px;
+    padding: 7px 10px;
+    border-radius: 6px;
+    border: 1px solid #d2d2d2;
+    background: #f9f9f9;
+    font-size: 13px;
+    cursor: pointer;
+    text-align: center;
+}
+
+.filter-chip-active {
+    background: #CB2B11;
+    color: #fff;
+    border-color: #CB2B11;
+    font-weight: 700;
+}
+
+/* 필터 적용 버튼 – 검정 동그란 버튼 */
+.rf-apply-btn {
+    width: 100%;
+    margin-top: 24px;
+    padding: 11px 0;
+    border-radius: 999px;
+    border: none;
+    background: #CB2B11;
+    color: #fff;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+.rf-apply-btn:hover {
+    opacity: 0.9;
+}
+
+/* 하단 안내 텍스트 */
+.rf-note {
+    margin-top: 14px;
+    font-size: 11px;
+    color: #777;
+    line-height: 1.4;
+}
+
+/* ========= 우측 이용내역 카드 ========= */
+
+.usage-history {
+    position: relative;
+    flex: 1;
+    background: #fafafa;
+    border-radius: 20px;
+    padding: 24px 28px 20px;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.04);
+    box-sizing: border-box;
+}
+
+.section-title {
+    font-size: 24px;
+    font-weight: 600;
+    margin-bottom: 15px;
+}
+
+.usage-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 16px;
+}
+
+.usage-header-left {
+    display: flex;
+    align-items: baseline;
+    gap: 16px;
+}
+
+/* 정렬 탭 */
+.usage-sort .sort-btn {
+    border: none;
+    background: none;
+    padding: 0;
+    font-size: 13px;
+    cursor: pointer;
+    color: #aaa;
+}
+
+.usage-sort .sort-btn.sort-active {
+    font-weight: 600;
+    color: #111;
+}
+
+.sort-divider {
+    margin: 0 6px;
+    color: #d0d0d0;
+}
+
+/* 상단 오른쪽 엑셀/인쇄 버튼 영역 */
+.statement-title-wrap {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 24px;
+}
+
+.statement-title {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 24px;
+    font-weight: 600;
+    letter-spacing: 0.02em;
+}
+
+.statement-top-actions {
+    display: flex;
+    gap: 8px;
+}
+
+.icon-btn {
+    border: 1px solid #d8d8d8;
+    background: #fff;
+    border-radius: 999px;
+    padding: 4px 10px;
+    font-size: 14px;
+    cursor: pointer;
+    height: 50px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.icon-btn img {
+    height: 35px;
+}
+
+/* 리스트 헤더(총 건수/합계) */
+.usage-list-head {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    font-size: 13px;
+    margin: 12px 0;
+}
+
+.usage-count {
+    color: #444;
+}
+
+.usage-total {
+    font-size: 14px;
+    font-weight: 600;
+}
+
+/* 리스트 본문 */
+.usage-list {
+    list-style: none;
+    margin: 0;
+    padding: 8px 0 0;
+    border-top: 1px solid #e1e1e1;
+}
+
+.usage-item {
+    padding: 14px 0;
+    border-bottom: 1px solid #f2f2f2;
+    cursor: pointer;
+}
+
+.usage-item:last-child {
+    border-bottom: none;
+}
+
+.usage-item-main {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 16px;
+}
+
+.usage-item-left {
+    flex: 1;
+}
+
+.usage-merchant {
+    font-size: 15px;
+    font-weight: 500;
+    margin-bottom: 4px;
+}
+
+.usage-meta {
+    font-size: 13px;
+    font-weight: 400;
+    color: #777;
+}
+
+.usage-amount {
+    font-size: 14px;
+    font-weight: 600;
+    white-space: nowrap;
+}
+
+/* 이용내역 더보기 버튼 – 프로젝트 메인 빨간색 사용 */
+.usage-more-wrap {
+    margin-top: 8px;
+    width: 100%;
+    text-align: center;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+}
+
+.usage-more-btn {
+    min-width: 180px;
+    padding: 9px 18px;
+    border-radius: 999px;
+    border: none;
+    background: #CB2B11;
+    /* 공통 빨간색 */
+    color: #fff;
+    font-size: 13px;
+    font-weight: 600;
+    cursor: pointer;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.08);
+}
+
+.usage-more-btn:hover {
+    background: #a0210d;
+}
+
+.usage-more-btn:disabled {
+    background: #e5e5e5;
+    color: #999;
+    cursor: default;
+    box-shadow: none;
+}
+
+/* 이용안내 링크 */
+.usage-help-link {
+    font-size: 12px;
+    color: #1f3fd6;
+    text-decoration: none;
+}
+
+.usage-help-link:hover {
+    text-decoration: underline;
+}
+
+/* 모바일 대응 */
+@media (max-width: 960px) {
+    .recent-layout {
+        flex-direction: column;
+    }
+
+    .recent-filter {
+        width: 100%;
+        order: 2;
+    }
+
+    .usage-history {
+        order: 1;
+    }
+}
+
+@media (max-width: 600px) {
+    .usage-item-main {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .usage-amount {
+        margin-top: 4px;
+    }
+}
+
+/* 커스텀 셀렉트 래퍼 */
+.rf-select-wrap {
+    position: relative;
+}
+
+/* 상단 트리거 버튼 (기존 rf-select 스타일 재활용) */
+.rf-select-trigger {
+    width: 100%;
+    text-align: left;
+    padding: 8px 10px;
+    border-radius: 8px;
+    border: 1px solid #000;
+    background: #fff;
+    font-size: 13px;
+    cursor: pointer;
+    box-sizing: border-box;
+
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+/* 라벨 텍스트 */
+.rf-select-label {
+    display: inline-block;
+    font-weight: 700;
+}
+
+/* 화살표 */
+.rf-select-arrow {
+    font-size: 13px;
+    transform: translateY(1px);
+    transition: transform 0.2s;
+}
+
+/* 드롭다운 열렸을 때 화살표 회전 */
+.rf-select-wrap.open .rf-select-arrow {
+    transform: translateY(1px) rotate(180deg);
+}
+
+/* 드롭다운 박스 */
+.rf-select-dropdown {
+    position: absolute;
+    left: 0;
+    top: 100%;
+    margin-top: 4px;
+    width: 100%;
+    background: #fff;
+    border: 1px solid #000;
+    border-radius: 8px;
+    box-sizing: border-box;
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.12);
+    padding: 4px 0;
+    z-index: 50;
+    display: none;
+    /* 기본 감춤 */
+}
+
+/* open 클래스일 때만 보이기 */
+.rf-select-wrap.open .rf-select-dropdown {
+    display: block;
+}
+
+/* 옵션 한 줄 */
+.rf-option {
+    width: 100%;
+    padding: 8px 10px;
+    border: none;
+    background: #fff;
+    font-size: 13px;
+    cursor: pointer;
+    box-sizing: border-box;
+
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+/* 마우스 올렸을 때 강조 (스크린샷 2번째처럼) */
+.rf-option:hover {
+    background: #f5f5f5;
+}
+
+/* 옵션 텍스트 */
+.rf-option-label {
+    flex: 1;
+    text-align: left;
+    font-weight: 700;
+}
+
+/* 체크 표시 */
+.rf-option-check {
+    font-size: 13px;
+    color: #000;
+    opacity: 0;
+    /* 기본 숨김 */
+}
+
+/* 선택된 옵션 강조 */
+.rf-option.rf-option-active {
+    font-weight: 600;
+    color: #000;
+}
+
+/* 선택된 옵션만 체크 보이기 */
+.rf-option.rf-option-active .rf-option-check {
+    opacity: 1;
+}
+
+/* ========= 이용내역 상세 모달 ========= */
+
+.usage-modal-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.45);
+    display: none;
+    /* 기본 숨김 */
+    align-items: center;
+    justify-content: center;
+    z-index: 999;
+}
+
+/* 열렸을 때 */
+.usage-modal-overlay.open {
+    display: flex;
+}
+
+.usage-modal {
+    width: min(520px, 100% - 32px);
+    max-height: calc(100vh - 80px);
+    background: #fff;
+    border-radius: 28px;
+    padding: 28px 30px 24px;
+    box-shadow: 0 18px 40px rgba(0, 0, 0, 0.24);
+    box-sizing: border-box;
+    overflow-y: auto;
+    position: relative;
+}
+
+/* 닫기 버튼 (오른쪽 상단 X) */
+.usage-modal-close {
+    position: absolute;
+    top: 14px;
+    right: 16px;
+    border: none;
+    background: transparent;
+    font-size: 22px;
+    line-height: 1;
+    cursor: pointer;
+}
+
+/* 상단 상호명 */
+.usage-modal-merchant {
+    font-size: 20px;
+    font-weight: 700;
+    margin: 4px 0 14px;
+}
+
+/* 금액 + 영수증 인쇄 버튼 라인 */
+.usage-modal-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 6px;
+}
+
+.usage-modal-amount {
+    font-size: 26px;
+    font-weight: 700;
+}
+
+.usage-modal-amount span {
+    letter-spacing: 0.02em;
+}
+
+/* 영수증 인쇄 버튼 */
+.usage-modal-receipt-btn {
+    padding: 6px 12px;
+    border-radius: 6px;
+    border: 1px solid #d0d0d0;
+    background: #f4f4f4;
+    font-size: 12px;
+    cursor: pointer;
+}
+
+/* 금액 상세 토글 라인 */
+.usage-modal-detail-toggle {
+    margin-top: 6px;
+    border: none;
+    background: transparent;
+    padding: 0;
+    font-size: 13px;
+    color: #555;
+    cursor: pointer;
+}
+
+/* 상세 정보 리스트 */
+.usage-modal-list {
+    margin: 20px 0 0;
+    padding: 0;
+    font-size: 13px;
+}
+
+.usage-modal-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    padding: 6px 0;
+}
+
+.usage-modal-row dt {
+    font-weight: 600;
+    color: #555;
+}
+
+.usage-modal-row dd {
+    margin: 0;
+    font-weight: 700;
+}
+
+/* 모바일에서 여백 조정 */
+@media (max-width: 600px) {
+    .usage-modal {
+        width: calc(100% - 24px);
+        padding: 22px 18px 20px;
+        border-radius: 20px;
+    }
+}
+
+/* 가맹점 정보 박스 (승인상태 밑) */
+.usage-merchant-box {
+    margin-top: 10px;
+    padding: 12px 14px 10px;
+    background: #f5f5f5;
+    border-radius: 10px;
+    font-size: 12px;
+    line-height: 1.5;
+    font-weight: 500;
+}
+
+.usage-merchant-address {
+    margin: 0 0 4px;
+    color: #333;
+}
+
+.usage-merchant-links {
+    margin: 0 0 4px;
+}
+
+.usage-merchant-map,
+.usage-merchant-phone {
+    font-size: 12px;
+    text-decoration: none;
+}
+
+.usage-merchant-map {
+    color: #1f3fd6;
+    margin-right: 6px;
+}
+
+.usage-merchant-map:hover {
+    text-decoration: underline;
+}
+
+.usage-merchant-phone {
+    color: #2b4b9b;
+}
+
+.usage-merchant-detail {
+    margin: 0;
+    border: none;
+    background: transparent;
+    padding: 0;
+    font-size: 11px;
+    color: #555;
+    cursor: pointer;
+}

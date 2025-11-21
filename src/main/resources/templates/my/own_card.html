@@ -1,0 +1,367 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>보유 카드 목록</title>
+
+    <!-- 공통 스타일 -->
+    <link rel="stylesheet" href="../../static/css/common/header.css">
+    <link rel="stylesheet" href="../../static/css/common/footer.css">
+
+    <!-- 이 페이지 전용 -->
+    <link rel="stylesheet" href="../../static/css/member/my/own_card.css">
+</head>
+
+<body>
+    <!-- 공통 헤더 (Thymeleaf 쓰면 아래 유지) -->
+    <div th:replace="~{common/header :: header}"></div>
+
+    <main class="content card-list-content">
+        <section class="card-list-wrap">
+            <!-- 페이지 타이틀 -->
+            <h1 class="page-title">보유 카드 목록</h1>
+            <hr class="page-divider">
+
+            <!-- 좌측: 카드 / 우측: 카드 관리 -->
+            <div class="card-layout">
+                <section class="card-left">
+                    <ul class="owned-card-list">
+                        <!-- 카드 1 -->
+                        <li class="owned-card owned-card-active" data-card-name="현대카드M CHECK"
+                            data-card-number="4***-****-****-470*" data-card-brand="VISA" data-card-alias="M체크"
+                            data-benefit-basic="현대카드M CHECK 기본 혜택 안내" data-benefit-usage="현대카드M CHECK 이용실적 혜택 안내">
+                            <div class="owned-card-main">
+                                <div class="owned-card-thumb"></div>
+                                <div class="owned-card-info">
+                                    <p class="owned-card-name">현대카드M CHECK</p>
+                                    <p class="owned-card-meta">VISA · 4***-****-****-470*</p>
+                                </div>
+                                <button type="button" class="owned-card-arrow" aria-label="카드 상세 이동">
+                                    ▸
+                                </button>
+                            </div>
+                        </li>
+
+                        <!-- 카드 2 -->
+                        <li class="owned-card" data-card-name="BNK PLATINUM" data-card-number="5***-****-****-1234"
+                            data-card-brand="MASTER" data-card-alias="플래티넘" data-benefit-basic="BNK PLATINUM 기본 혜택 안내"
+                            data-benefit-usage="BNK PLATINUM 이용실적 혜택 안내">
+                            <div class="owned-card-main">
+                                <div class="owned-card-thumb"></div>
+                                <div class="owned-card-info">
+                                    <p class="owned-card-name">BNK PLATINUM</p>
+                                    <p class="owned-card-meta">MASTER · 5***-****-****-1234</p>
+                                </div>
+                                <button type="button" class="owned-card-arrow" aria-label="카드 상세 이동">
+                                    ▸
+                                </button>
+                            </div>
+                        </li>
+
+                        <!-- 카드 3 -->
+                        <li class="owned-card" data-card-name="BNK MARKET CARD" data-card-number="6***-****-****-7777"
+                            data-card-brand="LOCAL" data-card-alias="마켓카드" data-benefit-basic="BNK MARKET CARD 기본 혜택 안내"
+                            data-benefit-usage="BNK MARKET CARD 이용실적 혜택 안내">
+                            <div class="owned-card-main">
+                                <div class="owned-card-thumb"></div>
+                                <div class="owned-card-info">
+                                    <p class="owned-card-name">BNK MARKET CARD</p>
+                                    <p class="owned-card-meta">LOCAL · 6***-****-****-7777</p>
+                                </div>
+                                <button type="button" class="owned-card-arrow" aria-label="카드 상세 이동">
+                                    ▸
+                                </button>
+                            </div>
+                        </li>
+                    </ul>
+                </section>
+                <!-- 오른쪽: 카드 관리 + 혜택 -->
+                <section class="card-right">
+                    <!-- 카드 관리 영역 -->
+                    <section class="card-manage">
+                        <!-- 선택된 카드 이름을 보여주고 싶으면 이렇게 -->
+                        <h2 class="section-title" id="cardManageTitle">현대카드M CHECK 카드 관리</h2>
+
+                        <div class="setting-list">
+                            <!-- 별칭 -->
+                            <div class="setting-row">
+                                <span class="setting-label">별칭</span>
+                                <div class="setting-right">
+                                    <span class="setting-value" id="cardAliasText">M체크</span>
+                                    <button type="button" class="setting-action">
+                                        <span class="setting-action-text">설정하기</span>
+                                        <span class="setting-arrow">›</span>
+                                    </button>
+                                </div>
+                            </div>
+
+                            <!-- 카드번호 -->
+                            <div class="setting-row">
+                                <span class="setting-label">카드번호</span>
+                                <div class="setting-right">
+                                    <span class="setting-value" id="cardNumberText">4***-****-****-470*</span>
+                                    <button type="button" class="setting-small-btn card-number-view-btn">
+                                        카드번호보기
+                                    </button>
+
+                                </div>
+                            </div>
+
+                            <div class="setting-row">
+                                <span class="setting-label">카드 비밀번호 설정 · 변경</span>
+                                <button type="button" class="setting-action">
+                                    <span class="setting-action-text">설정하기</span>
+                                    <span class="setting-arrow">›</span>
+                                </button>
+                            </div>
+
+                            <div class="setting-row">
+                                <span class="setting-label">분실신고</span>
+                                <button type="button" class="setting-action">
+                                    <span class="setting-action-text">신고하기</span>
+                                    <span class="setting-arrow">›</span>
+                                </button>
+                            </div>
+
+                            <div class="setting-row">
+                                <span class="setting-label">재발급 신청</span>
+                                <button type="button" class="setting-action">
+                                    <span class="setting-action-text">신청하기</span>
+                                    <span class="setting-arrow">›</span>
+                                </button>
+                            </div>
+
+                            <div class="setting-row">
+                                <span class="setting-label">해지</span>
+                                <button type="button" class="setting-action">
+                                    <span class="setting-action-text">신청하기</span>
+                                    <span class="setting-arrow">›</span>
+                                </button>
+                            </div>
+                        </div>
+                    </section>
+
+                    <!-- 혜택 영역 -->
+                    <section class="card-benefit">
+                        <h2 class="section-title">혜택</h2>
+
+                        <div class="setting-list">
+                            <div class="setting-row">
+                                <span class="setting-label">기본 혜택 안내</span>
+                                <button type="button" class="setting-arrow-only" aria-label="기본 혜택 상세">
+                                    ›
+                                </button>
+                            </div>
+                            <div class="setting-row">
+                                <span class="setting-label">이용실적 혜택 안내</span>
+                                <button type="button" class="setting-arrow-only" aria-label="이용실적 혜택 상세">
+                                    ›
+                                </button>
+                            </div>
+                        </div>
+                    </section>
+                </section>
+            </div>
+        </section>
+    </main>
+
+    <!-- 공통 푸터 -->
+    <div th:replace="~{common/footer :: footer}"></div>
+    <!-- 카드번호 보기 / 본인인증 모달 -->
+    <div class="card-pin-modal-overlay" id="cardPinModal">
+        <div class="card-pin-modal">
+            <!-- 닫기 버튼 -->
+            <button type="button" class="card-pin-modal-close" id="cardPinModalClose" aria-label="닫기">
+                ×
+            </button>
+
+            <!-- 상단 텍스트 -->
+            <h2 class="card-pin-title">본인인증</h2>
+
+            <!-- 카드 정보 -->
+            <div class="card-pin-cardinfo">
+                <p class="card-pin-card-name" id="pinCardName">현대카드M CHECK</p>
+                <p class="card-pin-card-meta">
+                    <span id="pinCardBrand">VISA</span>
+                    <span id="pinCardNumber">4************470*</span>
+                </p>
+            </div>
+
+            <!-- 비밀번호 입력 -->
+            <div class="card-pin-field">
+                <label for="cardPinInput" class="card-pin-label">카드 비밀번호 앞 2자리</label>
+                <input type="password" id="cardPinInput" class="card-pin-input" maxlength="2" inputmode="numeric"
+                    autocomplete="off">
+                <!-- 우측 링크 -->
+                <button type="button" class="card-pin-change">
+                    카드 비밀번호 변경하기 &gt;
+                </button>
+            </div>
+
+            <!-- 확인 버튼 -->
+            <button type="button" class="card-pin-submit" id="cardPinSubmit" disabled>
+                확인
+            </button>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+
+            // 왼쪽 카드 리스트
+            const cardItems = document.querySelectorAll('.owned-card');
+
+            // 오른쪽에 표시할 요소들
+            const cardManageTitle = document.getElementById('cardManageTitle');
+            const cardAliasText = document.getElementById('cardAliasText');
+            const cardNumberText = document.getElementById('cardNumberText');
+            const benefitBasicText = document.getElementById('benefitBasicText');
+            const benefitUsageText = document.getElementById('benefitUsageText');
+
+            // 카드 하나 클릭했을 때 처리
+            cardItems.forEach(function (card) {
+                card.addEventListener('click', function () {
+
+                    // 1) active 클래스 갈아끼우기
+                    cardItems.forEach(function (c) {
+                        c.classList.remove('owned-card-active');
+                    });
+                    card.classList.add('owned-card-active');
+
+                    // 2) data- 속성에서 정보 꺼내기
+                    const name = card.dataset.cardName || '';
+                    const number = card.dataset.cardNumber || '';
+                    const alias = card.dataset.cardAlias || '';
+                    const benefitBasic = card.dataset.benefitBasic || '';
+                    const benefitUsage = card.dataset.benefitUsage || '';
+
+                    // 3) 오른쪽 영역 텍스트 변경
+                    if (cardManageTitle && name) {
+                        cardManageTitle.textContent = name + ' 카드 관리';
+                    }
+                    if (cardAliasText) {
+                        cardAliasText.textContent = alias || '-';
+                    }
+                    if (cardNumberText && number) {
+                        cardNumberText.textContent = number;
+                    }
+                    if (benefitBasicText && benefitBasic) {
+                        benefitBasicText.textContent = benefitBasic;
+                    }
+                    if (benefitUsageText && benefitUsage) {
+                        benefitUsageText.textContent = benefitUsage;
+                    }
+
+                    // 필요하면 여기서 선택 카드 기준으로 다른 기능도 호출 가능
+                    // 예: console.log('선택 카드 코드:', card.dataset.cardCode);
+
+
+                });
+            });
+            // ========= 카드번호 보기 모달 =========
+            const pinModalOverlay = document.getElementById('cardPinModal');
+            const pinModalClose = document.getElementById('cardPinModalClose');
+            const pinCardNameEl = document.getElementById('pinCardName');
+            const pinCardBrandEl = document.getElementById('pinCardBrand');
+            const pinCardNumberEl = document.getElementById('pinCardNumber');
+            const pinInput = document.getElementById('cardPinInput');
+            const pinSubmit = document.getElementById('cardPinSubmit');
+
+            // "카드번호보기" 버튼들
+            const cardNumberBtns = document.querySelectorAll('.card-number-view-btn');
+
+            function openPinModal() {
+                if (!pinModalOverlay) return;
+
+                // 현재 선택된 카드(왼쪽 리스트에서 active) 기준으로 정보 채우기
+                const activeCard = document.querySelector('.owned-card.owned-card-active');
+
+                if (activeCard) {
+                    const name = activeCard.dataset.cardName || '';
+                    const brand = activeCard.dataset.cardBrand || '';
+                    const number = activeCard.dataset.cardNumber || '';
+
+                    if (pinCardNameEl) pinCardNameEl.textContent = name;
+                    if (pinCardBrandEl) pinCardBrandEl.textContent = brand;
+                    if (pinCardNumberEl) pinCardNumberEl.textContent = number;
+                }
+
+                // 입력 초기화 & 버튼 비활성화
+                if (pinInput) {
+                    pinInput.value = '';
+                }
+                if (pinSubmit) {
+                    pinSubmit.disabled = true;
+                    pinSubmit.classList.remove('active');
+                }
+
+                pinModalOverlay.classList.add('open');
+                if (pinInput) {
+                    setTimeout(() => pinInput.focus(), 50);
+                }
+            }
+
+            function closePinModal() {
+                if (!pinModalOverlay) return;
+                pinModalOverlay.classList.remove('open');
+            }
+
+            // 카드번호보기 버튼 클릭 → 모달 오픈
+            cardNumberBtns.forEach(btn => {
+                btn.addEventListener('click', function (e) {
+                    e.preventDefault();
+                    openPinModal();
+                });
+            });
+
+            // X 버튼 클릭 → 닫기
+            if (pinModalClose) {
+                pinModalClose.addEventListener('click', function () {
+                    closePinModal();
+                });
+            }
+
+            // 배경 클릭 시 닫기 (모달 바깥 영역만)
+            if (pinModalOverlay) {
+                pinModalOverlay.addEventListener('click', function (e) {
+                    if (e.target === pinModalOverlay) {
+                        closePinModal();
+                    }
+                });
+            }
+
+            // 입력값 2자리 채워지면 확인 버튼 활성화
+            if (pinInput && pinSubmit) {
+                pinInput.addEventListener('input', function () {
+                    // 숫자만 허용
+                    this.value = this.value.replace(/[^0-9]/g, '').slice(0, 2);
+
+                    if (this.value.length === 2) {
+                        pinSubmit.disabled = false;
+                        pinSubmit.classList.add('active');
+                    } else {
+                        pinSubmit.disabled = true;
+                        pinSubmit.classList.remove('active');
+                    }
+                });
+
+                // 확인 버튼 클릭 시 처리 (추후 실제 검증 로직 연결)
+                pinSubmit.addEventListener('click', function () {
+                    if (pinSubmit.disabled) return;
+
+                    const pin = pinInput.value;
+                    console.log('입력된 카드 비밀번호 앞 2자리:', pin);
+
+                    // TODO: 서버에 검증 요청 후 성공/실패 처리
+                    // 일단은 모달만 닫아두자
+                    closePinModal();
+                });
+            }
+        });
+    </script>
+
+</body>
+
+</html>

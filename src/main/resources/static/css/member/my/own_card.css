@@ -1,0 +1,411 @@
+/* 전체 레이아웃 공통 (다른 페이지와 톤 맞추기) */
+.content.card-list-content {
+    max-width: 1200px;
+    margin: 150px auto 120px;
+    padding: 0 24px 80px;
+    box-sizing: border-box;
+    font-size: 14px;
+}
+
+/* 페이지 타이틀 */
+.page-title {
+    text-align: center;
+    font-size: 24px;
+    font-weight: 700;
+    letter-spacing: 0.02em;
+    margin-bottom: 18px;
+}
+
+.page-divider {
+    border: none;
+    border-top: 1px solid #222;
+    margin: 0 0 32px;
+}
+
+/* 좌우 2열 레이아웃 */
+.card-layout {
+    display: flex;
+    gap: 40px;
+    align-items: flex-start;
+}
+
+/* 왼쪽 카드 영역 */
+.card-left {
+    flex: 0 0 340px;
+}
+
+/* 오른쪽 카드관리/혜택 영역 */
+.card-right {
+    flex: 1;
+}
+
+/* 보유 카드 카드박스 */
+.owned-card {
+    background: #fff;
+    border-radius: 18px;
+    border: 1px solid #e2e2e2;
+    box-shadow: 0 10px 24px rgba(0, 0, 0, 0.04);
+    padding: 18px 18px;
+    box-sizing: border-box;
+}
+
+.owned-card-main {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+}
+
+/* 카드 썸네일 (이미지 대신 배경으로만 표현) */
+.owned-card-thumb {
+    width: 72px;
+    height: 110px;
+    border-radius: 10px;
+    background: linear-gradient(135deg, #4d9fff, #e84c6a);
+    flex-shrink: 0;
+}
+
+/* 카드 텍스트 */
+.owned-card-info {
+    flex: 1;
+}
+
+.owned-card-name {
+    font-size: 16px;
+    font-weight: 600;
+    margin: 0 0 4px;
+}
+
+.owned-card-meta {
+    font-size: 12px;
+    color: #666;
+    margin: 0;
+}
+
+/* 오른쪽 화살표 버튼 */
+.owned-card-arrow {
+    border: none;
+    background: transparent;
+    font-size: 16px;
+    cursor: pointer;
+    padding: 4px 0 4px 4px;
+}
+
+/* 오른쪽 섹션 타이틀 */
+.section-title {
+    font-size: 16px;
+    font-weight: 700;
+    margin: 4px 0 10px;
+}
+
+/* 설정 리스트 공통 */
+.setting-list {
+    border-top: 1px solid #f0f0f0;
+}
+
+/* 한 줄 */
+.setting-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 0;
+    border-bottom: 1px solid #f5f5f5;
+}
+
+.setting-row:last-child {
+    border-bottom: none;
+}
+
+/* 왼쪽 라벨 */
+.setting-label {
+    font-size: 13px;
+}
+
+/* 오른쪽 텍스트/버튼 묶음 */
+.setting-right {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+/* 카드번호 텍스트 */
+.setting-value {
+    font-size: 13px;
+}
+
+/* 우측 큰 액션 버튼 (텍스트 + 화살표) */
+.setting-action {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    border: none;
+    background: transparent;
+    cursor: pointer;
+    font-size: 12px;
+    padding: 4px 0;
+}
+
+.setting-action-text {
+    text-decoration: underline;
+}
+
+.setting-arrow {
+    font-size: 14px;
+    transform: translateY(1px);
+}
+
+/* 작은 회색 버튼 (카드번호보기) */
+.setting-small-btn {
+    border: 1px solid #cfcfcf;
+    background: #f5f5f5;
+    border-radius: 4px;
+    padding: 4px 8px;
+    font-size: 11px;
+    cursor: pointer;
+}
+
+/* 화살표만 있는 버튼 (혜택 쪽) */
+.setting-arrow-only {
+    border: none;
+    background: transparent;
+    font-size: 14px;
+    cursor: pointer;
+}
+
+/* 호버 시 라인 강조 */
+.setting-row:hover {
+    background: #fafafa;
+}
+
+/* 섹션 간 여백 */
+.card-manage {
+    margin-bottom: 32px;
+}
+
+/* 반응형 처리 */
+@media (max-width: 960px) {
+    .card-layout {
+        flex-direction: column;
+    }
+
+    .card-left {
+        flex-basis: auto;
+        width: 100%;
+    }
+
+    .card-right {
+        width: 100%;
+    }
+}
+
+/* 보유 카드 리스트 */
+.owned-card-list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    /* 카드들 사이 간격 */
+}
+
+/* 각 카드 한 줄 (기존 owned-card 스타일 그대로 사용) */
+.owned-card {
+    background: #fff;
+    border-radius: 18px;
+    border: 1px solid #e2e2e2;
+    box-shadow: 0 10px 24px rgba(0, 0, 0, 0.04);
+    padding: 14px 16px;
+    box-sizing: border-box;
+    cursor: pointer;
+}
+
+/* 선택된 카드 강조 */
+.owned-card-active {
+    border-color: #111;
+    box-shadow: 0 12px 28px rgba(0, 0, 0, 0.08);
+}
+
+/* 카드 내용 레이아웃 (이전과 동일) */
+.owned-card-main {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+}
+
+.owned-card-thumb {
+    width: 72px;
+    height: 110px;
+    border-radius: 10px;
+    background: linear-gradient(135deg, #4d9fff, #e84c6a);
+    flex-shrink: 0;
+}
+
+.owned-card-info {
+    flex: 1;
+}
+
+.owned-card-name {
+    font-size: 16px;
+    font-weight: 600;
+    margin: 0 0 4px;
+}
+
+.owned-card-meta {
+    font-size: 12px;
+    color: #666;
+    margin: 0;
+}
+
+.owned-card-arrow {
+    border: none;
+    background: transparent;
+    font-size: 16px;
+    cursor: pointer;
+    padding: 4px 0 4px 4px;
+}
+
+/* ========= 카드번호 보기 / 본인인증 모달 ========= */
+
+.card-pin-modal-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.45);
+    display: none;
+    /* 기본 숨김 */
+    align-items: center;
+    justify-content: center;
+    z-index: 999;
+}
+
+.card-pin-modal-overlay.open {
+    display: flex;
+}
+
+.card-pin-modal {
+    width: min(640px, 100% - 32px);
+    max-height: calc(100vh - 80px);
+    background: #fff;
+    border-radius: 28px;
+    padding: 32px 40px 32px;
+    box-shadow: 0 18px 40px rgba(0, 0, 0, 0.24);
+    box-sizing: border-box;
+    position: relative;
+    overflow-y: auto;
+}
+
+/* 닫기 X 버튼 */
+.card-pin-modal-close {
+    position: absolute;
+    top: 14px;
+    right: 18px;
+    border: none;
+    background: transparent;
+    font-size: 20px;
+    cursor: pointer;
+}
+
+/* 제목 */
+.card-pin-title {
+    font-size: 18px;
+    font-weight: 700;
+    margin: 4px 0 20px;
+}
+
+/* 카드 정보 영역 */
+.card-pin-cardinfo {
+    margin-bottom: 24px;
+}
+
+.card-pin-card-name {
+    font-size: 20px;
+    font-weight: 700;
+    margin: 0 0 4px;
+}
+
+.card-pin-card-meta {
+    margin: 0;
+    font-size: 14px;
+    color: #555;
+    font-weight: 600;
+}
+
+.card-pin-card-meta span+span {
+    margin-left: 4px;
+}
+
+/* 비밀번호 입력 영역 */
+.card-pin-field {
+    margin-top: 12px;
+    padding-top: 16px;
+    border-top: 1px solid #f0f0f0;
+    position: relative;
+}
+
+.card-pin-label {
+    display: block;
+    font-size: 14px;
+    color: #444;
+    margin-bottom: 10px;
+}
+
+.card-pin-input {
+    width: 100%;
+    border: none;
+    border-bottom: 1px solid #ddd;
+    padding: 6px 0;
+    font-size: 18px;
+    letter-spacing: 0.4em;
+    text-indent: 0.4em;
+    /* 숫자 사이 살짝 띄워보이게 */
+    outline: none;
+}
+
+.card-pin-input:focus {
+    border-bottom-color: #111;
+}
+
+/* 우측 "카드 비밀번호 변경하기 >" */
+.card-pin-change {
+    border: none;
+    background: transparent;
+    font-size: 12px;
+    color: #555;
+    cursor: pointer;
+    position: absolute;
+    right: 0;
+    bottom: -20px;
+}
+
+/* 확인 버튼 */
+.card-pin-submit {
+    width: 260px;
+    max-width: 100%;
+    margin: 56px auto 0;
+    display: block;
+    padding: 14px 0;
+    border-radius: 10px;
+    border: none;
+    font-size: 15px;
+    font-weight: 600;
+    cursor: default;
+    background: #e5e5e5;
+    color: #999;
+}
+
+/* 활성화 상태 */
+.card-pin-submit.active {
+    background: #111;
+    color: #fff;
+    cursor: pointer;
+}
+
+@media (max-width: 600px) {
+    .card-pin-modal {
+        padding: 24px 20px 24px;
+        border-radius: 20px;
+    }
+
+    .card-pin-submit {
+        width: 100%;
+    }
+}
