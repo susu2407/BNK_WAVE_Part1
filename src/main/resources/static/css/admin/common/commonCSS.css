@@ -19,7 +19,8 @@ body {
 
 .main-container {
     max-width: 1920px;
-    margin: 10px;
+    min-height: 800px;
+    margin: 10px auto;
 }
 
 #main-content {
