@@ -38,6 +38,7 @@
     border: 1px solid #D9D9D9;
     height: 35px;
     font-weight: 600;
+    padding: 5px;
 }
 .action-bar select  {width: 80px;}
 .action-bar input   {width: 200px;}
