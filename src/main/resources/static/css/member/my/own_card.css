@@ -409,3 +409,56 @@
         width: 100%;
     }
 }
+
+/* ========= 인증 완료 알림 모달 ========= */
+
+.card-pin-confirm-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.45);
+    display: none;
+    align-items: center;
+    justify-content: center;
+    z-index: 1000;
+    /* PIN 모달보다 위로 */
+}
+
+.card-pin-confirm-overlay.open {
+    display: flex;
+}
+
+.card-pin-confirm {
+    width: 260px;
+    background: #fff;
+    border-radius: 18px;
+    box-shadow: 0 12px 30px rgba(0, 0, 0, 0.25);
+    overflow: hidden;
+    text-align: center;
+    font-size: 14px;
+}
+
+/* 윗부분 텍스트 */
+.card-pin-confirm-message {
+    margin: 18px 0;
+    padding: 0 16px;
+}
+
+/* 구분선 */
+.card-pin-confirm-message+.card-pin-confirm-ok {
+    border-top: 1px solid #e5e5e5;
+}
+
+/* 아래 확인 버튼 */
+.card-pin-confirm-ok {
+    width: 100%;
+    border: none;
+    background: #fff;
+    padding: 12px 0;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+.card-pin-confirm-ok:hover {
+    background: #f7f7f7;
+}
