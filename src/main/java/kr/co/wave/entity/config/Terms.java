@@ -59,4 +59,8 @@ public class Terms {
     @Column(name="STATUS")
     private String termStatus;
 
+    public void toggleStatus(String status) {
+        this.termStatus = status;
+    }
+
 }

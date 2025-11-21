@@ -245,9 +245,6 @@ public class CardService {
         cardApprovalRepository.save(cardApproval);
     }
 
-
-
-
     // 카드 상품 가입
     @Transactional
     public void applyCard(CardApproval cardApproval){
