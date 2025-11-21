@@ -201,7 +201,13 @@
 
                 <!-- 하단 고정 버튼 -->
                 <div class="floating-apply">
-                    <button type="button" class="btn-main">카드신청</button>
+
+                    <form th:action="@{/card/register1}" method="get">
+                        <input type="hidden" name="cardId" th:value="${cardItem.card.cardId}">
+                    <button type="submit" class="btn-main">
+                        카드신청
+                    </button>
+                    </form>
                     <button type="button" class="btn-sub">뒤로가기</button>
                 </div>
             </div>

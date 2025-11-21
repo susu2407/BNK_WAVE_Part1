@@ -15,13 +15,13 @@
                     <h1 class="apply-title">카드 신청</h1>
 
                     <p class="apply-desc">
-                        <strong>레전드 Ganadi, the due...</strong><br>
-                        카드 신청 페이지 입니다.
+                        <strong th:text="${cardItem.card.name}">레전드 Ganadi, the due...</strong><br>
+                        카드 신청페이지 입니다람쥐
                     </p>
 
                     <div class="apply-card-visual">
-                        <img src="https://static11.samsungcard.com/wcms/home/scard/image/personal/IDON_AAP1731.gif"
-                             alt="십레전드 Ganadi, the due...">
+                        <img th:src="@{'/' + ${cardItem.card.thumbnail}}"
+                             th:alt="${cardItem.card.name}">
                     </div>
                     <p class="apply-info">카드 신청시 본인 확인이 필요합니다.</p>
 
@@ -29,7 +29,12 @@
                         <span class="guide-highlight">신분증</span>과 <span class="guide-highlight">본인 명의의 계좌</span>를 준비해 주세요.
                     </p>
 
-            <button type="button" class="apply-submit">신청 시작</button>
+                    <form th:action="@{/card/register2}" method="get">
+                        <input type="hidden" name="cardId" th:value="${cardItem.card.cardId}">
+            <button type="submit" class="apply-submit">
+                신청 시작
+            </button>
+                    </form>
         </div>
         </section>
         </div>
