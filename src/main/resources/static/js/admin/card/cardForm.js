@@ -48,4 +48,24 @@ document.addEventListener("DOMContentLoaded", function () {
         }
     });
 
+    // 날짜 : 2025-11-21
+    // 이름 : 이수연
+    // 내용 : 숫자 입력할 때에, 3자리마다 쉽표 생성
+    const priceInput = document.getElementsByClassName("product-num-input");
+
+    Array.from(priceInput).forEach(function (input) {
+        input.addEventListener("input", function () {
+            // 숫자만 남기기
+            let value = this.value.replace(/[^0-9]/g, "");
+
+            // 3자리 콤마 적용
+            this.value = value.replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+
+            // 벡엔드로 넘길 때(콤마 제거)
+            const rawNumber = this.value.replace(/,/g, "");
+        });
+    });
+
+
+
 });
