@@ -18,7 +18,7 @@
             <div class="action-bar">
                 <!-- 등록버튼 -->
                 <!-- 검색 -->
-                <form method="get" th:action="@{/admin/approval/card/list}">
+                <form method="get" th:action="@{/admin/approval/terms/list}">
                     <div th:with="st=${param.searchType != null ? param.searchType[0] : ''}">
                         <select name="searchType" id="searchType">
                             <option value="" th:selected="${st == ''}">전체</option>
@@ -62,35 +62,36 @@
             <div class="content">
                 <table>
                     <thead>
-                        <tr>
-                            <th>No</th>
-                            <th>카드번호</th>
-                            <th>사유</th>
-                            <th>요청일</th>
-                            <th>결재일</th>
-                            <th>상태</th>
-                            <th>관리</th>
-                        </tr>
+                    <tr>
+                        <th>No</th>
+                        <th>약관번호</th>
+                        <th>사유</th>
+                        <th>요청일</th>
+                        <th>결재일</th>
+                        <th>상태</th>
+                        <th>관리</th>
+                    </tr>
                     </thead>
                     <tbody>
-                        <!-- 페이지 객체의 content 리스트를 반복 -->
-                        <tr th:each="approval, stat : ${cardApprovalList.content}">
-                            <td>[[${cardApprovalList.totalElements - (cardApprovalList.number * cardApprovalList.size + stat.index)}]]</td>
-                            <td>
-                                [[${approval.cardId}]]
-                            </td>
-                            <td>[[${approval.reason}]]</td>
-                            <td>[[${#temporals.format(approval.requestedAt, 'yyyy-MM-dd')}]]</td>
-                            <td>[[${#temporals.format(approval.approvedAt, 'yyyy-MM-dd')}]]</td>
-                            <td>[[${approval.status}]]</td>
-                            <td th:if="${approval.status == '대기'}">
-                                <a th:href="@{/admin/approval/card/approval(cardId=${approval.approvalId})}">승인</a> <br>
-                                <a th:href="@{/admin/approval/card/rejection(cardId=${approval.approvalId})}">반려</a> <br>
-                            </td>
-                            <td th:unless="${approval.status == '대기' }">
-                                <a>결재완료 - [[${approval.status}]]</a>
-                            </td>
-                        </tr>
+                    <!-- 페이지 객체의 content 리스트를 반복 -->
+                    <tr th:each="approval, stat : ${termsApprovalList.content}">
+                        <td>[[${termsApprovalList.totalElements - (termsApprovalList.number * termsApprovalList.size + stat.index)}]]</td>
+                        <td>
+                            [[${approval.termsId}]]
+                        </td>
+                        <td>[[${approval.reason}]]</td>
+                        <td>[[${#temporals.format(approval.requestedAt, 'yyyy-MM-dd')}]]</td>
+                        <td>[[${#temporals.format(approval.approvedAt, 'yyyy-MM-dd')}]]</td>
+                        <td>[[${approval.status}]]</td>
+
+                        <td th:if="${approval.status == '대기'}">
+                            <a th:href="@{/admin/approval/terms/approval(termsId=${approval.termsApprovalId})}">승인</a> <br>
+                            <a th:href="@{/admin/approval/terms/rejection(termsId=${approval.termsApprovalId})}">반려</a> <br>
+                        </td>
+                        <td th:unless="${approval.status == '대기' }">
+                            <a>결재완료 - [[${approval.status}]]</a>
+                        </td>
+                    </tr>
                     </tbody>
                 </table>
             </div>
@@ -98,7 +99,7 @@
 
             <!-- 페이징 -->
             <div class="pagination" th:with="
-                page=${cardApprovalList},
+                page=${termsApprovalList},
                 now=${page.number},
                 total=${page.totalPages},
                 size=${page.size},

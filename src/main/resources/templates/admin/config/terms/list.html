@@ -17,7 +17,7 @@
             <!-- 주요 액션 영역 -->
             <div class="action-bar">
                 <!-- 검색 -->
-                <form method="get" th:action="@{/admin/card/list}">
+                <form method="get" th:action="@{/templates/admin/config/terms/list}">
                     <div th:with="st=${param.searchType != null ? param.searchType[0] : ''}">
                         <select name="searchType" id="searchType">
                             <option value="" th:selected="${st == ''}">전체</option>
@@ -35,7 +35,7 @@
                 </form>
                 <!-- 등록버튼 -->
                 <div class="btn register-btn">
-                    <a th:href="@{/admin/config/policy/register}">약관 등록</a>
+                    <a th:href="@{/templates/admin/config/terms/register}">약관 등록</a>
                 </div>
             </div>
 
@@ -46,18 +46,47 @@
                     <th>약관명</th>
                     <th>약관내용</th>
                     <th>필수여부</th>
+                    <th>상태</th>
                     <th>PDF파일</th>
+                    <th>미리보기</th>
+                    <th>관리</th>
                 </tr>
                 </thead>
                 <tbody>
-                    <tr th:each="term, stat : ${termsList.content}">
+                    <tr th:each="item, stat : ${termsList.content}">
                         <td>[[${termsList.totalElements - (termsList.number * termsList.size + stat.index)}]]</td>
-                        <td>[[${term.title}]]</td>
-                        <td>[[${term.content}]]</td>
-                        <td>[[${term.isRequired}]]</td>
-                        <td><a th:href="@{/terms/download/{id}(id=${term.termsId})}">
-                            [[${term.originalName}]]
+                        <td>[[${item.term.title}]]</td>
+                        <td>[[${item.term.content}]]</td>
+                        <td>[[${item.term.isRequired}]]</td>
+                        <td>[[${item.term.termStatus}]]</td>
+                        <td><a th:href="@{/terms/download/{id}(id=${item.term.termsId})}">
+                            [[${item.term.originalName}]]
                         </a></td>
+                        <td>
+                        <!-- 새 창에서 PDF 파일 열기 위해 target="_blank" 추가 -->
+                        <a th:href="@{/terms/pdfView/{id}(id=${item.term.termsId})}" target="_blank">
+                            [[${item.term.originalName}]]
+                        </a>
+                        <td th:if="${item.term.termStatus == '비활성'}">
+                            <a th:href="@{/admin/config/terms/view(termsId=${item.term.termsId})}">수정</a> <br>
+                            <a th:href="@{/admin/config/terms/view(termsId=${item.term.termsId})}">삭제</a> <br>
+                            <a th:href="@{/admin/config/terms/activate(termsId=${item.term.termsId})}"
+                               onclick="return confirm('활성화하면 더 이상 상품 정보를 변경할 수 없습니다.\n계속 진행하시겠습니까?');">
+                                활성화
+                            </a>
+                        </td>
+                        <td th:if="${item.term.termStatus == '활성'}">
+                            <div th:if="${item.approvalStatus == '결재진행중'}">
+                                <a>[[${item.approvalStatus}]]</a>
+                            </div>
+                            <div th:unless="${item.approvalStatus == '결재진행중'}">
+                                <a href="#"
+                                   th:onclick="|openInactivateModal(${item.term.termsId})|">
+                                    비활성화
+                                </a>
+                            </div>
+                        </td>
+                    </td>
                     </tr>
                 </tbody>
             </table>
@@ -98,7 +127,39 @@
             </div>
         </div>
     </div>
+
+    <div id="inactivateModal" style="display:none; position:fixed;
+    top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.4);">
+
+        <div style="background:white; padding:20px; width:400px; margin:100px auto; border-radius:8px;">
+            <h3>약관 비활성화</h3>
+
+            <form id="inactivateForm" th:action="@{/admin/config/terms/inactivate}" method="post">
+                <input type="hidden" name="termsId" id="modalTermsId">
+
+                <label>비활성화 사유</label><br>
+                <textarea name="reason" required style="width:100%; height:80px;"></textarea>
+
+                <div style="margin-top:15px; text-align:right;">
+                    <button type="button" onclick="closeInactivateModal()">취소</button>
+                    <button type="submit">확인</button>
+                </div>
+            </form>
+        </div>
+    </div>
 </main>
 <div th:replace="~{admin/common/footer :: footer}"></div>
+
+<script>
+    function openInactivateModal(termsId) {
+        document.getElementById('modalTermsId').value = termsId;
+        document.getElementById('inactivateModal').style.display = 'block';
+    }
+
+    function closeInactivateModal() {
+        document.getElementById('inactivateModal').style.display = 'none';
+    }
+</script>
+
 </body>
 </html>
