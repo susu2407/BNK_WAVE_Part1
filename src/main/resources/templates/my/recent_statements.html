@@ -4,10 +4,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>이용내역 명세서</title>
+    <title>최근 이용 내역</title>
 
     <!-- 이 페이지 전용 스타일 -->
     <link rel="stylesheet" href="../../static/css/member/my/recent_statements.css">
+    <!-- 공통 헤더/푸터 -->
     <link rel="stylesheet" href="../../static/css/common/header.css">
     <link rel="stylesheet" href="../../static/css/common/footer.css">
     <link rel="stylesheet" th:href="@{/css/member/my/recent_statements.css}">
@@ -29,14 +30,31 @@
 
         <!-- 좌측 필터 + 우측 이용내역 2컬럼 -->
         <section class="recent-layout">
-            <!-- 왼쪽: 필터 패널 -->
+            <!-- 왼쪽 패널 -->
             <aside class="recent-filter">
                 <!-- 보유카드 -->
                 <div class="rf-block">
                     <p class="rf-title">보유카드</p>
-                    <button type="button" class="rf-select">
-                        보유카드 전체 <span class="rf-select-arrow">▼</span>
-                    </button>
+                    <div class="rf-select-wrap" id="cardFilterSelect">
+                        <!-- 보유카드 메뉴 눌렀을 때 버튼 -->
+                        <button type="button" class="rf-select-trigger" id="btnCardFilter">
+                            <span class="rf-select-label" id="cardFilterLabel">보유카드 전체</span>
+                            <span class="rf-select-arrow">▾</span>
+                        </button>
+
+                        <!-- 드롭다운 카드 메뉴 -->
+                        <div class="rf-select-dropdown" id="cardFilterDropdown">
+                            <button type="button" class="rf-option rf-option-active" data-value="ALL">
+                                <span class="rf-option-label">보유카드 전체</span>
+                                <span class="rf-option-check">✔</span>
+                            </button>
+
+                            <button type="button" class="rf-option" data-value="M_CHECK_470">
+                                <span class="rf-option-label">현대카드M CHECK 4***-****-****-470*</span>
+                                <span class="rf-option-check">✔</span>
+                            </button>
+                        </div>
+                    </div>
                 </div>
 
                 <!-- 승인 상태 -->
@@ -50,7 +68,10 @@
 
                 <!-- 이용기간 -->
                 <div class="rf-block">
-                    <p class="rf-title">이용기간<small class="rf-caption"> (최근 3개월까지 조회 가능)</small></p>
+                    <p class="rf-title">
+                        이용기간
+                        <small class="rf-caption">(최근 3개월까지 조회 가능)</small>
+                    </p>
                     <div class="filter-chip-row" data-select="single">
                         <button type="button" class="filter-chip filter-chip-active">당일</button>
                         <button type="button" class="filter-chip">1개월</button>
@@ -88,7 +109,7 @@
                 </p>
             </aside>
 
-            <!-- 오른쪽: 이용내역 (기존 usage-history 재사용) -->
+            <!-- 오른쪽: 이용내역 -->
             <section class="usage-history">
                 <header class="usage-header">
                     <div class="usage-header-left">
@@ -157,17 +178,77 @@
                     </li>
                 </ul>
 
-                <!-- 3개월까지 더보기 바 -->
-                <button type="button" class="usage-more-bar">
-                    3개월까지 더보기
-                </button>
+                <!-- 3개월까지 더보기 + 이용안내 -->
+                <div class="usage-more-wrap">
+                    <button type="button" class="usage-more-btn">
+                        이용내역 더보기
+                    </button>
+                </div>
 
-                <!-- 이용안내 링크 -->
-                <a href="#" class="usage-help-link">이용안내</a>
             </section>
         </section>
     </main>
 
+    <!-- 이용내역 상세 모달 -->
+    <div class="usage-modal-overlay" id="usageModal">
+        <div class="usage-modal">
+            <button type="button" class="usage-modal-close" id="usageModalClose" aria-label="닫기">×</button>
+
+            <!-- 상단 상호명 -->
+            <h2 class="usage-modal-merchant" id="usageModalMerchant">씨유수비사거리점</h2>
+
+            <!-- 금액 / 영수증 인쇄 -->
+            <div class="usage-modal-top">
+                <p class="usage-modal-amount">
+                    <span id="usageModalAmount">5,100</span>원
+                </p>
+            </div>
+
+            <!-- 상세 정보 리스트 -->
+            <dl class="usage-modal-list">
+                <div class="usage-modal-row">
+                    <dt>거래일자</dt>
+                    <dd id="usageModalDate">25. 11. 18 · 18:26</dd>
+                </div>
+                <div class="usage-modal-row">
+                    <dt>결제구분</dt>
+                    <dd id="usageModalPayType">일시불</dd>
+                </div>
+                <div class="usage-modal-row">
+                    <dt>이용금액</dt>
+                    <dd id="usageModalAmountDetail">5,100원</dd>
+                </div>
+                <div class="usage-modal-row">
+                    <dt>결제카드</dt>
+                    <dd id="usageModalCard">현대카드M CHECK</dd>
+                </div>
+                <div class="usage-modal-row">
+                    <dt>카드 소지자</dt>
+                    <dd id="usageModalOwner">본인</dd>
+                </div>
+                <div class="usage-modal-row">
+                    <dt>승인번호</dt>
+                    <dd id="usageModalAuthNo">00325236</dd>
+                </div>
+                <div class="usage-modal-row">
+                    <dt>승인상태</dt>
+                    <dd id="usageModalStatus">정상</dd>
+                </div>
+            </dl>
+            <div class="usage-merchant-box">
+                <p class="usage-merchant-address">
+                    서울 중구 세종대로 39, 7층 (남대문로4가, 대한서울상공회의소)
+                </p>
+                <p class="usage-merchant-links">
+                    <a href="#" class="usage-merchant-map">지도보기</a>
+                    <a href="tel:02-368-0800" class="usage-merchant-phone">02-368-0800</a>
+                </p>
+                <button type="button" class="usage-merchant-detail">
+                    가맹점 상세 ▾
+                </button>
+            </div>
+        </div>
+    </div>
 
     <div id="footer"></div>
     <div th:replace="~{common/footer :: footer}"></div>
@@ -211,7 +292,7 @@
                 });
             }
 
-            // 좌측 필터칩(승인 상태 / 이용기간 / 이용 지역 / 이용 구분) 단일 선택
+            // 좌측 필터칩 단일 선택
             document.querySelectorAll('.filter-chip-row[data-select="single"]').forEach(function (row) {
                 row.addEventListener('click', function (e) {
                     const btn = e.target.closest('.filter-chip');
@@ -223,10 +304,162 @@
                     btn.classList.add('filter-chip-active');
 
                     console.log('선택된 값:', btn.textContent.trim());
-                    // TODO: 여기서 선택 값 읽어서 실제 필터 파라미터로 사용하면 됨
+                    // TODO: 여기서 선택 값 읽어서 실제 필터 파라미터로 사용
                 });
             });
 
+            // ==========================
+            // 이용내역 15개씩 표시 + 더보기
+            // ==========================
+            const usageItems = document.querySelectorAll('.usage-list .usage-item');
+            const moreBtn = document.querySelector('.usage-more-btn');
+            const PAGE_SIZE = 15;   // 한 번에 보여줄 건수
+
+            if (usageItems.length > 0 && moreBtn) {
+                let visibleCount = Math.min(PAGE_SIZE, usageItems.length);
+
+                // 현재 visibleCount까지만 보이게 처리
+                function updateUsageVisibility() {
+                    usageItems.forEach((item, index) => {
+                        item.style.display = (index < visibleCount) ? 'block' : 'none';
+                    });
+
+                    // 모두 보이면 버튼 숨기기
+                    if (visibleCount >= usageItems.length) {
+                        moreBtn.style.display = 'none';
+                    } else {
+                        moreBtn.style.display = 'inline-block';
+                    }
+                }
+
+                // 초기 상태 설정 (최대 15개만 보이게)
+                updateUsageVisibility();
+
+                // 더보기 클릭 시 15개 추가
+                moreBtn.addEventListener('click', function () {
+                    visibleCount = Math.min(visibleCount + PAGE_SIZE, usageItems.length);
+                    updateUsageVisibility();
+                });
+
+            } else if (moreBtn) {
+                // 항목이 0개거나 버튼만 있을 때는 버튼 숨김
+                moreBtn.style.display = 'none';
+            }
+
+            // ==========================
+            // 보유카드 셀렉트 드롭다운
+            // ==========================
+            const selectWrap = document.getElementById('cardFilterSelect');
+            const triggerBtn = document.getElementById('btnCardFilter');
+            const dropdown = document.getElementById('cardFilterDropdown');
+            const labelEl = document.getElementById('cardFilterLabel');
+
+            if (selectWrap && triggerBtn && dropdown && labelEl) {
+
+                // 트리거 클릭 → 열기/닫기 토글
+                triggerBtn.addEventListener('click', function (e) {
+                    e.stopPropagation();
+                    selectWrap.classList.toggle('open');
+                });
+
+                // 옵션 클릭 → 선택 변경
+                dropdown.querySelectorAll('.rf-option').forEach(function (opt) {
+                    opt.addEventListener('click', function (e) {
+                        e.preventDefault();
+
+                        // 모든 옵션 active 해제
+                        dropdown.querySelectorAll('.rf-option')
+                            .forEach(function (o) { o.classList.remove('rf-option-active'); });
+
+                        // 현재 옵션 active
+                        opt.classList.add('rf-option-active');
+
+                        // 상단 라벨 변경
+                        const text = opt.querySelector('.rf-option-label').textContent.trim();
+                        labelEl.textContent = text;
+
+                        // 필요하면 여기서 실제 필터 값 사용
+                        const value = opt.dataset.value;
+                        console.log('보유카드 선택 값:', value);
+
+                        // 닫기
+                        selectWrap.classList.remove('open');
+                    });
+                });
+
+                // 바깥 클릭 시 닫기
+                document.addEventListener('click', function (e) {
+                    if (!selectWrap.contains(e.target)) {
+                        selectWrap.classList.remove('open');
+                    }
+                });
+            }
+
+            // ==========================
+            // 이용내역 상세 모달
+            // ==========================
+            const modalOverlay = document.getElementById('usageModal');
+            const modalCloseBtn = document.getElementById('usageModalClose');
+
+            const modalMerchant = document.getElementById('usageModalMerchant');
+            const modalAmount = document.getElementById('usageModalAmount');
+            const modalDate = document.getElementById('usageModalDate');
+            const modalPayType = document.getElementById('usageModalPayType');
+            const modalAmountDetail = document.getElementById('usageModalAmountDetail');
+            const modalCard = document.getElementById('usageModalCard');
+
+            // 이용내역 한 줄 클릭 → 모달 열기
+            document.querySelectorAll('.usage-list .usage-item').forEach(function (item) {
+                item.addEventListener('click', function () {
+                    const merchant = item.querySelector('.usage-merchant')?.textContent.trim() || '';
+                    const amount = item.querySelector('.usage-amount')?.textContent.trim() || '';
+                    const meta = item.querySelector('.usage-meta')?.textContent.trim() || '';
+
+                    // meta 예시: "현대카드M CHECK · 25.11.18 · 18:26 · 일시불"
+                    // 대략적으로 분리해봄 (형식 다르면 여기만 수정)
+                    let cardName = '';
+                    let dateText = '';
+                    let payType = '';
+
+                    if (meta) {
+                        const parts = meta.split('·').map(p => p.trim()); // ["현대카드M CHECK", "25.11.18", "18:26", "일시불"]
+                        cardName = parts[0] || '';
+                        if (parts.length >= 3) {
+                            dateText = parts[1] + ' · ' + parts[2]; // "25.11.18 · 18:26"
+                        }
+                        if (parts.length >= 4) {
+                            payType = parts[3];
+                        }
+                    }
+
+                    // 모달에 값 주입
+                    if (modalMerchant) modalMerchant.textContent = merchant;
+                    if (modalAmount) modalAmount.textContent = amount.replace('원', '').trim();
+                    if (modalAmountDetail) modalAmountDetail.textContent = amount;
+                    if (modalDate && dateText) modalDate.textContent = dateText;
+                    if (modalPayType && payType) modalPayType.textContent = payType;
+                    if (modalCard && cardName) modalCard.textContent = cardName;
+
+                    // 모달 열기
+                    if (modalOverlay) {
+                        modalOverlay.classList.add('open');
+                    }
+                });
+            });
+
+            // 닫기 버튼 클릭
+            if (modalCloseBtn && modalOverlay) {
+                modalCloseBtn.addEventListener('click', function () {
+                    modalOverlay.classList.remove('open');
+                });
+
+                // 배경 클릭 시 닫기
+                modalOverlay.addEventListener('click', function (e) {
+                    if (e.target === modalOverlay) {
+                        modalOverlay.classList.remove('open');
+                    }
+                });
+            }
         });
     </script>
 
