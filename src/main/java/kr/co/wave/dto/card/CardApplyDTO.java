@@ -1,7 +1,16 @@
 package kr.co.wave.dto.card;
 
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
 import java.time.LocalDateTime;
 
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
+@Builder
 public class CardApplyDTO {
 
     // 회원 ID (로그인한 사용자 기준, 서버에서 세팅)

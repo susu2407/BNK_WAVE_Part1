@@ -250,16 +250,16 @@ public class CardService {
 
     // 카드 상품 가입
     @Transactional
-    public void applyCard(CardApproval cardApproval){
+    public void applyCard(CardApplyDTO cardApplyDTO){
 
 
         // 사용자
         Member member = Member.builder()
+                .name(cardApplyDTO.getName())
+
 
                 .build();
 
-        System.out.println(member.toString());
-        Member savedMember = memberRepository.save(member);
 
 
 
