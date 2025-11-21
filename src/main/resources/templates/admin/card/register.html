@@ -21,32 +21,34 @@
                 <div class="form-wrap">
                     <!-- 1. 기본 정보 -->
                     <section class="form-section">
-                        <header class="section-header">
+                        <div class="section-header">
                             <h2>기본 정보</h2>
                             <p>카드 상품을 식별하는 기본 정보를 입력합니다. 상품명, 노출명, 카드 타입 등 고객에게 바로 표시되는 핵심 정보입니다.</p>
-                        </header>
-                        <div class="section-content two-columns-layout">
+                        </div>
+                        <div class="section-content">
                             <div class="form-field-wrapper">
-                                <label for="name">상품명</label>
-                                <input id="name" type="text" name="name" required> <br>
+                                <label for="name" style="width: 50px">상품명</label>
+                                <input id="name" type="text" name="name" required class="product-name-input">
                             </div>
                             <div class="form-field-wrapper">
-                                <label for="engName">영어명</label>
-                                <input id="engName" type="text" name="engName" required> <br>
+                                <label for="engName" style="width: 50px">영어명</label>
+                                <input id="engName" type="text" name="engName" required class="product-name-input">
                             </div>
-                            <div class="form-field-wrapper">
-                                <label for="type">타입</label>
-                                <select name="type" id="type" required>
+                            <div class="form-flex-wrapper">
+                                <label for="type" style="width: 30px">타입</label>
+                                <select name="type" id="type" required style="width: 50px">
                                     <option value="신용">신용</option>
                                     <option value="체크">체크</option>
                                 </select> <br>
-                                <label>
-                                    <input type="checkbox" name="isCompany" value="true"> 기업
+                                <label class="isCompany">
+                                    <input type="checkbox" name="isCompany" value="true"
+                                           class="company-checkbox">
+                                    기업
                                 </label>
                             </div>
                             <div class="form-field-wrapper full-width">
-                                <label for="description">설명</label>
-                                <input id="description" type="text" name="description" required> <br>
+                                <label for="description" style="width: 30px;">설명</label>
+                                <textarea id="description" name="description" required class="product-desc-textarea"></textarea>
                             </div>
 
                         </div>
@@ -54,42 +56,51 @@
 
                     <!-- 2. 연회비 -->
                     <section class="form-section">
-                        <header class="section-header">
+                        <div class="section-header">
                             <h2>비용 정보</h2>
                             <p>카드 이용자에게 제고되는 혜택을 등록합니다. 적립, 할인, 제휴 혜택 등 모든 프로모션 내용을 포함할 수 있습니다.</p>
-                        </header>
+                        </div>
                         <div id="annualFeeList" class="section-content">
-                            <div class="dynamic-items-container">
+                            <div class="form-flex-wrapper btn-section">
                                 <label>연회비</label>
-                                <button type="button" class="annualFee-add-btn">➕ 추가</button>
+                                <button type="button" class="btn annualFee-add-btn">+</button>
                             </div>
-                            <div class="dynamic-items-container">
-                                <div class="annualFeeContainer">
-                                    <input name="annualFeeName" type="text">
-                                    <button type="button" class="annualFee-remove-btn">➖ 삭제</button>
+                            <div class="form-flex-wrapper btn-section">
+                                <div class="form-flex-wrapper">
+                                    <select name="" id="" required>
+                                        <option value="type" disabled selected hidden>타입 선택</option>
+                                        <option value="국내">국내</option>
+                                        <option value="해외">해외</option>
+                                    </select>
+                                    <div class="input-with-unit">
+                                        <input type="text" name="annualFeeName" style="width: 300px"
+                                               class="product-num-input">
+                                        <span class="unit">원</span>
+                                    </div>
                                 </div>
+                                <button type="button" class="btn annualFee-remove-btn">-</button>
                             </div>
                         </div>
                     </section>
 
                     <!-- 3. 혜택 컨테이너 -->
                     <section class="form-section">
-                        <header class="section-header">
+                        <div class="section-header">
                             <h2>혜택 정보</h2>
                             <p>
                                 카드 이용자에게 제공되는 혜택을 등록합니다.<br>
                                 월별 최대 혜택 금액 한도를 설정합니다.<br>
                                 각 혜택을 고객에게 보여주는 내용입니다.
                             </p>
-                        </header>
+                        </div>
                         <div id="benefitList" class="section-content">
-                            <div class="dynamic-items-container">
+                            <div class="form-flex-wrapper btn-section">
                                 <label>혜택</label>
-                                <button type="button" class="benefit-add-btn">➕ 추가</button>
+                                <button type="button" class="btn benefit-add-btn">+</button>
                             </div>
-                            <div class="dynamic-items-container">
-                                <div class="benefitContainer dynamic-card-item">
-                                    <div class="form-field-wrapper benefit-inline-fields">
+                            <div class="form-field-wrapper btn-section">
+                                <div class="form-field-wrapper benefitContainer">
+                                    <div class="form-flex-wrapper">
                                         <select name="category" class="category" required>
                                             <option value="" disabled selected hidden>카테고리 선택</option>
                                             <option th:each="category : ${categoryList}"
@@ -101,7 +112,11 @@
                                             <option value="캐시백">캐시백</option>
                                             <option value="포인트적립">포인트적립</option>
                                         </select>
-                                        <input type="number" name="value" class="value" placeholder="혜택 값">
+                                        <label class="input-with-unit">
+                                            <input type="text" name="value" placeholder="혜택 값"
+                                                   class="product-num-input" >
+                                            <span class="unit">원</span>
+                                        </label>
                                         <select name="unit" class="unit" required>
                                             <option value="%">%</option>
                                             <option value="원">원</option>
@@ -109,35 +124,41 @@
                                     </div>
                                     <div class="form-field-wrapper">
                                         <label>월 최대 혜택 한도</label>
-                                        <input type="number" name="limit" class="limit" placeholder="한도 금액">
+                                        <label class="input-with-unit" style="width: 150px">
+                                            <input type="text" name="limit" placeholder="한도 금액" style="width: 150px;"
+                                                   class="product-num-input">
+                                            <span class="unit">원</span>
+                                        </label>
                                     </div>
                                     <div class="form-field-wrapper">
                                         <label>혜택설명</label>
-                                        <input type="text" name="benefitDescription" class="benefitDescription"
-                                               placeholder="예: 주유소 5% 할인"
-                                               required>
+                                        <label>
+                                            <textarea name="benefitDescription" class="product-desc-textarea"
+                                                   placeholder="예: 주유소 5% 할인"
+                                                   required></textarea>
+                                        </label>
                                     </div>
-                                    <button type="button" class="benefit-remove-btn">➖ 삭제</button>
                                 </div>
+                                <button type="button" class="btn benefit-remove-btn" style="margin-left: auto;">-</button>
                             </div>
                         </div>
                     </section>
 
                     <!-- 4. 이미지 관리`` -->
                     <section class="form-section">
-                        <header class="section-header">
+                        <div class="section-header">
                             <h2>이미지 관리</h2>
-                            <p>상품에 사용될 카드 이미지와 홍보용 이미지를 업로드합니다. 고객이 보는 주요 시각 요소임을 유의하세요.</p>
-                        </header>
+                            <p>상품에 사용될 카드 이미지와 홍보용 이미지를 업로드합니다. 고객이 보는 주요 시각 요소입니다.</p>
+                        </div>
                         <div class="section-content">
                             <label for="thumbnail">이미지</label>
-                            <input id="thumbnail" type="file" name="thumbnail" accept="image/*" required> <br>
+                            <input id="thumbnail" type="file" name="thumbnail" accept="image/*" required>
                         </div>
                     </section>
 
-                    <div class="btn-section">
-                        <button type="submit" class="btn register-btn">등록</button>
+                    <div class="form-flex-wrapper btn-section-submit">
                         <a th:href="@{/admin/card/list}" class="btn register-btn">취소</a>
+                        <button type="submit" class="btn register-btn">등록</button>
                     </div>
 
                 </div>

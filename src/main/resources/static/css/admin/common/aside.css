@@ -183,7 +183,7 @@ main, header, footer {
 
 /*  ===== aside 고정 switch CSS ============================== */
 /* aside on/off switch design */
-[type="checkbox"] {
+.aside-switch input[type="checkbox"] {
     appearance: none;
     position: relative;
     border: max(2px, 0.1em) solid white;
@@ -195,7 +195,7 @@ main, header, footer {
 }
 
 /* switch thumb */
-[type="checkbox"]::before {
+.aside-switch input[type="checkbox"]::before {
     content: "";
     position: absolute;
     left: 0;
@@ -208,12 +208,12 @@ main, header, footer {
 }
 
 /* on state(스위치 오른쪽으로 이동했을 때) */
-[type="checkbox"]:checked::before {
+.aside-switch input[type="checkbox"]:checked::before {
     background-color: #CB2B11;
     left: 1.5em;
 }
 
-[type="checkbox"]:checked {
+.aside-switch input[type="checkbox"]:checked {
     background-color: #AA210A;
 }
 
