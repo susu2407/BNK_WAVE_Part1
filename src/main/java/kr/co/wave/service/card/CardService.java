@@ -7,10 +7,12 @@ import kr.co.wave.entity.approval.CardApproval;
 import kr.co.wave.entity.card.AnnualFee;
 import kr.co.wave.entity.card.Benefit;
 import kr.co.wave.entity.card.Card;
+import kr.co.wave.entity.member.Member;
 import kr.co.wave.repository.approval.CardApprovalRepository;
 import kr.co.wave.repository.card.AnnualFeeRepository;
 import kr.co.wave.repository.card.BenefitRepository;
 import kr.co.wave.repository.card.CardRepository;
+import kr.co.wave.repository.member.MemberRepository;
 import kr.co.wave.service.util.FileUploadUtil;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
@@ -34,6 +36,7 @@ public class CardService {
     private final CardApprovalRepository cardApprovalRepository;
     private final ModelMapper modelMapper; // Entity와 DTO를 변환해주는 객체
     private final FileUploadUtil fileUploadUtil; // 저기 util 불러오는 객체
+    private final MemberRepository memberRepository;
 
     // 필요없는데 혹시나 남겨둠
     public Page<CardDTO> getCardAllBySearch(String searchType, String keyword, int page, int size){
@@ -241,4 +244,45 @@ public class CardService {
 
         cardApprovalRepository.save(cardApproval);
     }
+
+
+
+
+    // 카드 상품 가입
+    @Transactional
+    public void applyCard(CardApproval cardApproval){
+
+
+        // 사용자
+        Member member = Member.builder()
+
+                .build();
+
+        System.out.println(member.toString());
+        Member savedMember = memberRepository.save(member);
+
+
+
+        // 혜택
+//        for(int i = 0; i<cardRequestDTO.getCategory().size(); i++){
+//            Benefit benefit = Benefit.builder()
+//                    .benefitType(cardRequestDTO.getBenefitType().get(i))
+//                    .benefitCategory(String.valueOf(cardRequestDTO.getCategory().get(i)))
+//                    .unit(cardRequestDTO.getUnit().get(i))
+//                    .value(cardRequestDTO.getValue().get(i))
+//                    .limit(cardRequestDTO.getLimit().get(i))
+//                    .benefitDescription(cardRequestDTO.getBenefitDescription().get(i))
+//                    .card(savedCard)
+//                    .build();
+//
+//            System.out.println(i + "번째" + benefit.toString());
+//
+//            benefitRepository.save(benefit);
+//        }
+    }
+
+
 }
+
+
+

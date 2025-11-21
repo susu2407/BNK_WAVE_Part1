@@ -1,5 +1,7 @@
 package kr.co.wave.controller.card;
 
+import kr.co.wave.dto.card.CardApplyDTO;
+import kr.co.wave.dto.card.CardRequestDTO;
 import kr.co.wave.dto.card.CardWithInfoDTO;
 import kr.co.wave.service.card.CardService;
 import lombok.RequiredArgsConstructor;
@@ -7,6 +9,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 @Controller
@@ -53,16 +56,30 @@ public class CardController {
     }
 
     @GetMapping("/card/register1")
-    public String register1() {
+    public String register1(int cardId, Model model) {
+
+        CardWithInfoDTO cardInfo = cardService.getCardWithInfoById(cardId);
+        model.addAttribute("cardItem", cardInfo);
 
         return "card/register1";
     }
 
     @GetMapping("/card/register2")
-    public String register2() {
+    public String register2(int cardId, Model model) {
+
+        CardWithInfoDTO cardInfo = cardService.getCardWithInfoById(cardId);
+        model.addAttribute("cardItem", cardInfo);
 
         return "card/register2";
     }
+
+//    @PostMapping("/card/register2") // 추후 변경예정 1121박효빈
+//    public void applyCard(CardApplyDTO cardApplyDTO) {
+//
+//
+//    }
+
+
 
     @GetMapping("/card/register3")
     public String register3() {
