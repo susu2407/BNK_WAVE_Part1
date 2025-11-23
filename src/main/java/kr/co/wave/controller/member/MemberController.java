@@ -19,6 +19,7 @@ public class MemberController {
         return "member/login";
     }
 
+    /*
     // 로그인 요청 받기
     @PostMapping("/member/login")
     public String login(MemberDTO memberDTO) {
@@ -35,6 +36,7 @@ public class MemberController {
         }
         return "redirect:/member/login"; // 둘 중 하나라도 맞지 않다면 로그인 화면으로 이동
     }
+    */
 
     // 회원가입 화면으로 이동
     @GetMapping("/member/signup")
@@ -45,7 +47,8 @@ public class MemberController {
     // 회원가입 요청 받기
     @PostMapping("/member/signup")
     public String signup(MemberDTO memberDTO) {
+        System.out.println("정보 : " + memberDTO);
         memberService.signup(memberDTO);
-        return "member/signup";
+        return "redirect:/member/login";
     }
 }

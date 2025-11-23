@@ -22,6 +22,8 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -221,6 +223,73 @@ public class CardService {
         }
     }
 
+    @Transactional
+    public void updateCard(int cardId, CardRequestDTO cardRequestDTO) {
+
+        // 1. 기존 카드 조회
+        Card card = cardRepository.findById(cardId)
+                .orElseThrow(() -> new RuntimeException("카드를 찾을 수 없습니다."));
+
+        // 2. 이미지 업데이트
+        String thumbnailPath = card.getThumbnail();
+        String backgroundPath = card.getBackground();
+
+        // 새로운 파일이 들어온 경우만 교체
+        if (cardRequestDTO.getThumbnail() != null && !cardRequestDTO.getThumbnail().isEmpty()) {
+            thumbnailPath = fileUploadUtil.saveFile(cardRequestDTO.getThumbnail(), "card");
+        }
+
+        if (cardRequestDTO.getBackground() != null && !cardRequestDTO.getBackground().isEmpty()) {
+            backgroundPath = fileUploadUtil.saveFile(cardRequestDTO.getBackground(), "card");
+        }
+
+        // 3. 카드 정보 업데이트
+        Card updatedCard = Card.builder()
+                .cardId(card.getCardId())   // 기존 식별자 유지 → UPDATE
+                .name(cardRequestDTO.getName())
+                .engName(cardRequestDTO.getEngName())
+                .type(cardRequestDTO.getType())
+                .isCompany(cardRequestDTO.isCompany())
+                .description(cardRequestDTO.getDescription())
+                .thumbnail(thumbnailPath)
+                .background(backgroundPath)
+                .status(card.getStatus())  // 기존 상태 유지
+                .updatedAt(LocalDate.now())
+                .build();
+
+        cardRepository.save(updatedCard);
+
+        // 4. 연회비 삭제 후 새로 저장
+        annualFeeRepository.deleteByCard(card);
+
+        for (int i = 0; i < cardRequestDTO.getAnnualFeeName().size(); i++) {
+            AnnualFee annualFee = AnnualFee.builder()
+                    .annualName(cardRequestDTO.getAnnualFeeName().get(i))
+                    .card(card)
+                    .build();
+
+            annualFeeRepository.save(annualFee);
+        }
+
+        // 5. 혜택 삭제 후 새로 저장
+        benefitRepository.deleteByCard(card);
+
+        for (int i = 0; i < cardRequestDTO.getCategory().size(); i++) {
+            Benefit benefit = Benefit.builder()
+                    .benefitType(cardRequestDTO.getBenefitType().get(i))
+                    .benefitCategory(String.valueOf(cardRequestDTO.getCategory().get(i)))
+                    .unit(cardRequestDTO.getUnit().get(i))
+                    .value(cardRequestDTO.getValue().get(i))
+                    .limit(cardRequestDTO.getLimit().get(i))
+                    .benefitDescription(cardRequestDTO.getBenefitDescription().get(i))
+                    .card(card)
+                    .build();
+
+            benefitRepository.save(benefit);
+        }
+    }
+
+
     // 카드 활성화
     @Transactional
     public void activateCard(int cardId){
@@ -249,16 +318,12 @@ public class CardService {
     @Transactional
     public void applyCard(CardApplyDTO cardApplyDTO){
 
-
         // 사용자
         Member member = Member.builder()
                 .name(cardApplyDTO.getName())
 
 
                 .build();
-
-
-
 
         // 혜택
 //        for(int i = 0; i<cardRequestDTO.getCategory().size(); i++){

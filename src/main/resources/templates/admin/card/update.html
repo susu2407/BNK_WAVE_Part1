@@ -17,7 +17,8 @@
     <div class="main-container">
         <div th:replace="~{admin/common/mainHeader :: mainHeader}"></div>
         <div id="main-content">
-            <form th:action="@{/admin/card/register}" method="post" enctype="multipart/form-data">
+            <form th:action="@{/admin/card/update}" method="post" enctype="multipart/form-data">
+                <input type="hidden" name="cardId" th:value="${cardItem.card.cardId}">
                 <div class="form-wrap">
                     <!-- 1. 기본 정보 -->
                     <section class="form-section">
@@ -28,29 +29,30 @@
                         <div class="section-content">
                             <div class="form-field-wrapper">
                                 <label for="name" style="width: 50px">상품명</label>
-                                <input id="name" type="text" name="name" required class="product-name-input">
+                                <input id="name" type="text" name="name" th:value="${cardItem.card.name}" required
+                                       class="product-name-input">
                             </div>
                             <div class="form-field-wrapper">
                                 <label for="engName" style="width: 50px">영어명</label>
-                                <input id="engName" type="text" name="engName" required class="product-name-input">
+                                <input id="engName" type="text" name="engName" th:value="${cardItem.card.engName}"
+                                       required class="product-name-input">
                             </div>
                             <div class="form-flex-wrapper">
                                 <label for="type" style="width: 30px">타입</label>
                                 <select name="type" id="type" required style="width: 50px">
-                                    <option value="신용">신용</option>
-                                    <option value="체크">체크</option>
+                                    <option value="신용" th:selected="${cardItem.card.type == '신용'}">신용</option>
+                                    <option value="체크" th:selected="${cardItem.card.type == '체크'}">체크</option>
                                 </select> <br>
                                 <label class="isCompany">
                                     <input type="checkbox" name="isCompany" value="true"
-                                           class="company-checkbox">
-                                    기업
+                                           th:checked="${cardItem.card.isCompany}" class="company-checkbox"> 기업
                                 </label>
                             </div>
                             <div class="form-field-wrapper full-width">
                                 <label for="description" style="width: 30px;">설명</label>
-                                <textarea id="description" name="description" required class="product-desc-textarea"></textarea>
+                                <textarea id="description" th:text="${cardItem.card.description}" name="description"
+                                          required class="product-desc-textarea"></textarea>
                             </div>
-
                         </div>
                     </section>
 
@@ -65,15 +67,18 @@
                                 <label>연회비</label>
                                 <button type="button" class="btn annualFee-add-btn">+</button>
                             </div>
-                            <div class="form-flex-wrapper btn-section annualFeeContainer">
-                                <div class="form-flex-wrapper" >
+                            <!-- 연회비 항목 반복 -->
+                            <div class="form-flex-wrapper btn-section annualFeeContainer"
+                                 th:each="fee, stat : ${cardItem.annualFeeList}">
+                                <div class="form-flex-wrapper">
                                     <select name="" id="" required>
                                         <option value="type" disabled selected hidden>타입 선택</option>
                                         <option value="국내">국내</option>
                                         <option value="해외">해외</option>
                                     </select>
                                     <div class="input-with-unit">
-                                        <input type="text" name="annualFeeName" style="width: 300px"
+                                        <input type="text" name="annualFeeName" th:value="${fee.annualName}"
+                                               style="width: 300px"
                                                class="product-num-input">
                                         <span class="unit">원</span>
                                     </div>
@@ -99,46 +104,50 @@
                                 <button type="button" class="btn benefit-add-btn">+</button>
                             </div>
                             <div class="form-field-wrapper btn-section">
-                                <div class="form-field-wrapper benefitContainer">
+                                <div class="form-field-wrapper benefitContainer"
+                                     th:each="benefit : ${cardItem.benefitList}">
                                     <div class="form-flex-wrapper">
                                         <select name="category" class="category" required>
                                             <option value="" disabled selected hidden>카테고리 선택</option>
+
                                             <option th:each="category : ${categoryList}"
                                                     th:value="${category.name}"
-                                                    th:text="${category.name}"></option>
+                                                    th:selected="${benefit.benefitCategory == category.name}"
+                                                    th:text="${category.name}">
+                                            </option>
                                         </select>
                                         <select name="benefitType" class="benefitType" required>
-                                            <option value="할인">할인</option>
-                                            <option value="캐시백">캐시백</option>
-                                            <option value="포인트적립">포인트적립</option>
+                                            <option value="할인" th:selected="${benefit.benefitType == '할인'}">할인</option>
+                                            <option value="캐시백" th:selected="${benefit.benefitType == '캐시백'}">캐시백</option>
+                                            <option value="포인트적립" th:selected="${benefit.benefitType == '포인트적립'}">포인트적립</option>
                                         </select>
                                         <label class="input-with-unit">
-                                            <input type="text" name="value" placeholder="혜택 값"
-                                                   class="product-num-input" >
-                                            <span class="unit">원</span>
+                                            <input type="text" th:value="${benefit.value}" name="value" placeholder="혜택 값"
+                                                   class="product-num-input">
                                         </label>
                                         <select name="unit" class="unit" required>
-                                            <option value="%">%</option>
-                                            <option value="원">원</option>
+                                            <option value="%" th:selected="${benefit.unit == '%'}">%</option>
+                                            <option value="원" th:selected="${benefit.unit == '원'}">원</option>
                                         </select>
                                     </div>
                                     <div class="form-field-wrapper">
                                         <label>월 최대 혜택 한도</label>
                                         <label class="input-with-unit" style="width: 150px">
-                                            <input type="text" name="limit" placeholder="한도 금액" style="width: 150px;"
-                                                   class="product-num-input">
+                                            <input type="text" th:value="${benefit.limit}" name="limit"
+                                                   placeholder="한도 금액" style="width: 150px;" class="product-num-input">
                                             <span class="unit">원</span>
                                         </label>
                                     </div>
                                     <div class="form-field-wrapper">
                                         <label>혜택설명</label>
                                         <label>
-                                            <textarea name="benefitDescription" class="product-desc-textarea"
-                                                   placeholder="예: 주유소 5% 할인"
-                                                   required></textarea>
+                                            <textarea name="benefitDescription" th:text="${benefit.benefitDescription}"
+                                                      class="product-desc-textarea" placeholder="예: 주유소 5% 할인"
+                                                      required></textarea>
                                         </label>
                                     </div>
-                                <button type="button" class="btn benefit-remove-btn" style="margin-left: auto;">-</button>
+                                    <button type="button" class="btn benefit-remove-btn" style="margin-left: auto;">-
+                                    </button>
                                 </div>
                             </div>
                         </div>
@@ -152,13 +161,14 @@
                         </div>
                         <div class="section-content">
                             <label for="thumbnail">이미지</label>
-                            <input id="thumbnail" type="file" name="thumbnail" accept="image/*" required>
+                            <img th:src="@{'/' + ${cardItem.card.thumbnail}}" alt="thumbnail" width="150">
+                            <input id="thumbnail" type="file" name="thumbnail" accept="image/*">
                         </div>
                     </section>
 
                     <div class="form-flex-wrapper btn-section-submit">
                         <a th:href="@{/admin/card/list}" class="btn register-btn">취소</a>
-                        <button type="submit" class="btn register-btn">등록</button>
+                        <button type="submit" class="btn register-btn">수정</button>
                     </div>
 
                 </div>

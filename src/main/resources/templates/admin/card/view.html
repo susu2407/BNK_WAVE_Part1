@@ -23,11 +23,11 @@
                     <form th:action="@{/admin/card/update}" method="post">
                         <tr>
                             <td>상품명</td>
-                            <td><input type="text" th:value="${cardItem.card.name}"></td>
+                            <td><input type="text" name="name" th:value="${cardItem.card.name}"></td>
                         </tr>
                         <tr>
                             <td>영어명</td>
-                            <td><input type="text" th:value="${cardItem.card.engName}"></td>
+                            <td><input type="text" name="engName" th:value="${cardItem.card.engName}"></td>
                         </tr>
                         <tr>
                             <td>카드유형</td>
@@ -48,7 +48,6 @@
                             <td>혜택</td>
                             <td>
                                 <div id="benefitList">
-
                                     <button type="button" class="benefit-add-btn">➕ 추가</button>
 
                                     <div class="benefitContainer" th:each="benefit : ${cardItem.benefitList}">
