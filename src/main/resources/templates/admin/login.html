@@ -7,12 +7,12 @@
 
 </head>
 <body>
-    <form action="/login" method="post">
+    <form th:action="@{/member/login}" method="post">
         <img th:src="@{/images/BNK5team-logo.png}" alt="부산은행카드팀로고" class="BNK-logo">
 
         <div class="input-box">
             <img th:src="@{/images/user-round.svg}" alt="아이디아이콘" class="login-icon">
-            <input type="text" name="username" placeholder="I  D" required class="login-input"/>
+            <input type="text" name="memId" placeholder="I  D" required class="login-input"/>
         </div>
 
         <div class="input-box">
@@ -22,7 +22,8 @@
 
         <div class="input-box">
             <button class="login-btn">
-                <a th:href="@{/admin}">Login</a>
+                <!-- <a th:href="@{/admin}">Login</a> -->
+                <input type="submit" value="Login">
             </button>
         </div>
 

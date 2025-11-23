@@ -22,6 +22,7 @@ public class AdminCardController {
     private final CardService cardService;
     private final CategoryService categoryService;
 
+    // 카드 목록
     @GetMapping("/admin/card/list")
     public String cardList(@RequestParam(required = false) String searchType,
                            @RequestParam(required = false) String keyword,
@@ -36,18 +37,7 @@ public class AdminCardController {
         return "admin/card/list";
     }
 
-    /*
-    @GetMapping("/admin/card/view")
-    public String cardView(@RequestParam String cardId, Model model) {
-
-        CardDTO card = cardService.getCardById(Integer.parseInt(cardId));
-
-        model.addAttribute("card", card);
-        return "admin/card/list";
-    }
-    */
-
-
+    // 카드 자세히 보기
     @GetMapping("/admin/card/view")
     public String cardView(@RequestParam String cardId, Model model) {
 
@@ -60,7 +50,26 @@ public class AdminCardController {
         return "admin/card/view";
     }
 
+    // 카드 수정 화면으로 이동
+    @GetMapping("/admin/card/update")
+    public String cardUpdate(@RequestParam String cardId, Model model) {
+        CardWithInfoDTO card = cardService.getCardWithInfoById(Integer.parseInt(cardId));
+        List<Category> categoryList = categoryService.getCategoryAll();
 
+        model.addAttribute("cardItem", card);
+        model.addAttribute("categoryList", categoryList);
+
+        return "admin/card/update";
+    }
+
+    // 카드 수정
+    @PostMapping("/admin/card/update")
+    public String cardUpdate(int cardId, CardRequestDTO cardRequestDTO) {
+        cardService.updateCard(cardId, cardRequestDTO);
+        return "redirect:/admin/card/list";
+    }
+
+    // 카드 등록 화면으로 이동
     @GetMapping("/admin/card/register")
     public String cardRegister(Model model) {
         List<Category> categoryList = categoryService.getCategoryAll();
@@ -70,6 +79,7 @@ public class AdminCardController {
         return "admin/card/register";
     }
 
+    // 카드 등록
     @PostMapping("/admin/card/register")
     public void cardRegister(CardRequestDTO cardRequestDTO) {
 

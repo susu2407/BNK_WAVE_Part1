@@ -35,6 +35,9 @@ document.addEventListener("DOMContentLoaded", function () {
         if (e.target.classList.contains("benefit-add-btn")) {
             const current = benefitList.querySelector(".benefitContainer");
             const clone = cloneAndReset(current);
+            clone.querySelectorAll("textarea").forEach(el => {
+                el.value = "";
+            });
             benefitList.appendChild(clone);
         }
 

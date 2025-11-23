@@ -7,14 +7,13 @@
     <script th:src="@{/js/common/aside.js}"></script>
 </head>
 <body>
-<div th:replace="~{common/header :: header}"></div>
 <main>
     <div class="main-container">
         <div id="main-content">
             <form th:action="@{/member/signup}" method="post">
                 <section class="section">
-                    <label for="mem_id">아이디</label>
-                    <input id="mem_id" type="text" name="mem_id" placeholder="아이디 입력">
+                    <label for="memId">아이디</label>
+                    <input id="memId" type="text" name="memId" placeholder="아이디 입력">
 
                     <label for="password">비밀번호</label>
                     <input id="password" type="password" name="password" placeholder="비밀번호 입력">

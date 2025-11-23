@@ -45,7 +45,17 @@ public class MemberService {
 
     // 회원가입
     public MemberDTO signup(MemberDTO memberDTO) {
-        memberRepository.save(modelMapper.map(memberDTO, Member.class));
+        String plain = memberDTO.getPassword();
+        String encoded = passwordEncoder.encode(plain);
+
+        Member member = Member.builder().
+                        memId(memberDTO.getMemId()).
+                        password(encoded).
+                        name(memberDTO.getName()).
+                        role(memberDTO.getRole()).
+                        build();
+
+        Member saved = memberRepository.save(member);
         return memberDTO;
     }
 
