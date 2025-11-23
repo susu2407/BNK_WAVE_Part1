@@ -1,0 +1,103 @@
+/* 전체 레이아웃 */
+.content.myinfo-content {
+    max-width: 900px;
+    margin: 130px auto 120px;
+    padding: 0 16px 80px;
+    box-sizing: border-box;
+    font-size: 14px;
+}
+
+/* 상단 타이틀 */
+.myinfo-title {
+    text-align: center;
+    font-size: 28px;
+    font-weight: 700;
+    margin-bottom: 36px;
+}
+
+/* 섹션 공통 */
+.info-section {
+    margin-bottom: 40px;
+}
+
+.info-section-title {
+    font-size: 20px;
+    font-weight: 600;
+    padding-bottom: 8px;
+    border-bottom: 1px solid #111;
+    margin: 0 0 10px;
+}
+
+/* 정보 리스트 (테이블처럼 보이게) */
+.info-list {
+    margin: 0;
+    padding: 0;
+}
+
+.info-row {
+    display: flex;
+    padding: 10px 0;
+    border-bottom: 1px solid #f3f3f3;
+    font-size: 16px;
+}
+
+.info-row:nth-child(even) {
+    background: #fafafa;
+}
+
+.info-row dt {
+    width: 150px;
+    padding: 0 12px 0 4px;
+    box-sizing: border-box;
+    color: #555;
+    font-weight: 600;
+}
+
+.info-row dd {
+    flex: 1;
+    margin: 0;
+    padding: 0 4px 0 0;
+    font-weight: 500;
+    color: #222;
+    word-break: keep-all;
+}
+
+/* 주소처럼 줄바꿈 허용하고 싶으면 */
+.info-row dd br {
+    display: block;
+}
+
+/* 하단 링크 영역 */
+.info-links {
+    margin-top: 24px;
+    font-size: 14px;
+}
+
+.info-link {
+    display: block;
+    color: #0052cc;
+    text-decoration: none;
+    margin-bottom: 4px;
+}
+
+.info-link:hover {
+    text-decoration: underline;
+}
+
+/* 반응형 */
+@media (max-width: 600px) {
+    .content.myinfo-content {
+        margin-top: 110px;
+        padding: 0 12px 60px;
+    }
+
+    .info-row {
+        flex-direction: column;
+        gap: 4px;
+    }
+
+    .info-row dt {
+        width: auto;
+        padding-right: 0;
+    }
+}
