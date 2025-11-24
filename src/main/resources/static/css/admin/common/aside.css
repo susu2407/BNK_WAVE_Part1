@@ -125,7 +125,7 @@ aside {
     font-size: 1rem;
     font-weight: bold;
     color: #ffffff;
-    padding: 0.5rem 3rem;
+    padding: 0.5rem 2.5rem; /* 글자수 때문에 조정 */
     gap: 0; /* 2차 메뉴는 아이콘이 없으므로 gap 제거 */
     text-decoration: none;
 

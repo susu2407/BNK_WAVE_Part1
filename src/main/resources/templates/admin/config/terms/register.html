@@ -4,8 +4,8 @@
     <meta charset="UTF-8">
     <title>약관 등록</title>
     <link rel="stylesheet" th:href="@{/css/admin/common/commonCSS.css}">
-    <link rel="stylesheet" th:href="@{/css/admin/card/register.css}">
-    <link rel="stylesheet" th:href="@{/css/admin/config/register.css}">
+    <link rel="stylesheet" th:href="@{/css/admin/common/commonActionBarTable.css}">
+    <link rel="stylesheet" th:href="@{/css/admin/config/termsRegister.css}">
     <script th:src="@{/js/admin/common/aside.js}"></script>
 </head>
 <div th:replace="~{admin/common/header :: header}"></div>
@@ -15,35 +15,105 @@
     <div class="main-container">
         <div th:replace="~{admin/common/mainHeader :: mainHeader}"></div>
         <div id="main-content">
-
             <form th:action="@{/templates/admin/config/terms/register}" method="post" enctype="multipart/form-data">
-                <div class="form-flex-wrapper">
-                    <label>약관명</label>
-                    <input type="text" name="title">
-                </div>
-                <div class="form-flex-wrapper">
-                    <label>약관내용</label>
-                    <input type="text" name="content">
-                    <label>
-                        필수여부 <input type="checkbox" name="isRequired" >
-                    </label>
-                </div>
+                <div class="form-wrap">
+                    <!-- 1.약관명 -->
+                    <section class="form-section">
+                        <div class=section-header>
+                            <h2>약관명 <span style="color: red">*</span></h2>
+                            <p>
+                                약관을 신규 등록하기 전에 동일하거나 유사한 약관이 이미 존재하는지 반드시 확인하시오. <br>
+                                등록 후에는 즉시 서비스에 반영될 수 있으므로, 제목·버전·필수 여부를 신중하게 입력하시오. <br>
+                                (예: 개인정보처리방침_v2025.01)
+                            </p>
+                        </div>
+                        <div class="section-content">
+                            <div class="form-field-wrapper">
+                                <label class="form-flex-wrapper">
+                                    <select required>
+                                        <option value="" disabled selected hidden>약관 구분을 선택하세요.</option>
+                                        <option value="개인정보">개인정보 전용 약관</option>
+                                        <option value="상품">상품 전용 약관</option>
+                                        <option value="광고">광고ㆍ마케딩 전용 약관</option>
+                                        <option value="서비스">서비스 전용 약관</option>
+                                        <option value="웹">웹 이용약관</option>
+                                        <option value="앱">앱 이용약관</option>
+                                        <option value="계약ㆍ법적 고지">계약ㆍ법적 고지 약관</option>
+                                        <option value="부가정책">부가정책</option>
+                                        <option value="운영정책">운영정책</option>
+                                    </select>
+                                    <span class="checkbox-required">
+                                        <input type="checkbox" name="isRequired">
+                                        <span>필수여부</span>
+                                    </span>
+                                </label>
+                                <label class="terms-title">
+                                    <input type="text" name="termsTitle" placeholder="약관명을 입력하세요.">
+                                </label>
+                            </div>
+                            <div class="form-field-wrapper"> <!-- 이 부분은 관련 약관이 있을 때만 보이도록 하면 좋을 듯? -->
+                                <p style="color: red">관련 약관이 있습니다. 중복되지 않도록 각별히 주의해주십시오.</p>
+                                <ul class="title-caution">
+                                    <li>개인정보_보호법_v.2025.10.01 <span style="color: green">활성</span></li>
+                                    <li>개인정보_보호법_v.2025.09.11 <span style="color: darkgray">비활성</span></li>
+                                    <li>...</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </section>
+                    <!-- 2. 약관 내용 -->
+                    <section class="form-section">
+                        <div class="section-header">
+                            <h2>약관내용 <span style="color: red">*</span></h2>
+                            <p> </p>
+                        </div>
+                        <div class="section-content">
+                            <div class="form-field-wrapper">
+                                <label>
+                                    <textarea name="terms-content" placeholder="약관 내용을 입력하세요" class="terms-textarea"></textarea>
+                                </label>
+                            </div>
 
-                <br>
-                <label>약관파일</label>
-                <input type="file" name="pdfFile" id="termsFile" accept="application/pdf">  <!-- PDF 파일만 업로드 가능하게 제한 -->
+                        </div>
+                    </section>
+                    <section class="form-section">
+                        <div class="section-header">
+                            <h2>약관 파일 <span style="color: red">*</span></h2>
+                            <p>
 
-                <button type="submit">제출</button>
+                            </p>
+                        </div>
+                        <div class="section-content">
+                            <div>
+                                <div class="file-upload-wrapper">
+                                    <label for="termsFile" class="custom-file-label">파일 선택</label>
+                                    <span id="fileNameDisplay">선택된 파일 없음</span>
+                                    <input type="file" name="pdfFile" id="termsFile" accept="application/pdf">
+                                </div>
+                                <!-- PDF 파일만 업로드 가능하게 제한 -->
+                            </div>
+                            <div id="preview">
+                                <!-- 미리보기 버튼 -->
+                                <button id="previewBtn" style="display: none;">등록한 파일 미리보기</button>
+                                <!-- 등록한 파일 간단 정보 -->
+                                <p id="fileName">파일명 : -</p>
+                                <p id="fileSize">크기 : -</p>
+                                <p id="fileType">형식 : -</p>
+                            </div>
+                        </div>
+                    </section>
+                </div>
             </form>
-            <div id="preview">
-                <p>파일 미리보기</p>
-                <p id="fileName">파일명 : -</p>
-                <p id="fileSize">크기 : -</p>
-                <p id="fileType">형식 : -</p>
 
-                <!-- 미리보기 버튼 -->
-                <button id="previewBtn" style="display: none;">파일 미리보기</button>
-
+            <!-- 주요 액션 영역 -->
+            <div class="action-bar">
+                <!-- 등록버튼 -->
+                <div class="btn register-btn">
+                    <a th:href="@{/admin/config/terms/register}">취소</a>
+                </div>
+                <div class="btn register-btn">
+                    <button>등록</button>
+                </div>
             </div>
         </div>
     </div>
@@ -78,6 +148,22 @@
         } else {
             alert("PDF 파일만 업로드 가능합니다.");
             document.getElementById("previewBtn").style.display = "none"; // 미리보기 버튼 숨기기
+        }
+    });
+
+    // input 디자인을 위함
+    document.getElementById('termsFile').addEventListener('change', function() {
+        const fileNameDisplay = document.getElementById('fileNameDisplay');
+
+        // 파일이 선택되었는지 확인
+        if (this.files && this.files.length > 0) {
+            // 첫 번째 파일의 이름을 가져와 표시
+            fileNameDisplay.textContent = this.files[0].name;
+            fileNameDisplay.style.color = '#333'; // 텍스트 색상 변경
+        } else {
+            // 파일 선택이 취소된 경우
+            fileNameDisplay.textContent = '선택된 파일 없음';
+            fileNameDisplay.style.color = '#555';
         }
     });
 </script>
