@@ -29,21 +29,21 @@
                     </header>
 
                     <div class="apply-form-body">
-                        <!-- 이름 -->
+                        <form th:action="@{/card/apply/step2}" method="post" id="applyForm">                        <!-- 이름 -->
                         <div class="form-item">
                             <label for="name">이름</label>
-                            <input id="name" type="text" placeholder="이름을 입력해 주세요." />
+                            <input id="name" type="text" placeholder="이름을 입력해 주세요." name="name" />
                         </div>
 
                         <!-- 영문 이름 -->
                         <div class="form-2col">
                             <div class="form-item">
                                 <label for="ename-last">영문 성</label>
-                                <input id="ename-last" type="text" placeholder="KIM" />
+                                <input id="ename-last" type="text" placeholder="KIM" name="lastNameEn" />
                             </div>
                             <div class="form-item">
                                 <label for="ename-first">영문 이름</label>
-                                <input id="ename-first" type="text" placeholder="CHEOLSU" />
+                                <input id="ename-first" type="text" placeholder="CHEOLSU" name="firstNameEn" />
                                 <p class="field-help">여권과 동일한 영문명을 입력해 주세요.</p>
                             </div>
                         </div>
@@ -61,19 +61,20 @@
                                 <!-- 뒤 7자리 (마스킹) -->
                                 <input type="text" class="rrn-back secret-input" inputmode="numeric" maxlength="7"
                                        aria-label="주민등록번호 뒤 7자리 입력">
+                                <input type="hidden" name="rrn" id="rrnCombined">
                             </div>
                         </div>
 
                         <!-- 휴대폰번호 -->
                         <div class="form-item">
                             <label for="phone">휴대폰번호</label>
-                            <input id="phone" type="text" inputmode="numeric" maxlength="11" placeholder="숫자만 입력해 주세요.">
+                            <input id="phone" type="text" inputmode="numeric" maxlength="11" placeholder="숫자만 입력해 주세요." name="phone">
                         </div>
 
                         <!-- 이메일  -->
                         <div class="form-item">
                             <label for="email">이메일</label>
-                            <input id="email" type="text" placeholder="이메일을 입력해 주세요." />
+                            <input id="email" type="text" placeholder="이메일을 입력해 주세요." name="email"/>
                         </div>
 
                         <!-- 전체 동의 영역 -->
@@ -148,8 +149,12 @@
                                     </button>
                                 </div>
                             </div>
-                            <button class="btn-submit" id="submitBtn" disabled>확인</button>
+                                <input type="hidden" name="cardId" th:value="${cardItem.card.cardId}">
+                            <button class="btn-submit" id="submitBtn" disabled>
+                                확인
+                            </button>
                         </section>
+                        </form>
                     </div>
                 </div>
             </section>
@@ -278,6 +283,27 @@
 
         // 초기 상태 평가
         refreshSubmit();
+
+        const form = document.querySelector('form');
+        if (form) {
+            form.addEventListener('submit', function (e) {
+                const rrnFront = document.querySelector('.rrn-front').value;
+                const rrnBack = document.querySelector('.rrn-back').value;
+                const rrnCombinedInput = document.getElementById('rrnCombined');
+
+                // 1. RRN 유효성 검사
+                if (rrnFront.length !== 6 || rrnBack.length !== 7) {
+                    alert("주민등록번호 13자리를 정확히 입력해주세요.");
+                    e.preventDefault(); // 폼 제출 방지
+                    return;
+                }
+
+                // 2. RRN 합치기 및 Hidden 필드(name="rrn")에 설정
+                rrnCombinedInput.value = rrnFront + rrnBack;
+
+                // 추가적으로 다른 필수 필드 유효성 검사가 필요하면 여기에 추가합니다.
+            });
+        }
     });
 </script>
 </body>

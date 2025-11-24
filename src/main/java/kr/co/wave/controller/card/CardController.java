@@ -1,10 +1,12 @@
 package kr.co.wave.controller.card;
 
+import jakarta.servlet.http.HttpSession;
 import kr.co.wave.dto.card.CardApplyDTO;
-import kr.co.wave.dto.card.CardRequestDTO;
+import kr.co.wave.dto.card.CardApplyRequestDTO;
 import kr.co.wave.dto.card.CardWithInfoDTO;
 import kr.co.wave.service.card.CardService;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -14,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 @Controller
 @RequiredArgsConstructor
+@Slf4j
 public class CardController {
     private final CardService cardService;
 
@@ -67,36 +70,167 @@ public class CardController {
     @GetMapping("/card/register2")
     public String register2(int cardId, Model model) {
 
+        log.info("=== register2 진입 ===");
+        log.info("cardId: {}", cardId);
+
+        // 카드 상품 조회
         CardWithInfoDTO cardInfo = cardService.getCardWithInfoById(cardId);
         model.addAttribute("cardItem", cardInfo);
 
+        // 빈 폼 객체 (사용자 정보 입력 용)
+        model.addAttribute("applyForm",new CardApplyDTO());
+
+
+        log.info("카드 정보 조회 완료: {}", cardInfo);
+
+
         return "card/register2";
+
+
     }
 
-//    @PostMapping("/card/register2") // 추후 변경예정 1121박효빈
-//    public void applyCard(CardApplyDTO cardApplyDTO) {
-//
-//
-//    }
+    @PostMapping("/card/apply/step2") // 추후 변경예정 1121박효빈
+    public String applystep2(CardApplyRequestDTO request, HttpSession session) {
+
+
+        log.info("=== applyStep2 진입 ===");
+
+        // 입력 받은 사용자 정보 세션에 임시 저장(why? 로그인 상태로도 이 페이지에서는 입력해야하니깐 일단 구현
+        session.setAttribute("applyInfo", request);
+        log.info("세션에 정보 저장 완료");
+        log.info("받은 데이터 전체: {}", session.getAttribute("applyInfo"));
+
+
+
+
+        return "redirect:/card/register3?cardId=" + request.getCardId();
+    }
 
 
 
     @GetMapping("/card/register3")
-    public String register3() {
+    public String register3(@RequestParam int cardId, Model model) {
+        log.info("=== register3 진입 ===");
+        log.info("cardId: {}", cardId);
+
+        // 카드 상품 조회 (뷰에서 cardItem을 사용하기 위해)
+        CardWithInfoDTO cardInfo = cardService.getCardWithInfoById(cardId);
+        model.addAttribute("cardItem", cardInfo);
 
         return "card/register3";
     }
 
-    @GetMapping("/card/register4")
-    public String register4() {
-
-        return "card/register4";
-    }
+//    @GetMapping("/card/register4")
+//    public String register4() {
+//
+//        return "card/register4";
+//    }
 
     @GetMapping("/card/register5")
-    public String register5() {
+    public String register4(@RequestParam int cardId, HttpSession session, Model model) {
+
+        log.info("=== register5 진입 ===");
+        log.info("cardId: {}", cardId);
+
+        // 1. 세션에서 임시 저장된 신청 정보(applyInfo)를 불러옵니다.
+        CardApplyRequestDTO applyInfo = (CardApplyRequestDTO) session.getAttribute("applyInfo");
+
+        if (applyInfo == null) {
+            log.warn("세션에 'applyInfo'가 없습니다. 비정상적인 접근이거나 세션이 만료되었습니다.");
+            // 세션 정보가 없으면, 신청 단계 2로 돌려보내 재입력을 유도합니다.
+            // 이 때, cardId는 유지하여 상품 정보는 다시 볼 수 있게 합니다.
+            return "redirect:/card/register2?cardId=" + cardId;
+        }
+
+        log.info("세션에서 불러온 CardApplyRequestDTO 정보: {}", applyInfo);
+
+        // 2. 카드 상품 정보 조회 (화면 표시용)
+        CardWithInfoDTO cardInfo = cardService.getCardWithInfoById(cardId);
+        model.addAttribute("cardItem", cardInfo);
+
+        // 3. 다음 뷰에서 세션 데이터를 활용할 필요가 있다면 model에 추가합니다.
+        // model.addAttribute("applyInfo", applyInfo);
 
         return "card/register5";
+    }
+
+    @PostMapping("/card/apply/step5")
+    public String applystep5(@RequestParam int cardId,
+                             CardApplyRequestDTO newInfo,
+                             HttpSession session) {
+
+        log.info("=== applyStep5 진입: 추가 정보 병합 ===");
+
+        CardApplyRequestDTO applyInfo = (CardApplyRequestDTO) session.getAttribute("applyInfo");
+
+        if (applyInfo == null) {
+            log.warn("세션 정보 누락. Step 2로 리다이렉트합니다.");
+            return "redirect:/card/register2?cardId=" + cardId;
+        }
+
+        // 새로운 정보를 기존 DTO에 setter로 병합
+        applyInfo.setJob(newInfo.getJob());
+        applyInfo.setRiskJob(newInfo.getRiskJob());
+        applyInfo.setFundSource(newInfo.getFundSource());
+        applyInfo.setPurpose(newInfo.getPurpose());
+
+        session.setAttribute("applyInfo", applyInfo);
+        log.info("세션 DTO 업데이트 완료. 최신 정보: {}", applyInfo);
+
+        // 다음 단계(Step 6)로 이동합니다.
+        return "redirect:/card/register6?cardId=" + cardId;
+    }
+
+    @GetMapping("/card/register6")
+    public String register6(@RequestParam int cardId,HttpSession session ,Model model) {
+        log.info("=== register6 진입: 최종 DTO 유효성 검사 ===");
+        log.info("cardId: {}", cardId);
+
+        // 1. 세션에서 현재까지 누적된 신청 정보(applyInfo)를 가져옵니다.
+        CardApplyRequestDTO applyInfo = (CardApplyRequestDTO) session.getAttribute("applyInfo");
+
+        if (applyInfo == null) {
+            log.info("세션에 'applyInfo'가 없습니다. 비정상적인 접근이거나 세션이 만료되었습니다.");
+            // 세션 정보가 없으면, 신청의 시작점인 Step 2로 돌려보냅니다.
+            return "redirect:/card/register2?cardId=" + cardId;
+        }
+
+        // 2. 카드 상품 정보 조회 (뷰 표시용)
+        CardWithInfoDTO cardInfo = cardService.getCardWithInfoById(cardId);
+        model.addAttribute("cardItem", cardInfo);
+
+        // 3. 뷰에서 사용하기 위해 최종 DTO를 모델에 담아 전달합니다. (선택적)
+        // 예를 들어, 사용자 이름 등을 표시할 수 있습니다.
+        model.addAttribute("applyInfo", applyInfo);
+        log.info("세션에서 불러온 최종 신청 정보 확인: {}", applyInfo);
+
+        return "redirect:/card/register7?cardId=" + cardId;
+    }
+
+    @GetMapping("/card/register7")
+    public String register7(@RequestParam int cardId,HttpSession session ,Model model) {
+        log.info("=== register7 진입: 최종 DTO 유효성 검사 ===");
+        log.info("cardId: {}", cardId);
+
+        // 1. 세션에서 현재까지 누적된 신청 정보(applyInfo)를 가져옵니다.
+        CardApplyRequestDTO applyInfo = (CardApplyRequestDTO) session.getAttribute("applyInfo");
+
+        if (applyInfo == null) {
+            log.info("세션에 'applyInfo'가 없습니다. 비정상적인 접근이거나 세션이 만료되었습니다.");
+            // 세션 정보가 없으면, 신청의 시작점인 Step 2로 돌려보냅니다.
+            return "redirect:/card/register2?cardId=" + cardId;
+        }
+
+        // 2. 카드 상품 정보 조회 (뷰 표시용)
+        CardWithInfoDTO cardInfo = cardService.getCardWithInfoById(cardId);
+        model.addAttribute("cardItem", cardInfo);
+
+        // 3. 뷰에서 사용하기 위해 최종 DTO를 모델에 담아 전달합니다. (선택적)
+        // 예를 들어, 사용자 이름 등을 표시할 수 있습니다.
+        model.addAttribute("applyInfo", applyInfo);
+        log.info("세션에서 불러온 최종 신청 정보 확인: {}", applyInfo);
+
+        return "redirect:/card/register7?cardId=" + cardId;
     }
 
 

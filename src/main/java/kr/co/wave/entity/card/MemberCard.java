@@ -27,7 +27,15 @@ public class MemberCard {
     @Column(name="CREATED_AT")
     private LocalDate createdAt; // 카드 발급일
 
-    @Column(name="UPDATED_AT")
-    private LocalDate updatedAt; // 카드 만료일
+    @Column(name="EXPIRED_AT")
+    private LocalDate expiredAt; // 카드 만료일
 
+    @Column(name="MEM_ID")
+    private String memId;
+
+    @Column(name="CARD_ID")
+    private int cardId;
+
+    @Column(name="ACCOUNT_ID")
+    private String accountId;
 }

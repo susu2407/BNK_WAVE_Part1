@@ -32,8 +32,29 @@ public class Member {
     @Column(name = "NAME")
     private String name;
 
+    @Column(name = "FIRST_NAME_EN")
+    private String firstNameEn;  // 영문 이름
+
+    @Column(name = "LAST_NAME_EN")
+    private String lastNameEn;   // 영문 성
+
     @Column(name = "ROLE")
     private String role;
+
+    @Column(name = "ADDRESS")
+    private String address;
+
+    @Column (name = "EMAIL")
+    private String email;
+
+    @Column (name = "RRN")
+    private String rrn;
+
+    @Column (name = "DEADDRESS")
+    private String deaddress;
+
+    @Column (name = "ZIP")
+    private String zip;
 
     @CreationTimestamp
     @Column(name="CREATED_AT")
