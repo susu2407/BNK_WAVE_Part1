@@ -19,7 +19,7 @@ public class AdminManageController {
 
     private final MemberService memberService;
 
-    // 관리자 로그인 페이지 이동
+    // 관리자 로그인 페이지로 이동
     @GetMapping("/admin/admin/list")
     public String login(@RequestParam(required = false) String searchType,
                         @RequestParam(required = false) String keyword,
