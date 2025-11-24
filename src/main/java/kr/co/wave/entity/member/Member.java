@@ -5,6 +5,9 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 import lombok.*;
+import org.hibernate.annotations.CreationTimestamp;
+
+import java.time.LocalDateTime;
 
 @Getter
 @NoArgsConstructor
@@ -32,4 +35,10 @@ public class Member {
     @Column(name = "ROLE")
     private String role;
 
+    @CreationTimestamp
+    @Column(name="CREATED_AT")
+    private LocalDateTime createdAt;
+
+    @Column(name="STATUS")
+    private String status;
 }

@@ -7,7 +7,9 @@
 
 </head>
 <body>
-    <form th:action="@{/member/login}" method="post">
+    <form th:action="@{/login}" method="post">
+        <input type="hidden" name="loginType" value="admin">
+
         <img th:src="@{/images/BNK5team-logo.png}" alt="부산은행카드팀로고" class="BNK-logo">
 
         <div class="input-box">
