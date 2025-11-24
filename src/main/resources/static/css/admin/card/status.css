@@ -1,0 +1,38 @@
+.date-range-area {
+    display: flex;
+    align-items: center;
+    border: 1px solid #ccc;     /* 전체 박스 */
+    border-radius: 4px;
+    padding: 6px 10px;
+    background: #fff;
+    color: #1b1b1b;
+    gap: 15px;                   /* 간격 */
+    height: 35px;
+}
+
+.date-range-area input[type="date"] {
+    border: none;               /* 개별 input border 제거 */
+    background: transparent;    /* 배경 투명 */
+    padding: 4px 0;
+    outline: none;
+    font-size: 14px;
+    width: 120px;               /* 날짜 텍스트 길이 균일화 */
+    cursor: pointer;
+}
+
+/* input 클릭 시 outline 제거 */
+.date-range-area input[type="date"]:focus {
+    outline: none;
+}
+
+.date-range-area span {
+    color: #555;
+    font-size: 14px;
+}
+
+/* 검색 버튼과 붙지 않도록 */
+.date-range-search {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}

@@ -7,6 +7,7 @@ import kr.co.wave.service.card.CardService;
 import kr.co.wave.service.config.CategoryService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
+import org.springframework.security.web.webauthn.api.PublicKeyCose;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -102,5 +103,11 @@ public class AdminCardController {
         cardService.inactivateCard(Integer.parseInt(cardId), reason);
 
         return "redirect:/admin/card/list";
+    }
+
+    // 상품관리 > 상품별 가입 현황 - 화면 이동
+    @GetMapping("/admin/card/status")
+    public String cardStatus() {
+        return "admin/card/status";
     }
 }
