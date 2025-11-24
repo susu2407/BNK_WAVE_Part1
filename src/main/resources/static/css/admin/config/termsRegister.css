@@ -33,7 +33,7 @@ form {
     width: 600px;
     display: flex;
     flex-direction: column;
-    gap: 20px;
+    gap: 5px;
 }
 
 .form-field-wrapper { /* 세로 나열 */
@@ -82,9 +82,25 @@ input, select {
     padding: 10px;
     font-size: 14px;
     height: 100px;
-    /* border: 3px solid #AA210A; */
     background-color: #fcefef;
+
+    /*display: none;  css 보려고 잠시 꺼둠 */
+    overflow-y: auto;
+    list-style: none;
 }
+
+/* ㅡㅡㅡ 약관 내용 ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ */
+.compare-content {
+    white-space: pre-wrap;
+    border:1px solid #ccc;
+    background-color: #fcefef;
+    padding:5px;"
+}
+.update-textarea {
+    height: 200px;
+    font-size: 14px;
+}
+
 /* ㅡㅡㅡ 미리보기 영역 ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ */
 /*  input[type=file] 디자인 ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ */
 /* 1. 실제 input[type="file"]을 숨김 */
@@ -130,6 +146,9 @@ input[type="file"] {
     white-space: nowrap; /* 파일명이 길어도 줄 바꿈 방지 */
     overflow: hidden;
     text-overflow: ellipsis; /* 넘치는 텍스트를 ...으로 표시 */
+}
+.file-title-area {
+    display: flex;
 }
 
 /* 간단 정보 영역 ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ */

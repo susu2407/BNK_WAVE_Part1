@@ -2,10 +2,10 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>약관 등록</title>
+    <title>약관 수정</title>
     <link rel="stylesheet" th:href="@{/css/admin/common/commonCSS.css}">
-    <link rel="stylesheet" th:href="@{/css/admin/card/register.css}">
-    <link rel="stylesheet" th:href="@{/css/admin/config/register.css}">
+    <link rel="stylesheet" th:href="@{/css/admin/common/commonActionBarTable.css}">
+    <link rel="stylesheet" th:href="@{/css/admin/config/termsRegister.css}">
     <script th:src="@{/js/admin/common/aside.js}"></script>
 </head>
 <div th:replace="~{admin/common/header :: header}"></div>
@@ -17,47 +17,125 @@
         <div id="main-content">
 
             <form th:action="@{/admin/config/terms/update}" method="post" enctype="multipart/form-data">
-
-                <div class="form-flex-wrapper">
-                    <label>약관명</label>
-                    <input type="text" th:value="${terms.title}" name="title" id="titleInput" autocomplete="off">
-
-                    <ul id="suggestionBox" style="display: none; max-height: 150px; overflow-y: auto; border: 1px solid #ddd; list-style: none; padding: 0; margin: 0;">
-                        <li th:each="item : ${warningList}" th:data-title="${item.title}" onclick="selectTitle(this)" style="padding: 8px; cursor: pointer; border-bottom: 1px solid #eee;">
-                            <p style="margin: 0;">[[${item.title}]] - [[${item.version}]] - [[${item.termStatus}]]</p>
-                        </li>
-                    </ul>
-                </div>
-                <div class="form-flex-wrapper">
-                    <label>약관내용</label>
-                    <input type="text" id="editor" th:value="${terms.content}" name="content">
-                    <label>
-                        필수여부 <input type="checkbox" th:checked="${terms.isRequired}" name="isRequired" >
-                    </label>
-                </div>
-
-                <br>
-                <label>약관파일</label>
-                <div th:if="${terms.pdfFile != null}">
-                    기존 파일: <span th:text="${terms.originalName}"></span>
-                </div>
-                <input type="file" th:file="${terms.pdfFile}" name="pdfFile" id="termsFile" accept="application/pdf">  <!-- PDF 파일만 업로드 가능하게 제한 -->
-                <button type="submit">제출</button>
+                <!-- 1.약관명 -->
+                <section class="form-section">
+                    <div class=section-header>
+                        <h2>약관명 <span style="color: red">*</span></h2>
+                        <p>
+                            약관명은 기존 약관 정보의 제목, 버전, 필수 여부를 변경하는 영역입니다. <br>
+                            기존 약관 정보의 제목, 버전, 필수 여부 등의 정보를 신중하게 변경하십시오. <br>
+                            최종 변경 내용은 상위 관리자의 승인 절차를 거쳐 서비스에 적용됩니다. 승인 후 혼란이 없도록 제목 및 버전을 명확하게 설정하십시오. <br>
+                            <br>
+                            예시 형식: [약관주제] - [약관명] - v.0.0.0
+                        </p>
+                    </div>
+                    <div class="section-content">
+                        <div class="form-field-wrapper">
+                            <label class="form-flex-wrapper">
+                                <select required>
+                                    <option value="" disabled selected hidden>약관 구분을 선택하세요.</option>
+                                    <option value="개인정보">개인정보 전용 약관</option>
+                                    <option value="상품">상품 전용 약관</option>
+                                    <option value="광고">광고ㆍ마케딩 전용 약관</option>
+                                    <option value="서비스">서비스 전용 약관</option>
+                                    <option value="웹">웹 이용약관</option>
+                                    <option value="앱">앱 이용약관</option>
+                                    <option value="계약ㆍ법적 고지">계약ㆍ법적 고지 약관</option>
+                                    <option value="부가정책">부가정책</option>
+                                    <option value="운영정책">운영정책</option>
+                                </select>
+                                <span class="checkbox-required">
+                                    <input type="checkbox" th:checked="${terms.isRequired}" name="isRequired" >
+                                    <span>필수여부</span>
+                                </span>
+                            </label>
+                            <label class="terms-title">
+                                <input type="text" th:value="${terms.title}" name="title" id="titleInput" autocomplete="off"
+                                       placeholder="약관명을 입력하세요.">
+                            </label>
+                        </div>
+                        <div class="form-field-wrapper"> <!-- 이 부분은 관련 약관이 있을 때만 보이도록 하면 좋을 듯? -->
+                            <p style="color: red">관련 약관이 있습니다. 중복되지 않도록 각별히 주의해주십시오.</p>
+                            <p style="color: darkgray; font-size: 12px;">[ 약관명 ] - [ 버전 ] - [ 상태 ] 입니다.</p>
+                            <ul id="suggestionBox" class="title-caution">
+                                <li th:each="item : ${warningList}" th:data-title="${item.title}" onclick="selectTitle(this)">
+                                    <p>
+                                        [[${item.title}]] - [[${item.version}]] - <span th:style="'color:' +
+                                        (${item.termStatus == '활성' ? 'green' :
+                                        (item.termStatus == '비활성' ? 'gray' :
+                                        (item.termStatus == '퇴직' ? 'red' : 'black'))})">[[${item.termStatus}]]</span>
+                                    </p>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </section>
+                <!-- 2. 약관 내용 -->
+                <section class="form-section">
+                    <div class="section-header">
+                        <h2>약관내용 <span style="color: red">*</span></h2>
+                        <p>
+                            약관 내용 수정은 서비스에 법적 효력을 갖는 중요한 내용입니다. <br>
+                            기존 약관 내용에 대한 수정 사항을 입력하십시오. 이 내용이 최종 약관으로 게시됩니다. <br>
+                            '내용 비교' 기능을 활용하여 기존 내용과 변경 내용이 정확하게 일치하는지 최종 검토하고,
+                            오탈자 여부를 확인하십시오. 모든 내용은 승인 전 철저한 검토가 필요합니다.
+                        </p>
+                    </div>
+                    <div class="section-content">
+                        <div class="form-field-wrapper">
+                            <label>
+                                <textarea type="text" id="editor" th:value="${terms.content}" name="content"
+                                          placeholder="약관 내용을 입력하세요" class="terms-textarea update-textarea"
+                                >
+                                    [[${terms.content}]]
+                                </textarea>
+                            </label>
+                        </div>
+                        <span> 약관 내용 비교 결과 : </span>
+                        <div id="highlighted" class="compare-content terms-textarea update-textarea" ></div> <!-- 내용 비교 결과 -->
+                        <label for="origin">기존 약관 내용 : </label>
+                        <textarea id="origin" rows="5" cols="50" readonly class="terms-textarea update-textarea">[[${terms.content}]]</textarea>
+                    </div>
+                </section>
+                <!-- 3. 약관 파일 -->
+                <section class="form-section">
+                    <div class="section-header">
+                        <h2>약관 파일 <span style="color: red">*</span></h2>
+                        <p>
+                            기존 파일 교체 시의 주의 사항을 명확히 안내합니다. <br>
+                            약관 파일은 사용자 다운로드용 및 안내책자로 제공되며, 현재 기존 파일이 등록되어 있는 상태입니다. <br>
+                            교체 업로드 후 '등록한 파일 미리보기'를 클릭하여 파일이 정상적으로 표시되는지 확인하고,
+                            업로드된 약관 내용과 본문 내용이 일치하는지 최종 검토하십시오. <br>
+                        </p>
+                    </div>
+                    <div class="section-content">
+                        <!-- PDF 파일만 업로드 가능하게 제한 -->
+                        <div class="file-upload-wrapper">
+                            <div th:if="${terms.pdfFile != null}" class="file-title-area">
+                                <div class="custom-file-label">기존 파일</div>
+                                <span th:text="${terms.originalName}" id="fileNameDisplay"></span>
+                            </div>
+                            <input type="file" th:file="${terms.pdfFile}" name="pdfFile" id="termsFile" accept="application/pdf">  <!-- PDF 파일만 업로드 가능하게 제한 -->
+                        </div>
+                        <div id="preview">
+                            <!-- 등록한 파일 간단 정보 -->
+                            <p id="fileName">파일명 : -</p>
+                            <p id="fileSize">크기 : -</p>
+                            <p id="fileType">형식 : -</p>
+                            <!-- 미리보기 버튼 -->
+                            <button id="previewBtn" style="display: none;" class="btn preview-btn">등록한 파일 미리보기</button>
+                        </div>
+                    </div>
+                </section>
             </form>
 
-            <label for="origin">기존 약관 내용 : </label>
-            <textarea id="origin" rows="5" cols="50" readonly>[[${terms.content}]]</textarea>
-            <div id="highlighted" style="white-space: pre-wrap; border:1px solid #ccc; padding:5px;"></div>
-
-            <div id="preview">
-                <p>파일 미리보기</p>
-                <p id="fileName">파일명 : -</p>
-                <p id="fileSize">크기 : -</p>
-                <p id="fileType">형식 : -</p>
-
-                <!-- 미리보기 버튼 -->
-                <button id="previewBtn" style="display: none;">파일 미리보기</button>
+            <!-- 주요 액션 영역 -->
+            <div class="terms-action-bar ">
+                <!-- 등록버튼 -->
+                <a th:href="@{/admin/config/terms/list}" class="btn register-btn">취소</a>
+                <button class="btn register-btn">수정</button>
             </div>
+
         </div>
     </div>
 </main>
