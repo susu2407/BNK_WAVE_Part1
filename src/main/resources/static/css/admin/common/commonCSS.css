@@ -20,7 +20,7 @@ body {
 .main-container {
     max-width: 1920px;
     min-height: 800px;
-    margin: 10px auto;
+    margin: 10px;       /* 화면 양옆까지 여유 공간 확보! 제발.. 되돌아가지마..ㅠ */
 }
 
 #main-content {

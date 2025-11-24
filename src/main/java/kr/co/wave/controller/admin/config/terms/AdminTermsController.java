@@ -33,31 +33,15 @@ public class AdminTermsController {
 
         Page<TermsWithInfoDTO> termsList = termsService.getTermsAllBySearch(searchType, keyword, page, 10);
 
-        for (TermsWithInfoDTO item : termsList.getContent()) {
-            System.out.println("Term ID: " + item.getTerm().getTermsId());
-            System.out.println("Term Title: " + item.getTerm().getTitle());
-            System.out.println("Approval Status: " + item.getApprovalStatus());
-            System.out.println("=====================================");
-        }
-
         model.addAttribute("termsList", termsList);
 
         return "admin/config/terms/list";
     }
 
-    // 약관 수정
-    @PostMapping("/admin/config/terms/update")
-    public String adminConfigUpdate(TermsDTO termsDTO) {
-
-        System.out.println(termsDTO);
-        termsService.updateTerms(termsDTO);
-        return "redirect:/admin/config/terms/list";
-    }
-
-    // 약관 등록
+    // 약관 등록으로 이동
     @GetMapping("/admin/config/terms/register")
     public String adminConfigRegister() {
-        return "admin/config/policy/register";
+        return "admin/config/terms/register";
     }
 
     // 약관 등록
@@ -86,19 +70,36 @@ public class AdminTermsController {
     @GetMapping("/admin/config/terms/activate")
     public String cardActivate(@RequestParam String termsId) {
 
-        termsService.activateCard(Integer.parseInt(termsId));
+        termsService.activateTerms(Integer.parseInt(termsId));
 
         return "redirect:/admin/config/terms/list";
     }
-
 
     // 비활성화
     @PostMapping("/admin/config/terms/inactivate")
     public String termsInactivate(@RequestParam String termsId, @RequestParam String reason) {
 
-        termsService.inactivateCard(Integer.parseInt(termsId), reason);
+        termsService.inactivateTerms(Integer.parseInt(termsId), reason);
 
         return "redirect:/admin/config/terms/list";
+    }
+
+    // 약관 업데이트 이동
+    @GetMapping("/admin/config/terms/update")
+    public String updateTerms(@RequestParam String termsId, Model model){
+
+        model.addAttribute("warningList", termsService.getTitles());
+        model.addAttribute("terms", termsService.getTermsById(Integer.parseInt(termsId)));
+        return "admin/config/terms/update";
+    }
+
+    // 약관 업데이트
+    @PostMapping("/admin/config/terms/update")
+    public String updateTerms(TermsDTO termsDTO){
+
+        termsService.updateTerms(termsDTO);
+
+        return "admin/config/terms/update";
     }
 
 }

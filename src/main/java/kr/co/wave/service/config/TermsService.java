@@ -5,6 +5,7 @@ import jakarta.transaction.Transactional;
 import kr.co.wave.dto.approval.TermsApprovalDTO;
 import kr.co.wave.dto.config.TermsDTO;
 import kr.co.wave.dto.config.TermsRepositoryDTO;
+import kr.co.wave.dto.config.TermsWarningDTO;
 import kr.co.wave.dto.config.TermsWithInfoDTO;
 import kr.co.wave.entity.approval.CardApproval;
 import kr.co.wave.entity.approval.TermsApproval;
@@ -79,6 +80,7 @@ public class TermsService {
     }
 
     // 약관 등록
+    @Transactional
     public void registerTerms(TermsDTO termsDTO) {
         String originalName = termsDTO.getPdfFile().getOriginalFilename(); // 파일 원래 이름
         String pdfPath = fileUploadUtil.saveFile(termsDTO.getPdfFile(), "terms"); // 저장할 상대 경로 반환 , terms = 저장할 폴더 이름
@@ -95,6 +97,7 @@ public class TermsService {
     }
 
     // 다운로드
+    @Transactional
     public ResponseEntity<Resource> fileDownload(int termsId) {
         Terms term = termsRepository.findById(termsId).orElse(null);
 
@@ -157,7 +160,7 @@ public class TermsService {
 
     }
 
-
+    @Transactional
     public void updateTerms(TermsDTO termsDTO) {
 
         termsDTO.setContent(termsDTO.getContent());
@@ -167,9 +170,20 @@ public class TermsService {
         termsRepository.save(modelMapper.map(termsDTO, Terms.class));
     }
 
-    // 카드 활성화
     @Transactional
-    public void activateCard(int termsId){
+    public Terms getTermsById(int termsId) {
+        Optional<Terms> optionalTerms = termsRepository.findById(termsId);
+
+        if (optionalTerms.isPresent()) {
+            Terms terms = optionalTerms.get();
+            return terms;
+        }
+
+        return null;
+    }
+    // 약관 활성화
+    @Transactional
+    public void activateTerms(int termsId){
         Optional<Terms> optionalTerms = termsRepository.findById(termsId);
 
         if(optionalTerms.isPresent()){
@@ -180,7 +194,7 @@ public class TermsService {
 
     // 약관 비활성화 요청
     @Transactional
-    public void inactivateCard(int termsId, String reason){
+    public void inactivateTerms(int termsId, String reason){
 
         TermsApproval termsApproval = TermsApproval.builder().
                 termsId(termsId).
@@ -191,4 +205,8 @@ public class TermsService {
         termsApprovalRepository.save(termsApproval);
     }
 
+    @Transactional
+    public List<TermsWarningDTO> getTitles(){
+        return termsRepository.findAllTitles();
+    }
 }

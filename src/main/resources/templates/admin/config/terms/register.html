@@ -2,8 +2,10 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>약관 등록</title>
     <link rel="stylesheet" th:href="@{/css/admin/common/commonCSS.css}">
+    <link rel="stylesheet" th:href="@{/css/admin/card/register.css}">
+    <link rel="stylesheet" th:href="@{/css/admin/config/register.css}">
     <script th:src="@{/js/admin/common/aside.js}"></script>
 </head>
 <div th:replace="~{admin/common/header :: header}"></div>
@@ -14,16 +16,18 @@
         <div th:replace="~{admin/common/mainHeader :: mainHeader}"></div>
         <div id="main-content">
 
-            <form th:action="@{/templates/admin/config/terms/register}" method="post" enctype="multipart/form-data">
-                <label>약관명</label>
-                <input type="text" name="title">
-
-                <label>약관내용</label>
-                <input type="text" name="content">
-
-                <label>
-                    필수여부 <input type="checkbox" name="isRequired" >
-                </label>
+            <form th:action="@{/admin/config/terms/register}" method="post" enctype="multipart/form-data">
+                <div class="form-flex-wrapper">
+                    <label>약관명</label>
+                    <input type="text" name="title">
+                </div>
+                <div class="form-flex-wrapper">
+                    <label>약관내용</label>
+                    <input type="text" name="content">
+                    <label>
+                        필수여부 <input type="checkbox" name="isRequired" >
+                    </label>
+                </div>
 
                 <br>
                 <label>약관파일</label>

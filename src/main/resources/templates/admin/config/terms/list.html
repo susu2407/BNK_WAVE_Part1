@@ -17,7 +17,7 @@
             <!-- 주요 액션 영역 -->
             <div class="action-bar">
                 <!-- 검색 -->
-                <form method="get" th:action="@{/templates/admin/config/terms/list}">
+                <form method="get" th:action="@{/admin/config/terms/list}">
                     <div th:with="st=${param.searchType != null ? param.searchType[0] : ''}">
                         <select name="searchType" id="searchType">
                             <option value="" th:selected="${st == ''}">전체</option>
@@ -35,7 +35,7 @@
                 </form>
                 <!-- 등록버튼 -->
                 <div class="btn register-btn">
-                    <a th:href="@{/templates/admin/config/terms/register}">약관 등록</a>
+                    <a th:href="@{/admin/config/terms/register}">약관 등록</a>
                 </div>
             </div>
 
@@ -68,7 +68,7 @@
                             [[${item.term.originalName}]]
                         </a>
                         <td th:if="${item.term.termStatus == '비활성'}">
-                            <a th:href="@{/admin/config/terms/view(termsId=${item.term.termsId})}">수정</a> <br>
+                            <a th:href="@{/admin/config/terms/update(termsId=${item.term.termsId})}">수정</a> <br>
                             <a th:href="@{/admin/config/terms/view(termsId=${item.term.termsId})}">삭제</a> <br>
                             <a th:href="@{/admin/config/terms/activate(termsId=${item.term.termsId})}"
                                onclick="return confirm('활성화하면 더 이상 상품 정보를 변경할 수 없습니다.\n계속 진행하시겠습니까?');">
