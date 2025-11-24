@@ -47,3 +47,18 @@
 .status-dot.retired {
     background-color: red;
 }
+
+/* ㅡㅡㅡ tbody 셀 내용 표시 ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ */
+.status-display-item {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    /*gap: 0.5em; !* 동그라미와 텍스트 사이의 간격 *!*/
+}
+
+/* <td> 내부에 들어가는 .status-dot */
+.status-display-item .status-dot {
+    /* 범례와 크기를 같게 하거나, 테이블 내용에 맞게 조정 가능 */
+    width: 15px;
+    height: 15px;
+}

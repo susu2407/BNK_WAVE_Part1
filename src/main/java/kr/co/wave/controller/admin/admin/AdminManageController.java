@@ -33,4 +33,9 @@ public class AdminManageController {
         return "admin/admin/list";
     }
 
+    // 관리자 등록 페이지로 이동
+    @GetMapping("/admin/admin/register")
+    public String adminRegister() {
+        return "admin/admin/register";
+    }
 }

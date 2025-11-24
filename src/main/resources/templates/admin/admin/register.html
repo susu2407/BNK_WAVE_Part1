@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>관리자 등록</title>
+    <link rel="stylesheet" th:href="@{/css/admin/common/commonCSS.css}">
+    <link rel="stylesheet" th:href="@{/css/admin/common/commonActionBarTable.css}">
+    <link rel="stylesheet" th:href="@{/css/admin/admin/register.css}">
+    <script th:src="@{/js/admin/common/aside.js}"></script>
+</head>
+<body>
+<div th:replace="~{admin/common/header :: header}"></div>
+<div th:replace="~{admin/common/aside :: aside}"></div>
+<main>
+    <div class="main-container">
+        <div th:replace="~{admin/common/mainHeader :: mainHeader}"></div>
+        <div class="main-content">
+            <form>
+                <div class="form-wrap">
+                    <!-- 1. 계정 정보-->
+                    <section class="form-section">
+                        <div class="section-header">
+                            <h2>계정 정보 <span style="color: red">*</span></h2>
+                            <p>시스템에서 로그인 및 접근제어용으로 정보</p> 
+                        </div>
+                        <div class="section-content">
+                            <table>
+                                <tr>
+                                    <th>아이디</th>
+                                    <td>
+                                        <input type="text" placeholder="영문/숫자 포함 6자 이상">
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th>비밀번호</th>
+                                    <td>
+                                        <input type="text" placeholder="영문, 숫자 포함 6~12자 (특수문자 권장)">
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th>비밀번호 확인</th>
+                                    <td>
+                                        <input type="text" placeholder="비밀번호를 다시 입력하세요.">
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th>권한 등급</th>
+                                    <td>
+                                        <div class="radio-group">
+                                            <label>
+                                                <input type="radio" name="authLevel" value="ADMIN" checked>
+                                                <span>일반 관리자</span>
+                                            </label>
+
+                                            <label>
+                                                <input type="radio" name="authLevel" value="ADMIN_SUPER">
+                                                <span>최고 관리자</span>
+                                            </label>
+                                        </div>
+                                    </td>
+                                </tr>
+                            </table>
+                        </div>
+                    </section>
+                    <!-- 2. 인적 사항 -->
+                    <section class="form-section">
+                        <div class="section-header">
+                            <h2>인적 사항 <span style="color: red">*</span></h2>
+                            <p>관리자 식별 및 연락용 정보</p>
+                        </div>
+                        <div class="section-content">
+                            <table>
+                                <tr>
+                                    <th>이름</th>
+                                    <td>
+                                        <input type="text" placeholder="이름을 입력하세요.">
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th>연락처</th>
+                                    <td>
+                                        <input type="number" placeholder=" - 없이 입력하세요.">
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th>이메일</th>
+                                    <td>
+                                        <input type="text" placeholder="이메일을 입력하세요.">
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th>거주지</th>
+                                    <td>
+                                        지도 선택? 또는 그냥 입력?
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th>부서명</th>
+                                    <td>
+                                        <input type="text" placeholder="부서명을 입력하세요.">
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th>직책</th>
+                                    <td>
+                                        <label>
+                                            <select required>
+                                                <option value="" disabled selected>직책</option>
+                                                <option value="행원">행원</option>
+                                                <option value="주임">주임</option>
+                                                <option value="대리">대리</option>
+                                                <option value="과장">과장</option>
+                                                <option value="차장">차장</option>
+                                                <option value="팀장">팀장</option>
+                                                <option value="부장">부장</option>
+                                                <option value="지점장">지점장</option>
+                                                <option value="임원">임원</option>
+                                            </select>
+                                        </label>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th>메모</th>
+                                    <td>
+                                        <input type="text" placeholder="계정 생성 사유, 특이 권한, 담당 업무 등 관리 목적으로 사용할 내용 입력">
+                                    </td>
+                                </tr>
+                            </table>
+                        </div>
+                    </section>
+
+                    <!-- 주요 액션 영역 -->
+                    <div class="terms-action-bar ">
+                        <!-- 등록버튼 -->
+                        <a th:href="@{/admin/admin/list}" class="btn register-btn">취소</a>
+                        <button class="btn register-btn">등록</button>
+                    </div>
+
+                </div>
+            </form>
+        </div>
+    </div>
+</main>
+<div th:replace="~{admin/common/footer :: footer}"></div>
+</body>
+</html>
