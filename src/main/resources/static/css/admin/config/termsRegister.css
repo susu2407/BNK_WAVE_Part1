@@ -1,0 +1,122 @@
+/*
+    날짜 : 2025-11-21
+    이름 : 이수연
+    내용 : 약관 등록 CSS
+*/
+form {
+    width: 1000px;
+    margin: 0 auto;
+}
+.form-wrap {
+    display: flex;
+    flex-direction: column;
+    gap: 60px;
+}
+
+.form-section {
+    display: flex;
+    padding: 30px 5px;
+    border-bottom: 1px solid;
+}
+
+.section-header {
+    width: 400px;
+    padding-right: 40px;
+}
+.section-header p {
+    padding: 15px;
+    color: darkgray;
+    font-size: 12px;
+}
+
+.section-content {
+    width: 600px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.form-field-wrapper { /* 세로 나열 */
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    font-weight: 500;
+}
+.form-flex-wrapper { /* 가로 나열 */
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-weight: 500;
+}
+
+/* 공통 적용 */
+input, select {
+    height: 35px;
+    border: none;
+    border-bottom: 1px solid;
+}
+.terms-textarea {
+    height: 250px;
+    width: 600px;
+    resize: none;
+    overflow: auto;
+}
+
+/* detail */
+.checkbox-required {
+    margin-left: 10px;
+    display: flex;
+    gap: 5px;
+    align-items: center;
+}
+
+.terms-title {
+    margin: 20px 0;
+}
+.terms-title input {
+    width: 400px;
+    padding: 0 5px;
+}
+
+.title-caution {
+    padding: 10px;
+    font-size: 14px;
+    height: 100px;
+    /* border: 3px solid #AA210A; */
+    background-color: #fcefef;
+}
+
+/* input[type=file] 디자인 */
+/* 1. 실제 input[type="file"]을 숨김 */
+input[type="file"] {
+    display: none;
+}
+
+/* 2. 커스텀 라벨을 버튼처럼 스타일링 */
+.custom-file-label {
+    display: flex;
+    padding: 8px 15px;
+    background-color: #c0392b; /* 버튼 색상 (예: 빨간색 계열) */
+    color: white;
+    cursor: pointer; /* 클릭 가능한 요소임을 표시 */
+    transition: background-color 0.2s; /* 호버 효과 */
+    margin-right: 15px; /* 파일명 표시 영역과의 간격 */
+    border: none;
+}
+
+/* 3. 전체 영역 레이아웃 조정 */
+.file-upload-wrapper {
+    display: flex;
+    align-items: center; /* 수직 중앙 정렬 */
+    padding: 10px 0;
+}
+
+/* 4. 파일명 표시 영역 스타일 */
+#fileNameDisplay {
+    font-size: 14px;
+    color: #555;
+    white-space: nowrap; /* 파일명이 길어도 줄 바꿈 방지 */
+    overflow: hidden;
+    text-overflow: ellipsis; /* 넘치는 텍스트를 ...으로 표시 */
+}
+
