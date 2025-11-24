@@ -54,10 +54,10 @@ public class AdminTermsController {
         return "redirect:/admin/config/terms/list";
     }
 
-    // 약관 등록
+    // 약관 등록으로 이동
     @GetMapping("/admin/config/terms/register")
     public String adminConfigRegister() {
-        return "admin/config/policy/register";
+        return "admin/config/terms/register";
     }
 
     // 약관 등록

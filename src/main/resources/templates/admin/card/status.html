@@ -2,9 +2,82 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>상품가입현황</title>
+    <title>상품관리-상품별가입현황</title>
+    <link rel="stylesheet" th:href="@{/css/admin/common/commonCSS.css}">
+    <link rel="stylesheet" th:href="@{/css/admin/common/commonActionBarTable.css}">
+    <link rel="stylesheet" th:href="@{/css/admin/card/status.css}">
+    <script th:src="@{/js/admin/common/aside.js}"></script>
 </head>
 <body>
+<div th:replace="~{admin/common/header :: header}"></div>
+<div th:replace="~{admin/common/aside :: aside}"></div>
+<main>
+    <div class="main-container">
+        <div th:replace="~{admin/common/mainHeader :: mainHeader}"></div>
+        <div id="main-content">
+            <!-- 주요 액션 영역 -->
+            <div class="action-bar">
+                <!-- 검색 (날짜) -->
+                <form method="get" class="date-range-search">
+                    <label class="date-range-area">
+                        <input type="date" id="startDate" name="startDate" class="date-input">
+                        <span>-</span>
+                        <input type="date" id="endDate" name="endDate" max=" " class="date-input">
+                    </label>
+                    <button type="submit" class="btn search-btn">검색</button>
+                </form>
+            </div>
 
+            <!-- 본문 -->
+            <table>
+                <thead>
+                <tr>
+                    <th>No</th>
+                    <th>상품명</th>
+                    <th>신청건수</th>
+                    <th>승인건수</th>
+                    <th>거절건수</th>
+                    <th>해지건수</th>
+                    <th>관리</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr>
+                    <td>1</td>
+                    <td>상품명1</td>
+                    <td>58,694(▼ 51)</td>
+                    <td>58,622(▲ 25)</td>
+                    <td>138( - )</td>
+                    <td>59 (▲ 13)</td>
+                    <td>상세보기</td>
+                </tr>
+                </tbody>
+            </table>
+
+
+        </div>
+    </div>
+</main>
+<div th:replace="~{admin/common/footer :: footer}"></div>
+<script>
+    // 날짜 기간 검색에 필요한 스크립트
+    // 오늘 날짜
+    const today = new Date();
+    const yyyy = today.getFullYear();
+    const mm = String(today.getMonth() + 1).padStart(2, '0');
+    const dd = String(today.getDate()).padStart(2, '0');
+    const todayStr = `${yyyy}-${mm}-${dd}`;
+
+    // 이번 달 1일 (화면 최소 진입 시 그 달의 1일로 자동 설정)
+    const firstDay = `${yyyy}-${mm}-01`;
+
+    // DOM 적용
+    document.getElementById('startDate').value = firstDay;
+    document.getElementById('endDate').value = todayStr;
+    document.getElementById('endDate').setAttribute("max", todayStr);
+
+
+
+</script>
 </body>
 </html>
