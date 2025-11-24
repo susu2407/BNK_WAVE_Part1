@@ -84,17 +84,35 @@
         </ul>
         <div class="util">
             <form th:action="@{/card/list}" method="get">
-            <div class="search-box">
-                <span class="search-ico">🔍</span>
-                <input type="text" name="keyword" th:value="${keyword}" placeholder="카드, 메뉴, 혜택을 검색해 보세요">
-            </div>
+                <div class="search-box">
+                    <span class="search-ico">🔍</span>
+                    <input type="text" name="keyword" th:value="${keyword}" placeholder="카드, 메뉴, 혜택을 검색해 보세요">
+                </div>
             </form>
+            <!-- ▼ 예전 디자인 그대로 세션바 옮겨오기 ▼ -->
+            <section class="myp-session-bar" th:if="${loginUser != null}">
+                <div class="myp-session-left">
+                    <!-- 실제 로그인 사용자 이름 바인딩 -->
+                    <button type="button" class="link-name" id="btnUserInfo">
+                        <span th:text="${loginUser.name} + '님'">홍길동님</span>
+                    </button>
+                </div>
+                <div class="myp-session-right">
+                    <button type="button" class="btn-session-extend" id="btnExtend">
+                        로그인 연장
+                    </button>
+                    <span class="session-timer" id="sessionTimer">
+                        09:58
+                    </span>
+                </div>
+            </section>
             <button class="all-nav-btn" id="allNavOpen" aria-label="전체 메뉴 열기">☰</button>
         </div>
     </div>
 </header>
 
 <script>
+    // 스크롤 시 헤더 그림자
     window.addEventListener('scroll', () => {
         const header = document.querySelector('.header');
         if (window.scrollY > 10) {
@@ -103,4 +121,69 @@
             header.classList.remove('scrolled');
         }
     });
+
+    // ===== 로그인 세션 타이머 (공통) =====
+    (function () {
+        const timerEl = document.getElementById('sessionTimer');
+        const btnExtend = document.getElementById('btnExtend');
+        const btnUserInfo = document.getElementById('btnUserInfo');
+
+        // 세션바가 없는 페이지(비로그인 등)는 스킵
+        if (!timerEl || !btnExtend) return;
+
+        const DEFAULT_SECONDS = 10 * 60; // 10분 예시
+        let remain = DEFAULT_SECONDS;
+        let timerId = null;
+
+        function formatTime(sec) {
+            const m = Math.floor(sec / 60);
+            const s = sec % 60;
+            return String(m).padStart(2, '0') + ':' + String(s).padStart(2, '0');
+        }
+
+        function updateView() {
+            timerEl.textContent = formatTime(remain);
+        }
+
+        function startTimer() {
+            if (timerId) clearInterval(timerId);
+            timerId = setInterval(() => {
+                remain--;
+                if (remain <= 0) {
+                    clearInterval(timerId);
+                    timerId = null;
+                    remain = 0;
+                    updateView();
+                    alert('로그인 시간이 만료되었습니다. 다시 로그인해 주세요.');
+                    // location.href = '/login'; // 필요하면 활성화
+                    return;
+                }
+                updateView();
+            }, 1000);
+        }
+
+        // 로그인 연장 버튼
+        btnExtend.addEventListener('click', () => {
+            // TODO: 실제 세션 연장 API 호출
+            // fetch('/api/session/extend', { method: 'POST' });
+
+            remain = DEFAULT_SECONDS;
+            updateView();
+            if (!timerId) startTimer();
+
+            // 데모용
+            // alert('로그인 시간이 연장되었습니다.');
+        });
+
+        // 이름 클릭 시 마이페이지로 이동
+        if (btnUserInfo) {
+            btnUserInfo.addEventListener('click', () => {
+                window.location.href = '/member/my'; // 실제 마이페이지 경로로 수정
+            });
+        }
+
+        // 초기 시작
+        updateView();
+        startTimer();
+    })();
 </script>

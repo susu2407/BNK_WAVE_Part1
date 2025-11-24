@@ -5,25 +5,17 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>마이페이지</title>
-    <link rel="stylesheet" th:href="@{/css/member/my/index.css}">
+    <!-- <link rel="stylesheet" th:href="@{/css/member/my/index.css}"> -->
+    <link rel="stylesheet" href="../../static/css/common/header.css">
+    <link rel="stylesheet" href="../../static/css/common/footer.css">
+    <link rel="stylesheet" href="../../static/css/member/my/index.css">
 </head>
 
 <body>
-    <div th:replace="~{common/header :: header}"></div>
+    <!-- <div th:replace="~{common/header :: header}"></div> -->
+    <div id="header"></div>
 
     <main class="content">
-
-        <!-- 상단 세션·유저 바 -->
-        <section class="myp-session-bar">
-            <div class="myp-session-left">
-                <!-- 실제로는 로그인 사용자 이름으로 바인딩 -->
-                <button type="button" class="link-name" id="btnUserInfo">홍길동님</button>
-            </div>
-            <div class="myp-session-right">
-                <button type="button" class="btn-session-extend" id="btnExtend">로그인 연장</button>
-                <span class="session-timer" id="sessionTimer">09:58</span>
-            </div>
-        </section>
 
         <!-- 메인 2컬럼 영역 (왼쪽 환영 + 오른쪽 카드 정보) -->
         <section class="myp-main-row">
@@ -207,37 +199,102 @@
 
         </section>
 
-        <!-- 하단 2분할 섹션 (설정·문의 / 내 상품 가입 정보) -->
+        <!-- 하단 3분할 섹션 (마이메뉴 / 나의 부가서비스 / 추천서비스) -->
         <section class="myp-bottom-row">
-            <!-- 설정·문의 메뉴 -->
-            <section class="myp-box myp-bottom-box">
+
+            <!-- 마이메뉴 -->
+            <section class="myp-box myp-bottom-box myp-bottom-menu">
                 <header class="myp-box-head">
-                    <h2 class="myp-box-title-sm">설정·문의</h2>
+                    <h2 class="myp-box-title-sm">마이메뉴</h2>
                 </header>
+
                 <ul class="myp-menu-list">
-                    <li><a href="#">문의내역</a></li>
-                    <li><a href="#">사용자 정보 수정</a></li>
-                    <li><a href="#">비밀번호 수정</a></li>
-                    <li><a href="#">회원탈퇴</a></li>
-                    <li><a href="#">기타</a></li>
+                    <li>
+                        <a href="#">
+                            <span class="menu-icon">💳</span>
+                            카드 사용등록
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#">
+                            <span class="menu-icon">🔔</span>
+                            카드 분실신고
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#">
+                            <span class="menu-icon">💸</span>
+                            결제계좌 변경
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#">
+                            <span class="menu-icon">👤</span>
+                            개인정보 변경
+                        </a>
+                    </li>
                 </ul>
             </section>
 
-            <!-- 내 상품 가입 정보 -->
-            <section class="myp-box myp-bottom-box">
+            <!-- 나의 부가서비스 -->
+            <section class="myp-box myp-bottom-box myp-bottom-extra">
                 <header class="myp-box-head">
-                    <h2 class="myp-box-title-sm">내 상품 가입 정보</h2>
-                    <a href="#" class="myp-link-small">자세히 보기</a>
+                    <h2 class="myp-box-title-sm">나의 부가서비스</h2>
+                    <a href="#" class="myp-link-small">전체 보기 &gt;</a>
                 </header>
-                <div class="myp-products-body">
-                    <p class="placeholder-text">보유 카드, 대출, 예금 등 가입 상품 목록이 여기에 표시됩니다.</p>
-                </div>
+
+                <ul class="extra-service-list">
+                    <li>
+                        <span class="svc-badge">유료사용</span>
+                        <span class="svc-name">일반 정기결제관리알람 (일반형)</span>
+                    </li>
+                    <li>
+                        <span class="svc-badge">유료사용</span>
+                        <span class="svc-name">휴대폰 알림형</span>
+                    </li>
+                    <li>
+                        <span class="svc-badge">유료사용</span>
+                        <span class="svc-name">비공인증형</span>
+                    </li>
+                </ul>
             </section>
+
+            <!-- 추천서비스 -->
+            <section class="myp-box myp-bottom-box myp-bottom-reco">
+                <header class="myp-box-head">
+                    <h2 class="myp-box-title-sm">추천서비스</h2>
+                </header>
+
+                <ul class="reco-service-list">
+                    <li>
+                        <a href="#" class="reco-item-link">
+                            <div class="reco-icon"></div>
+                            <span class="reco-text">분할납부 서비스</span>
+                            <span class="reco-arrow">›</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#" class="reco-item-link">
+                            <div class="reco-icon"></div>
+                            <span class="reco-text">마케팅수신동의</span>
+                            <span class="reco-arrow">›</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#" class="reco-item-link">
+                            <div class="reco-icon"></div>
+                            <span class="reco-text">기프트카드</span>
+                            <span class="reco-arrow">›</span>
+                        </a>
+                    </li>
+                </ul>
+            </section>
+
         </section>
 
     </main>
-    <div th:replace="~{common/footer :: footer}"></div>
-
+    <!-- <div th:replace="~{common/footer :: footer}"></div> -->
+    <div id="footer"></div>
     <script>
         // 헤더/푸터 로드 (index와 동일 패턴)
         document.addEventListener('DOMContentLoaded', function () {

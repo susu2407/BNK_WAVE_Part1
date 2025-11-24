@@ -1,0 +1,229 @@
+/* ========= 전체 레이아웃 ========= */
+.content.myinfo-content {
+    max-width: 900px;
+    margin: 130px auto 120px;
+    padding: 0 16px 80px;
+    box-sizing: border-box;
+    font-size: 14px;
+}
+
+/* ========= 상단 타이틀 / 안내문구 ========= */
+
+/* 조회/수정 공통 타이틀 */
+.myinfo-title {
+    text-align: center;
+    font-size: 22px;
+    font-weight: 700;
+    margin-bottom: 12px;
+}
+
+/* profile_edit.html 에서 사용하는 헤더 래퍼 + 안내문구 */
+.myinfo-header {
+    text-align: center;
+    margin-bottom: 24px;
+}
+
+.myinfo-guide {
+    font-size: 12px;
+    color: #777;
+}
+
+/* ========= 섹션 공통 ========= */
+.info-section {
+    margin-bottom: 32px;
+}
+
+.info-section-title {
+    font-size: 15px;
+    font-weight: 600;
+    padding-bottom: 8px;
+    border-bottom: 1px solid #111;
+    margin: 0 0 8px;
+}
+
+/* ========= 정보 리스트 (dl) ========= */
+.info-list {
+    margin: 0;
+    padding: 0;
+}
+
+.info-row {
+    display: flex;
+    padding: 8px 0;
+    border-bottom: 1px solid #f3f3f3;
+    font-size: 13px;
+}
+
+.info-row:nth-child(even) {
+    background: #fafafa;
+}
+
+/* profile_edit.html 에서 클릭 가능 행 */
+.info-row.clickable {
+    cursor: pointer;
+}
+
+.info-row.clickable:hover {
+    background: #f5f7fb;
+}
+
+.info-row dt {
+    width: 150px;
+    padding: 0 12px 0 4px;
+    box-sizing: border-box;
+    color: #555;
+    font-weight: 600;
+}
+
+.info-row dd {
+    flex: 1;
+    margin: 0;
+    padding: 0 4px 0 0;
+    font-weight: 500;
+    color: #222;
+    word-break: keep-all;
+    display: flex;
+    /* edit 페이지에서 값 + 버튼 나란히 배치 */
+    align-items: center;
+    gap: 6px;
+    box-sizing: border-box;
+}
+
+/* 값/태그/부가텍스트 공통 */
+.info-value {
+    font-weight: 500;
+    color: #222;
+}
+
+.info-tag {
+    font-size: 11px;
+    color: #777;
+}
+
+.info-subtext {
+    font-size: 11px;
+    color: #999;
+}
+
+/* 주소 줄바꿈 */
+.info-row dd br {
+    display: block;
+}
+
+/* ========= 하단 링크 영역 (필요한 페이지에서 사용) ========= */
+.info-links {
+    margin-top: 20px;
+    font-size: 12px;
+}
+
+.info-link {
+    display: block;
+    color: #0052cc;
+    text-decoration: none;
+    margin-bottom: 3px;
+}
+
+.info-link:hover {
+    text-decoration: underline;
+}
+
+/* ========= 오른쪽 "변경" 링크 버튼 (edit 페이지) ========= */
+.edit-link-btn {
+    margin-left: auto;
+    border: none;
+    background: none;
+    padding: 0;
+    font-size: 12px;
+    color: #0052cc;
+    cursor: pointer;
+    text-decoration: none;
+    white-space: nowrap;
+}
+
+.edit-link-btn:hover {
+    text-decoration: underline;
+}
+
+/* ========= 하단 버튼 공통 영역 ========= */
+.myinfo-actions {
+    margin-top: 28px;
+    text-align: center;
+}
+
+/* 하단 버튼 모양 - 조회/수정 페이지 공통
+   profile.html  : a.myinfo-edit-btn
+   profile_edit  : button.myinfo-confirm-btn
+*/
+.myinfo-edit-btn,
+.myinfo-confirm-btn {
+    display: inline-block;
+    width: 200px;
+    /* 버튼 너비 */
+    height: 44px;
+    /* 버튼 높이 */
+    line-height: 44px;
+    /* 세로 가운데 정렬 */
+    border-radius: 12px;
+    border: none;
+    background: #CB2B11;
+    /* 프로젝트 공통 빨간색 */
+    color: #fff;
+    font-size: 14px;
+    font-weight: 600;
+    text-decoration: none;
+    text-align: center;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.08);
+    box-sizing: border-box;
+    cursor: pointer;
+}
+
+.myinfo-edit-btn:hover,
+.myinfo-confirm-btn:hover {
+    background: #a0210d;
+}
+
+/* ========= 반응형 ========= */
+@media (max-width: 600px) {
+    .content.myinfo-content {
+        margin-top: 110px;
+        padding: 0 12px 60px;
+    }
+
+    .info-row {
+        flex-direction: column;
+        gap: 4px;
+    }
+
+    .info-row dt {
+        width: auto;
+        padding-right: 0;
+    }
+
+    .edit-link-btn {
+        margin-left: 0;
+    }
+
+    .myinfo-edit-btn,
+    .myinfo-confirm-btn {
+        width: 100%;
+    }
+}
+
+/* 입력 가능한 필드 공통 스타일 */
+.info-input {
+    flex: 0 0 260px;
+    /* 적당한 너비, 필요하면 조절 */
+    max-width: 100%;
+    height: 32px;
+    padding: 0 10px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    font-size: 13px;
+    box-sizing: border-box;
+}
+
+.info-input:focus {
+    outline: none;
+    border-color: #CB2B11;
+    /* 프로젝트 빨간색 포커스 */
+}
