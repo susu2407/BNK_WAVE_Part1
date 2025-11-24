@@ -20,10 +20,12 @@
                 </p>
 
                 <!-- 직업구분 -->
+                <form id="extraForm" th:action="@{/card/apply/step5}" method="post">
+                    <input type="hidden" name="cardId" th:value="${cardItem.card.cardId}">
                 <div class="field">
                     <label class="field-label" for="job">직업구분</label>
                     <div class="select-like">
-                        <select id="job">
+                        <select id="job" name="job">
                             <option value="">선택</option>
                             <option>직장인</option>
                             <option>개인사업자</option>
@@ -43,7 +45,7 @@
                         <span class="info" title="금융범죄/테러자금조달 위험이 높은 업종 여부 확인">i</span>
                     </div>
                     <div class="select-like">
-                        <select id="riskjob">
+                        <select id="riskJob" name="riskJob">
                             <option value="">선택</option>
                             <option>해당사항없음</option>
                             <option>환전/귀금속/보석류 취급</option>
@@ -61,7 +63,7 @@
                         <span class="info" title="카드 결제 자금의 주된 출처">i</span>
                     </div>
                     <div class="select-like">
-                        <select id="fund">
+                        <select id="fund" name="fundSource">
                             <option value="">선택</option>
                             <option>근로소득</option>
                             <option>사업소득</option>
@@ -81,7 +83,7 @@
                         <span class="info" title="카드 사용의 주된 목적">i</span>
                     </div>
                     <div class="select-like">
-                        <select id="purpose">
+                        <select id="purpose" name="purpose">
                             <option value="">선택</option>
                             <option>생활비(물품구매, 세금납부 등)</option>
                             <option>사업상 지출</option>
@@ -93,7 +95,10 @@
                     </div>
                 </div>
 
-                <button type="button" id="submitBtn" class="btn-submit" disabled>확인</button>
+                <button type="submit" id="submitBtn" class="btn-submit" disabled>
+                    확인
+                </button>
+                </form>
             </section>
         </div>
     </div>

@@ -15,6 +15,7 @@ import kr.co.wave.repository.card.CardRepository;
 import kr.co.wave.repository.member.MemberRepository;
 import kr.co.wave.service.util.FileUploadUtil;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
@@ -29,6 +30,7 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
+@Slf4j
 @RequiredArgsConstructor
 public class CardService {
 
@@ -314,33 +316,11 @@ public class CardService {
         cardApprovalRepository.save(cardApproval);
     }
 
-    // 카드 상품 가입
+    // 카드 상품 가입 (사용자 정보 임시저장)
     @Transactional
     public void applyCard(CardApplyDTO cardApplyDTO){
 
-        // 사용자
-        Member member = Member.builder()
-                .name(cardApplyDTO.getName())
 
-
-                .build();
-
-        // 혜택
-//        for(int i = 0; i<cardRequestDTO.getCategory().size(); i++){
-//            Benefit benefit = Benefit.builder()
-//                    .benefitType(cardRequestDTO.getBenefitType().get(i))
-//                    .benefitCategory(String.valueOf(cardRequestDTO.getCategory().get(i)))
-//                    .unit(cardRequestDTO.getUnit().get(i))
-//                    .value(cardRequestDTO.getValue().get(i))
-//                    .limit(cardRequestDTO.getLimit().get(i))
-//                    .benefitDescription(cardRequestDTO.getBenefitDescription().get(i))
-//                    .card(savedCard)
-//                    .build();
-//
-//            System.out.println(i + "번째" + benefit.toString());
-//
-//            benefitRepository.save(benefit);
-//        }
     }
 
 
