@@ -1,10 +1,13 @@
-package kr.co.wave.service;
+package kr.co.wave.service.member;
 
 import kr.co.wave.dto.MemberDTO;
 import kr.co.wave.entity.member.Member;
 import kr.co.wave.repository.member.MemberRepository;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -44,6 +47,7 @@ public class MemberService {
     }
 
     // 회원가입
+    @Transactional
     public MemberDTO signup(MemberDTO memberDTO) {
         String plain = memberDTO.getPassword();
         String encoded = passwordEncoder.encode(plain);
@@ -73,6 +77,16 @@ public class MemberService {
             memberDTOList.add(modelMapper.map(member, MemberDTO.class));
         }
         return memberDTOList;
+    }
+
+    // 관리자
+    public Page<Member> getAdminMemberAll(String searchType, String keyword, int page, int size) {
+        // 검색어/타입 공백 처리
+        String st = (searchType == null) ? "" : searchType.trim();
+        String kw = (keyword == null) ? "" : keyword.trim();
+        Pageable pageable = PageRequest.of(page, size);
+
+        return memberRepository.findAdminAll(st, kw, pageable);
     }
 
 }

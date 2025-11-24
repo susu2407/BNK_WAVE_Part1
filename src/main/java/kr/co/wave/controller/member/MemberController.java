@@ -1,7 +1,7 @@
 package kr.co.wave.controller.member;
 
 import kr.co.wave.dto.MemberDTO;
-import kr.co.wave.service.MemberService;
+import kr.co.wave.service.member.MemberService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;

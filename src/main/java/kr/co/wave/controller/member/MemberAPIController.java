@@ -3,7 +3,7 @@ package kr.co.wave.controller.member;
 import kr.co.wave.dto.MemberDTO;
 import kr.co.wave.jwt.JwtProvider;
 import kr.co.wave.security.MemberDetails;
-import kr.co.wave.service.MemberService;
+import kr.co.wave.service.member.MemberService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;

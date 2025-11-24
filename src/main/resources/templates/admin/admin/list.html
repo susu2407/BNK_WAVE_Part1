@@ -18,13 +18,12 @@
             <!-- 주요 액션 영역 -->
             <div class="action-bar">
                 <!-- 검색 -->
-                <form method="get" th:action="@{/admin/card/list}">
+                <form method="get" th:action="@{/admin/admin/list}">
                     <div th:with="st=${param.searchType != null ? param.searchType[0] : ''}">
                         <select name="searchType" id="searchType">
                             <option value="" th:selected="${st == ''}">전체</option>
-                            <option value="name" th:selected="${st == 'name'}">상품명</option>
-                            <option value="engName" th:selected="${st == 'engName'}">영어명</option>
-                            <option value="type" th:selected="${st == 'type'}">카드유형</option>
+                            <option value="name" th:selected="${st == 'name'}">이름</option>
+                            <option value="role" th:selected="${st == 'role'}">등급</option>
                         </select>
                     </div>
                     <label for="keyword">
@@ -77,10 +76,10 @@
                             th:class="${stat.even} ? 'even-row' : 'odd-row'">
                             <td>[[${adminList.totalElements - (adminList.number * adminList.size + stat.index)}]]</td>
                             <td>[[${admin.name}]]</td>
-                            <td>ID</td>
+                            <td>[[${admin.memId}]]</td>
                             <td>[[${admin.role}]]</td>
-                            <td>등록일</td>
-                            <td>활성화상태</td>
+                            <td>[[${#temporals.format(admin.createdAt, 'yyyy-MM-dd HH:mm:ss')}]]</td>
+                            <td>[[${admin.status}]]</td>
                             <td>수정버튼</td>
                         </tr>
                     </tbody>
