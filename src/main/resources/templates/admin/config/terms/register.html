@@ -15,6 +15,7 @@
     <div class="main-container">
         <div th:replace="~{admin/common/mainHeader :: mainHeader}"></div>
         <div id="main-content">
+
             <form th:action="@{/templates/admin/config/terms/register}" method="post" enctype="multipart/form-data">
                 <div class="form-wrap">
                     <!-- 1.약관명 -->
@@ -72,10 +73,10 @@
                                 <label>
                                     <textarea name="terms-content" placeholder="약관 내용을 입력하세요" class="terms-textarea"></textarea>
                                 </label>
-                            </div>
-
+                          </div>
                         </div>
                     </section>
+                  <!--  -->
                     <section class="form-section">
                         <div class="section-header">
                             <h2>약관 파일 <span style="color: red">*</span></h2>
@@ -151,7 +152,7 @@
         }
     });
 
-    // input 디자인을 위함
+    // input[type="file"]
     document.getElementById('termsFile').addEventListener('change', function() {
         const fileNameDisplay = document.getElementById('fileNameDisplay');
 

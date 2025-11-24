@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>약관 등록</title>
+    <link rel="stylesheet" th:href="@{/css/admin/common/commonCSS.css}">
+    <link rel="stylesheet" th:href="@{/css/admin/card/register.css}">
+    <link rel="stylesheet" th:href="@{/css/admin/config/register.css}">
+    <script th:src="@{/js/admin/common/aside.js}"></script>
+</head>
+<div th:replace="~{admin/common/header :: header}"></div>
+<div th:replace="~{admin/common/aside :: aside}"></div>
+<body>
+<main>
+    <div class="main-container">
+        <div th:replace="~{admin/common/mainHeader :: mainHeader}"></div>
+        <div id="main-content">
+
+            <form th:action="@{/admin/config/terms/update}" method="post" enctype="multipart/form-data">
+
+                <div class="form-flex-wrapper">
+                    <label>약관명</label>
+                    <input type="text" th:value="${terms.title}" name="title" id="titleInput" autocomplete="off">
+
+                    <ul id="suggestionBox" style="display: none; max-height: 150px; overflow-y: auto; border: 1px solid #ddd; list-style: none; padding: 0; margin: 0;">
+                        <li th:each="item : ${warningList}" th:data-title="${item.title}" onclick="selectTitle(this)" style="padding: 8px; cursor: pointer; border-bottom: 1px solid #eee;">
+                            <p style="margin: 0;">[[${item.title}]] - [[${item.version}]] - [[${item.termStatus}]]</p>
+                        </li>
+                    </ul>
+                </div>
+                <div class="form-flex-wrapper">
+                    <label>약관내용</label>
+                    <input type="text" id="editor" th:value="${terms.content}" name="content">
+                    <label>
+                        필수여부 <input type="checkbox" th:checked="${terms.isRequired}" name="isRequired" >
+                    </label>
+                </div>
+
+                <br>
+                <label>약관파일</label>
+                <div th:if="${terms.pdfFile != null}">
+                    기존 파일: <span th:text="${terms.originalName}"></span>
+                </div>
+                <input type="file" th:file="${terms.pdfFile}" name="pdfFile" id="termsFile" accept="application/pdf">  <!-- PDF 파일만 업로드 가능하게 제한 -->
+                <button type="submit">제출</button>
+            </form>
+
+            <label for="origin">기존 약관 내용 : </label>
+            <textarea id="origin" rows="5" cols="50" readonly>[[${terms.content}]]</textarea>
+            <div id="highlighted" style="white-space: pre-wrap; border:1px solid #ccc; padding:5px;"></div>
+
+            <div id="preview">
+                <p>파일 미리보기</p>
+                <p id="fileName">파일명 : -</p>
+                <p id="fileSize">크기 : -</p>
+                <p id="fileType">형식 : -</p>
+
+                <!-- 미리보기 버튼 -->
+                <button id="previewBtn" style="display: none;">파일 미리보기</button>
+            </div>
+        </div>
+    </div>
+</main>
+<div th:replace="~{admin/common/footer :: footer}"></div>
+<script>
+    document.getElementById("termsFile").addEventListener("change", function () {
+        const file = this.files[0];
+        if (!file) return;
+
+        document.getElementById("fileName").textContent = "파일명 : " + file.name;
+        document.getElementById("fileSize").textContent = "크기 : " + (file.size / 1024).toFixed(2) + " KB";
+        document.getElementById("fileType").textContent = "형식 : " + file.type;
+
+        // PDF 미리보기 설정
+        if (file.type === "application/pdf") {
+            const reader = new FileReader();
+            reader.onload = function (e) {
+                const previewBtn = document.getElementById("previewBtn");
+
+                // 미리보기 버튼 보이기
+                previewBtn.style.display = "inline-block";
+
+                // 미리보기 버튼 클릭 시 새 창으로 PDF 띄우기
+                previewBtn.onclick = function () {
+                    // 새 창으로 PDF 파일 열기
+                    const pdfWindow = window.open();
+                    pdfWindow.document.write('<iframe width="100%" height="100%" src="' + e.target.result + '"></iframe>');
+                };
+            };
+            reader.readAsDataURL(file);
+        } else {
+            alert("PDF 파일만 업로드 가능합니다.");
+            document.getElementById("previewBtn").style.display = "none"; // 미리보기 버튼 숨기기
+        }
+    });
+</script>
+
+<script>
+    const original = document.getElementById("origin").value;
+    const editor = document.getElementById("editor");
+    const highlighted = document.getElementById("highlighted");
+
+    editor.addEventListener("input", () => {
+        const current = editor.value;
+        let result = "";
+
+        // 글자 단위 비교
+        const length = Math.max(original.length, current.length);
+        for (let i = 0; i < length; i++) {
+            const oChar = original[i] || "";
+            const cChar = current[i] || "";
+            if (oChar !== cChar) {
+                result += `<span style="background-color:yellow">${cChar}</span>`;
+            } else {
+                result += cChar;
+            }
+        }
+
+        highlighted.innerHTML = result;
+    });
+</script>
+
+<script th:inline="javascript">
+    const input = document.getElementById('titleInput');
+    const box = document.getElementById('suggestionBox');
+    const items = document.querySelectorAll('#suggestionBox > li');
+
+    input.addEventListener('input', function() {
+        const val = this.value.trim().toLowerCase();
+        if (!val) return box.style.display = 'none';
+
+        let count = 0;
+        items.forEach(item => {
+            const title = item.getAttribute('data-title');
+            if (title && title.toLowerCase().includes(val) && count < 5) {
+                item.style.display = 'block';
+                count++;
+            } else {
+                item.style.display = 'none';
+            }
+        });
+
+        box.style.display = count > 0 ? 'block' : 'none';
+    });
+
+    function selectTitle(el) {
+        input.value = el.dataset.title;
+        box.style.display = 'none';
+    }
+</script>
+
+</body>
+</html>
