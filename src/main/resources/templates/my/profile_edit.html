@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>내 정보 관리 - 정보 변경</title>
+
+    <link rel="stylesheet" href="../../static/css/common/header.css">
+    <link rel="stylesheet" href="../../static/css/common/footer.css">
+
+    <!-- 이 페이지 전용 -->
+    <link rel="stylesheet" href="../../static/css/member/my/profile_edit.css">
+</head>
+
+<body>
+    <!-- 공통 헤더 -->
+    <!-- <div th:replace="~{common/header :: header}"></div> -->
+
+    <div id="header"></div>
+    <main class="content myinfo-content">
+        <header class="myinfo-header">
+            <h1 class="myinfo-title">내 정보 관리</h1>
+            <p class="myinfo-guide">
+                변경을 원하시는 항목을 선택하시면 변경이 진행됩니다.
+            </p>
+        </header>
+
+        <!-- 기본 정보 -->
+        <section class="info-section">
+            <h2 class="info-section-title">기본 정보</h2>
+
+            <dl class="info-list">
+                <!-- 성명: 일반적으로 변경 X라서 변경버튼 없음 -->
+                <div class="info-row">
+                    <dt>성명</dt>
+                    <dd>
+                        <span class="info-value">박*셉</span>
+                    </dd>
+                </div>
+
+                <!-- 아이디: 변경 불가 -->
+                <div class="info-row">
+                    <dt>아이디</dt>
+                    <dd>
+                        <span class="info-value">jos******</span>
+                    </dd>
+                </div>
+
+                <!-- 비밀번호: 별표 + 변경 링크 -->
+                <div class="info-row clickable">
+                    <dt>비밀번호</dt>
+                    <dd>
+                        <span class="info-value">********</span>
+                        <button type="button" class="edit-link-btn">
+                            비밀번호 변경 &gt;
+                        </button>
+                    </dd>
+                </div>
+
+                <!-- 휴대폰 번호 -->
+                <div class="info-row clickable">
+                    <dt>휴대폰 번호</dt>
+                    <dd>
+                        <span class="info-value">010-25**-79**</span>
+                        <button type="button" class="edit-link-btn">
+                            휴대폰 번호 변경 &gt;
+                        </button>
+                    </dd>
+                </div>
+
+                <!-- 자택 주소 -->
+                <div class="info-row clickable">
+                    <dt>자택 주소</dt>
+                    <dd>
+                        <span class="info-value">
+                            48064 부산 해운대구 해운대로469번가길 91, 101동 107호 (우동, 센텀아파트)
+                        </span>
+                        <span class="info-tag">(자택)</span>
+                        <button type="button" class="edit-link-btn">
+                            자택 주소 변경 &gt;
+                        </button>
+                    </dd>
+                </div>
+
+                <!-- 이메일 -->
+                <div class="info-row clickable">
+                    <dt>이메일</dt>
+                    <dd>
+                        <span class="info-value">joseph8034@naver.com</span>
+                        <button type="button" class="edit-link-btn">
+                            이메일 변경 &gt;
+                        </button>
+                    </dd>
+                </div>
+
+                <!-- 자택 전화번호 -->
+                <div class="info-row">
+                    <dt>자택 전화번호</dt>
+                    <dd>
+                        <input type="text" class="info-input" placeholder="'-' 없이 입력" />
+                        <span class="info-subtext">('-' 없이 입력)</span>
+                    </dd>
+                </div>
+            </dl>
+        </section>
+
+        <!-- 직장 정보 -->
+        <section class="info-section">
+            <h2 class="info-section-title">직장 정보</h2>
+
+            <dl class="info-list">
+                <!-- 직장명 -->
+                <div class="info-row">
+                    <dt>직장명</dt>
+                    <dd>
+                        <input type="text" class="info-input" placeholder="직장명을 입력해 주세요" />
+                    </dd>
+                </div>
+
+                <!-- 부서명 -->
+                <div class="info-row">
+                    <dt>부서명</dt>
+                    <dd>
+                        <input type="text" class="info-input" placeholder="부서명을 입력해 주세요" />
+                    </dd>
+                </div>
+
+                <!-- 직위 -->
+                <div class="info-row">
+                    <dt>직위</dt>
+                    <dd>
+                        <input type="text" class="info-input" placeholder="직위를 입력해 주세요" />
+                    </dd>
+                </div>
+
+                <!-- 직장 전화번호 -->
+                <div class="info-row">
+                    <dt>직장 전화번호</dt>
+                    <dd>
+                        <input type="text" class="info-input" placeholder="'-' 없이 입력" />
+                        <span class="info-subtext">('-' 없이 입력)</span>
+                    </dd>
+                </div>
+
+                <!-- 직장 주소 -->
+                <div class="info-row">
+                    <dt>직장 주소</dt>
+                    <dd>
+                        <input type="text" class="info-input" placeholder="직장 주소를 입력해 주세요" />
+                    </dd>
+                </div>
+            </dl>
+        </section>
+
+        <!-- 확인 버튼 -->
+        <div class="myinfo-actions">
+            <button type="button" class="myinfo-confirm-btn">
+                확인
+            </button>
+        </div>
+    </main>
+
+    <!-- <div th:replace="~{common/footer :: footer}"></div> -->
+    <div id="footer"></div>
+
+
+    <!--
+    <script>
+        document.querySelectorAll('.info-row.clickable').forEach(row => {
+            row.addEventListener('click', function () {
+                // TODO: 여기에 각 항목별 수정 페이지/모달 오픈 로직 연결
+                console.log('변경 클릭:', this.querySelector('dt').textContent.trim());
+            });
+        });
+    </script>
+    -->
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            // 공통 헤더 로드
+            fetch('../common/header.html')
+                .then(res => res.text())
+                .then(html => {
+                    document.getElementById('header').innerHTML = html;
+                    const headerEl = document.querySelector('.header');
+                    if (headerEl) {
+                        window.addEventListener('scroll', () => {
+                            if (window.scrollY > 10) headerEl.classList.add('scrolled');
+                            else headerEl.classList.remove('scrolled');
+                        });
+                    }
+                });
+
+            // 공통 푸터 로드
+            fetch('../common/footer.html')
+                .then(res => res.text())
+                .then(html => document.getElementById('footer').innerHTML = html);
+        });  
+    </script>
+</body>
+
+</html>

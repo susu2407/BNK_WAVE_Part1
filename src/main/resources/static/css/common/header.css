@@ -190,3 +190,53 @@ body {
 .mega-col a:hover {
     text-decoration: underline;
 }
+
+/* ===== 상단 세션 바 (마이페이지용 공통) ===== */
+.myp-session-bar {
+    display: flex;
+    justify-content: end;
+    align-items: center;
+    margin-bottom: 0;
+    font-size: 13px;
+    color: #111827;
+    gap: 10px;
+}
+
+.myp-session-left {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.link-name {
+    border: none;
+    background: none;
+    padding: 0;
+    font-size: 14px;
+    font-weight: 700;
+    cursor: pointer;
+    color: #111827;
+}
+
+.myp-session-right {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.btn-session-extend {
+    border: 1px solid #e5e7eb;
+    background: #CB2B11;
+    font-weight: 700;
+    color: #fff;
+    border-radius: 999px;
+    padding: 4px 12px;
+    font-size: 12px;
+    cursor: pointer;
+}
+
+.session-timer {
+    font-weight: 600;
+    font-size: 12px;
+    color: #6b7280;
+}

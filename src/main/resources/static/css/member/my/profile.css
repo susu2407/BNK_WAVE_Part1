@@ -7,28 +7,28 @@
     font-size: 14px;
 }
 
-/* 상단 타이틀 */
+/* 상단 타이틀 – 마이페이지 프로필 톤에 맞춰 살짝 작은 제목 */
 .myinfo-title {
     text-align: center;
-    font-size: 28px;
+    font-size: 22px;
     font-weight: 700;
-    margin-bottom: 36px;
+    margin-bottom: 28px;
 }
 
 /* 섹션 공통 */
 .info-section {
-    margin-bottom: 40px;
+    margin-bottom: 32px;
 }
 
 .info-section-title {
-    font-size: 20px;
+    font-size: 15px;
     font-weight: 600;
     padding-bottom: 8px;
     border-bottom: 1px solid #111;
-    margin: 0 0 10px;
+    margin: 0 0 8px;
 }
 
-/* 정보 리스트 (테이블처럼 보이게) */
+/* 정보 리스트 (테이블처럼) */
 .info-list {
     margin: 0;
     padding: 0;
@@ -36,9 +36,9 @@
 
 .info-row {
     display: flex;
-    padding: 10px 0;
+    padding: 8px 0;
     border-bottom: 1px solid #f3f3f3;
-    font-size: 16px;
+    font-size: 13px;
 }
 
 .info-row:nth-child(even) {
@@ -62,22 +62,22 @@
     word-break: keep-all;
 }
 
-/* 주소처럼 줄바꿈 허용하고 싶으면 */
+/* 주소 줄바꿈 */
 .info-row dd br {
     display: block;
 }
 
 /* 하단 링크 영역 */
 .info-links {
-    margin-top: 24px;
-    font-size: 14px;
+    margin-top: 20px;
+    font-size: 12px;
 }
 
 .info-link {
     display: block;
     color: #0052cc;
     text-decoration: none;
-    margin-bottom: 4px;
+    margin-bottom: 3px;
 }
 
 .info-link:hover {
@@ -100,4 +100,33 @@
         width: auto;
         padding-right: 0;
     }
+}
+
+/* ========= 하단 정보 변경하기 버튼 ========= */
+
+.myinfo-actions {
+    margin-top: 28px;
+    text-align: center;
+}
+
+/* 카드신청 버튼 스타일 느낌 */
+.myinfo-edit-btn {
+    display: inline-block;
+    width: 200px;        /* 버튼 너비 */
+    height: 44px;        /* 버튼 높이 */
+    line-height: 44px;   /* 세로 가운데 정렬 */
+    border-radius: 12px;
+    border: none;
+    background: #CB2B11; /* 프로젝트 공통 빨간색 */
+    color: #fff;
+    font-size: 14px;
+    font-weight: 600;
+    text-decoration: none;
+    text-align: center;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.08);
+    box-sizing: border-box; 
+}
+
+.myinfo-edit-btn:hover {
+    background: #a0210d;
 }
