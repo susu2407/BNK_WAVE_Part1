@@ -16,19 +16,19 @@
 </head>
 
 <body>
-    <div id="header"></div>
+<div th:replace="~{common/product_header :: product_header}"></div>
 
     <main class="content">
         <section class="addr-wrap">
             <h1 class="addr-title">카드 수령 주소 입력</h1>
 
             <div class="addr-desc">카드를 수령하실 <strong>주소</strong>를 입력해 주세요.</div>
-
+            <form th:action="@{/card/apply/step9(cardId=${cardItem.card.cardId})}" method="post">
             <!-- 우편번호 -->
             <div class="field">
                 <label for="zip" class="label">우편번호</label>
                 <div class="row">
-                    <input id="zip" type="text" inputmode="numeric" maxlength="5" readonly
+                    <input id="zip" type="text" name="zip" inputmode="numeric" maxlength="5" readonly
                         placeholder="" />
                     <button type="button" class="btn-search" id="btnSearch" aria-label="주소 검색">주소 검색</button>
                 </div>
@@ -38,14 +38,14 @@
             <!-- 기본주소 -->
             <div class="field">
                 <label for="addr1" class="label">기본주소</label>
-                <input id="addr1" type="text" readonly placeholder="" />
+                <input id="addr1" name="addr1" type="text" readonly placeholder="" />
                 <div class="underline"></div>
             </div>
 
             <!-- 상세주소 -->
             <div class="field">
                 <label for="addr2" class="label">상세주소</label>
-                <input id="addr2" type="text" placeholder="상세주소를 입력해주세요" />
+                <input id="addr2" name="addr2" type="text" placeholder="상세주소를 입력해주세요" />
                 <div class="underline"></div>
             </div>
 
@@ -53,11 +53,11 @@
             <p class="guide">주소가 맞게 입력되었는지 다시 한 번 확인해 주세요.</p>
 
             <!-- 확인 버튼 -->
-            <button class="btn-submit" id="btnConfirm" disabled>확인</button>
+            <button class="btn-submit" id="btnConfirm" disabled type="submit">확인</button></form>
         </section>
     </main>
 
-    <div id="footer"></div>
+<div th:replace="~{common/footer :: footer}"></div>
 
     <script>
         document.addEventListener('DOMContentLoaded', () => {
