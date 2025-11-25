@@ -19,8 +19,9 @@
                         <div class="mega-col">
                             <h4>카드 이용 내역</h4>
                             <ul>
-                                <li><a th:href="@{/my/BillingStates}">이용내역 명세서</a></li>
-                                <li><a href="#">최근 이용 내역</a></li>
+                                <li><a th:href="@{/my/OwnCard}">보유 금융 상품</a></li>
+                                <li><a th:href="@{/my/CardHistory}">이용내역 명세서</a></li>
+                                <li><a th:href="@{/my/RecentHistory}">최근 이용 내역</a></li>
                                 <li><a href="#">결제 위치 지도로 확인하기</a></li>
                             </ul>
                         </div>
@@ -35,7 +36,7 @@
             </li>
 
             <li title="menu2">
-                <a href="/" class="menu_title">혜택</a>
+                <a th:href="@{/my}" class="menu_title">혜택</a>
                 <div class="mega-panel">
                     <div class="mega-inner">
                     </div>
@@ -51,6 +52,7 @@
                             <ul>
                                 <li><a th:href="@{/card/list}">체크카드</a></li>
                                 <li><a th:href="@{/card/list}">신용카드</a></li>
+                                <li><a th:href="@{/card/list}">기업카드</a></li>
                             </ul>
                         </div>
                     </div>
@@ -65,7 +67,6 @@
                             <h4>인증 센터</h4>
                             <ul>
                                 <li><a href="#">카드본인확인서비스</a></li>
-                                <li><a href="#">보안프로그램 설치 안내</a></li>
                             </ul>
                         </div>
                         <div class="mega-col">
@@ -78,6 +79,12 @@
                                 <li><a href="#">뉴스 / 공지</a></li>
                             </ul>
                         </div>
+                        <div class="mega-col">
+                            <h4>상담</h4>
+                            <ul>
+                                <li><a th:href="@{cs/ai/cs}">AI 상담</a></li>
+                            </ul>
+                        </div>
                     </div>
                 </div>
             </li>
@@ -85,8 +92,13 @@
         <div class="util">
             <form th:action="@{/card/list}" method="get">
                 <div class="search-box">
-                    <span class="search-ico">🔍</span>
-                    <input type="text" name="keyword" th:value="${keyword}" placeholder="카드, 메뉴, 혜택을 검색해 보세요">
+                    <input type="text"
+                           name="keyword"
+                           th:value="${keyword}"
+                           placeholder="검색어를 입력해 주세요.">
+                    <button type="submit" class="search-ico" aria-label="검색">
+                        <img th:src="@{/images/search.png}">
+                    </button>
                 </div>
             </form>
             <!-- ▼ 예전 디자인 그대로 세션바 옮겨오기 ▼ -->
@@ -94,7 +106,9 @@
                 <div class="myp-session-left">
                     <!-- 실제 로그인 사용자 이름 바인딩 -->
                     <button type="button" class="link-name" id="btnUserInfo">
-                        <span th:text="${loginUser.name} + '님'">홍길동님</span>
+                        <a th:href="@{/my/Profile}">
+                            <span th:text="${loginUser.name} + '님'">홍길동님</span>
+                        </a>
                     </button>
                 </div>
                 <div class="myp-session-right">
@@ -106,7 +120,6 @@
                     </span>
                 </div>
             </section>
-            <button class="all-nav-btn" id="allNavOpen" aria-label="전체 메뉴 열기">☰</button>
         </div>
     </div>
 </header>

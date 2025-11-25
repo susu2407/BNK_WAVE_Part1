@@ -17,7 +17,7 @@
     margin-bottom: 12px;
 }
 
-/* profile_edit.html 에서 사용하는 헤더 래퍼 + 안내문구 */
+/* ProfileEdit.html 에서 사용하는 헤더 래퍼 + 안내문구 */
 .myinfo-header {
     text-align: center;
     margin-bottom: 24px;
@@ -58,7 +58,7 @@
     background: #fafafa;
 }
 
-/* profile_edit.html 에서 클릭 가능 행 */
+/* ProfileEdit.html 에서 클릭 가능 행 */
 .info-row.clickable {
     cursor: pointer;
 }
@@ -151,7 +151,7 @@
 }
 
 /* 하단 버튼 모양 - 조회/수정 페이지 공통
-   profile.html  : a.myinfo-edit-btn
+   Profile.html  : a.myinfo-edit-btn
    profile_edit  : button.myinfo-confirm-btn
 */
 .myinfo-edit-btn,

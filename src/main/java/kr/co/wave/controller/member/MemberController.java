@@ -51,4 +51,19 @@ public class MemberController {
         memberService.signup(memberDTO);
         return "redirect:/member/login";
     }
+
+    @GetMapping("/member/Terms")
+    public String TermsPage() {
+        return "member/Terms";
+    }
+
+    @GetMapping("/member/Register")
+    public String RegisterPage() {
+        return "member/Register";
+    }
+
+    @GetMapping("/member/Address")
+    public String AddressPage() {
+        return "member/Address";
+    }
 }

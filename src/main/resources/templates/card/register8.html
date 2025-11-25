@@ -13,7 +13,7 @@
 </head>
 
 <body>
-    <div id="header"></div>
+<div th:replace="~{common/product_header :: product_header}"></div>
 
     <main class="content">
         <section class="pin-wrap">
@@ -21,6 +21,7 @@
                 사용할 카드 비밀번호<br />숫자 4자리를 입력해 주세요.
             </h1>
 
+            <form th:action="@{/card/apply/step8(cardId=${cardItem.card.cardId})}" method="post">
             <!-- 비밀번호 입력 -->
             <div class="pin-field">
                 <label class="sr-only" for="pin1">비밀번호 입력</label>
@@ -36,7 +37,7 @@
                 <p id="pin1Help" class="sr-only">숫자만 입력, 백스페이스로 삭제</p>
 
                 <!-- 보이지 않는 실제 입력 -->
-                <input id="pin1" type="text" inputmode="numeric" maxlength="4" autocomplete="one-time-code"
+                <input id="pin1" type="text" name="pin" inputmode="numeric" maxlength="4" autocomplete="one-time-code"
                     class="visually-hidden-input" />
             </div>
 
@@ -52,19 +53,20 @@
                 </div>
                 <p id="pin2Help" class="sr-only">숫자만 입력, 백스페이스로 삭제</p>
 
-                <input id="pin2" type="text" inputmode="numeric" maxlength="4" autocomplete="one-time-code"
+                <input id="pin2" type="text" inputmode="numeric" name="pinConfirm" maxlength="4" autocomplete="one-time-code"
                     class="visually-hidden-input" />
             </div>
 
             <p class="pin-error" id="pinError" aria-live="polite"></p>
 
             <button class="btn-submit" id="btnConfirm" disabled>확인</button>
-            <button class="btn-later" type="button" id="btnLater">다음에 하기</button>
+                <a th:href="@{/card/register9(cardId=${cardItem.card.cardId})}" class="btn-later">다음에 하기</a>
 
+            </form>
         </section>
     </main>
 
-    <div id="footer"></div>
+<div th:replace="~{common/footer :: footer}"></div>
 
     <script>
         // 공통 헤더/푸터 로드

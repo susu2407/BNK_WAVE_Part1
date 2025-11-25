@@ -7,18 +7,17 @@
     <title>내 정보 관리</title>
 
     <!-- 공통 스타일 -->
-    <link rel="stylesheet" href="../../static/css/common/header.css">
-    <link rel="stylesheet" href="../../static/css/common/footer.css">
+<!--    <link rel="stylesheet" href="../../static/css/common/header.css">-->
+<!--    <link rel="stylesheet" href="../../static/css/common/footer.css">-->
 
     <!-- 이 페이지 전용 스타일 -->
-    <link rel="stylesheet" href="../../static/css/member/my/profile.css">
+    <link rel="stylesheet" th:href="@{/css/member/my/Profile.css}">
 </head>
 
 <body>
     <!-- 공통 헤더 (프로젝트에 맞게 사용) -->
-    <!-- <div th:replace="~{common/header :: header}"></div> -->
-
-    <div id="header"></div>
+     <div th:replace="~{common/header :: header}"></div>
+<!--    <div id="header"></div>-->
     <main class="content myinfo-content">
         <h1 class="myinfo-title">내 정보 관리</h1>
 
@@ -107,8 +106,8 @@
         </div>
     </main>
 
-    <div id="footer"></div>
-    <!-- <div th:replace="~{common/footer :: footer}"></div> -->
+<!--    <div id="footer"></div>-->
+     <div th:replace="~{common/footer :: footer}"></div>
 </body>
 
 <script>
