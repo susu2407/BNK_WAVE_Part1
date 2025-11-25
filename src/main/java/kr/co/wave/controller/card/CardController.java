@@ -308,4 +308,103 @@ public class CardController {
 
         return "card/register8";
     }
+
+    @PostMapping("/card/apply/step8")
+    public String applystep8(@RequestParam int cardId, CardApplyRequestDTO step8Info, HttpSession session) {
+
+        log.info("=== applyStep8 진입 : 최종 정보 병합 ===");
+        CardApplyRequestDTO applyInfo = (CardApplyRequestDTO) session.getAttribute("applyInfo");
+
+        if (applyInfo == null) {
+            log.warn("세션 정보 누락. Step 2로 리다이렉트합니다.");
+            return "redirect:/card/register2?cardId=" + cardId;
+        }
+
+
+
+        applyInfo.setPin(step8Info.getPin()); // 카드 비밀번호 저장
+      
+        
+
+        // 추가 필드 입력된 DTO 다시 세션 저장
+        session.setAttribute("applyInfo", applyInfo);
+
+        log.info("세션 DTO 업데이트 완료. 최신정보 (POST STEP8 PIN 번호?:{}", applyInfo);
+
+
+        return "redirect:/card/register9?cardId=" + cardId;
+
+    }
+
+
+    @GetMapping("/card/register9")
+    public String register9(@RequestParam int cardId, HttpSession session, Model model) {
+        log.info("=== register9 진입: 최종 DTO 유효성 검사 === 카드 주소지 입력창");
+
+        // 1. 세션에서 현재까지 누적된 신청 정보(applyInfo)를 가져옵니다.
+        CardApplyRequestDTO applyInfo = (CardApplyRequestDTO) session.getAttribute("applyInfo");
+
+        if (applyInfo == null) {
+            log.info("세션에 'applyInfo'가 없습니다. 비정상적인 접근이거나 세션이 만료되었습니다.");
+            // 세션 정보가 없으면, 신청의 시작점인 Step 2로 돌려보냅니다.
+            return "redirect:/card/register2?cardId=" + cardId;
+        }
+
+        // 2. 카드 상품 정보 조회 (뷰 표시용)
+        CardWithInfoDTO cardInfo = cardService.getCardWithInfoById(cardId);
+        model.addAttribute("cardItem", cardInfo);
+
+        return "card/register9";
+    }
+
+    @PostMapping("/card/apply/step9")
+    public String applystep9(@RequestParam int cardId, CardApplyRequestDTO step9Info, HttpSession session) {
+
+        log.info("=== applyStep9 진입 : 최종 정보 병합 ===");
+        CardApplyRequestDTO applyInfo = (CardApplyRequestDTO) session.getAttribute("applyInfo");
+
+        if (applyInfo == null) {
+            log.warn("세션 정보 누락. Step 2로 리다이렉트합니다.");
+            return "redirect:/card/register2?cardId=" + cardId;
+        }
+
+
+
+        applyInfo.setZip(step9Info.getZip()); // 우편번호 저장
+        applyInfo.setAddr1(step9Info.getAddr1());
+        applyInfo.setAddr2(step9Info.getAddr2());
+
+
+        // 추가 필드 입력된 DTO 다시 세션 저장
+        session.setAttribute("applyInfo", applyInfo);
+
+        log.info("세션 DTO 업데이트 완료. 최신정보 (POST STEP9 집주소 뜨냐? :{}", applyInfo);
+
+
+        return "redirect:/card/register10?cardId=" + cardId;
+
+    }
+
+
+    @GetMapping("/card/register10")
+    public String register10(@RequestParam int cardId, HttpSession session, Model model) {
+        log.info("=== register10 진입: 최종 DTO 유효성 검사 === 카드 주소지 완료 !! ");
+
+        // 1. 세션에서 현재까지 누적된 신청 정보(applyInfo)를 가져옵니다.
+        CardApplyRequestDTO applyInfo = (CardApplyRequestDTO) session.getAttribute("applyInfo");
+
+        if (applyInfo == null) {
+            log.info("세션에 'applyInfo'가 없습니다. 비정상적인 접근이거나 세션이 만료되었습니다.");
+            // 세션 정보가 없으면, 신청의 시작점인 Step 2로 돌려보냅니다.
+            return "redirect:/card/register2?cardId=" + cardId;
+        }
+
+        // 2. 카드 상품 정보 조회 (뷰 표시용)
+        CardWithInfoDTO cardInfo = cardService.getCardWithInfoById(cardId);
+        model.addAttribute("cardItem", cardInfo);
+
+        return "card/register10";
+    }
+
+
 }
