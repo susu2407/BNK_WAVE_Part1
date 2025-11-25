@@ -43,6 +43,7 @@
                 <thead>
                 <tr>
                     <th>번호</th>
+                    <th>약관구분</th>
                     <th>약관명</th>
                     <th>약관내용</th>
                     <th>필수여부</th>
@@ -54,6 +55,7 @@
                 </thead>
                 <tbody>
                     <tr th:each="item, stat : ${termsList.content}">
+                        <td>운영정책</td>
                         <td>[[${termsList.totalElements - (termsList.number * termsList.size + stat.index)}]]</td>
                         <td>[[${item.term.title}]]</td>
                         <td>[[${item.term.content}]]</td>

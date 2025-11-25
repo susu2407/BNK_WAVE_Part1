@@ -62,3 +62,12 @@
     width: 15px;
     height: 15px;
 }
+
+/* 직책 */
+.position-select {
+    height: 30px;
+    border: none;
+    border-bottom: 1px solid;
+    width: 80px;
+    padding-left: 5px;
+}

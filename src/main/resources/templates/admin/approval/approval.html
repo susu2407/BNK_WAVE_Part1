@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Approval</title>
+    <link rel="stylesheet" th:href="@{/css/admin/common/commonCSS.css}">
+    <link rel="stylesheet" th:href="@{/css/admin/common/commonActionBarTable.css}">
+    <link rel="stylesheet" th:href="@{/css/admin/approval/approval.css}">
+    <script th:src="@{/js/admin/common/aside.js}"></script>
+</head>
+<body>
+<div th:replace="~{admin/common/header :: header}"></div>
+<div th:replace="~{admin/common/aside :: aside}"></div>
+<main>
+    <div class="main-container">
+        <div th:replace="~{admin/common/mainHeader :: mainHeader}"></div>
+        <div id="main-content">
+
+            <div class="tabs">
+                <button class="tab active" data-target="terms-tab">약관 승인</button>
+                <button class="tab" data-target="product-tab">상품 승인</button>
+            </div>
+
+            <!-- 탭 내용 -->
+            <div class="tab-content">
+
+                <div id="terms-tab" class="tab-pane active">
+                    <!-- 약관 승인 리스트 -->
+                   <!-- <div th:replace="~{admin/approval/terms/list :: approvalTermsFragment}"></div> -->
+                </div>
+
+<!--                <div id="product-tab" class="tab-pane">-->
+<!--                    &lt;!&ndash; 상품 승인 리스트 &ndash;&gt;-->
+<!--                    <div th:replace="~{admin/approval/card/list :: approvalCardFragment}"></div>-->
+<!--                </div>-->
+
+            </div>
+        </div>
+    </div>
+</main>
+<div th:replace="~{admin/common/footer :: footer}"></div>
+<script>
+    const tabButtons = document.querySelectorAll('.tab-btn');
+    const tabPanels = document.querySelectorAll('.tab-panel');
+
+    tabButtons.forEach(btn => {
+        btn.addEventListener('click', () => {
+
+            // 버튼 active 초기화
+            tabButtons.forEach(b => b.classList.remove('active'));
+            btn.classList.add('active');
+
+            // 패널 초기화
+            const target = btn.dataset.tab;
+            tabPanels.forEach(panel => {
+                panel.classList.remove('active');
+                if (panel.id === target) {
+                    panel.classList.add('active');
+                }
+            });
+        });
+    });
+
+</script>
+</body>
+</html>

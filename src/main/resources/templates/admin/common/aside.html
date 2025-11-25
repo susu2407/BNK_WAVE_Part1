@@ -18,6 +18,8 @@
                 <ul class="submenu">
                     <li><a th:href="@{/admin/card/list}" class="submenu-a">상품목록</a></li>
                     <li><a th:href="@{/admin/card/status}" class="submenu-a">상품별가입현황</a></li>
+                    <li><a th:href="@{/admin/config/terms/list}" class="submenu-a">약관관리</a></li>
+                    <li><a th:href="@{#}" class="submenu-a">검색어관리</a></li>
                 </ul>
             </li>
 
@@ -39,7 +41,7 @@
                 </a>
                 <ul class="submenu">
                     <li><a th:href="@{/admin/admin/list}" class="submenu-a">관리자 목록</a></li>
-                    <li><a th:href="@{/admin/approval/card/list}" class="submenu-a">승인</a></li> <!-- 화면이동_탭: 상품승인, 약관승인-->
+                    <li><a th:href="@{/admin/approval/approval}" class="submenu-a">승인</a></li> <!-- 화면이동_탭: 상품승인, 약관승인-->
                 </ul>
             </li>
 
@@ -61,8 +63,6 @@
                 </a>
                 <ul class="submenu">
                     <li><a th:href="@{/admin/config/basic}" class="submenu-a">기본설정</a></li> <!-- 기본설정, 배너관리, 카테고리, 버전설정 -->
-                    <li><a th:href="@{/admin/config/terms/list}" class="submenu-a">약관관리</a></li>
-                    <li><a th:href="@{#}" class="submenu-a">검색어관리</a></li>
 <!--                    <li><a th:href="@{/admin/config/banner}" class="submenu-a">배너관리</a></li>-->
 <!--                    <li><a th:href="@{/admin/config/category}" class="submenu-a">카테고리</a></li>-->
 <!--                    <li><a th:href="@{/admin/config/version}" class="submenu-a">버전설정</a></li>-->
