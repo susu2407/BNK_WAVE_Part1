@@ -31,6 +31,19 @@ public class CardApplyRequestDTO {
     private String fundSource; // 자금의 원천
     private String purpose; // 거래의 목적
 
+    // Step 6 추가 필드
+    private String postpaidTransit; // 후불교통 기능 신청 여부 ('Y' 또는 'N')
+    private String overseasUse;    // 해외 결제 여부 ('dual' 또는 'domestic')
+
+
+    // Step 7 추가 필드
+
+    private String accountBank;
+    private String accountNumber;
+    private Integer accountVerified;
+
+
+
 
     // 결제 정보 (나중에 받을 예정이면 null)
     private String accountId;      // 계좌번호
