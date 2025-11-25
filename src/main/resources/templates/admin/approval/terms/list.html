@@ -89,27 +89,6 @@
                 <button>승인</button>
             </td>
         </tr>
-
-
-<!--        &lt;!&ndash; 페이지 객체의 content 리스트를 반복 &ndash;&gt;-->
-<!--        <tr th:each="approval, stat : ${termsApprovalList.content}">-->
-<!--            <td>[[${termsApprovalList.totalElements - (termsApprovalList.number * termsApprovalList.size + stat.index)}]]</td>-->
-<!--            <td>-->
-<!--                [[${approval.termsId}]]-->
-<!--            </td>-->
-<!--            <td>[[${approval.reason}]]</td>-->
-<!--            <td>[[${#temporals.format(approval.requestedAt, 'yyyy-MM-dd')}]]</td>-->
-<!--            <td>[[${#temporals.format(approval.approvedAt, 'yyyy-MM-dd')}]]</td>-->
-<!--            <td>[[${approval.status}]]</td>-->
-
-<!--            <td th:if="${approval.status == '대기'}">-->
-<!--                <a th:href="@{/admin/approval/terms/approval(termsId=${approval.termsApprovalId})}">승인</a> <br>-->
-<!--                <a th:href="@{/admin/approval/terms/rejection(termsId=${approval.termsApprovalId})}">반려</a> <br>-->
-<!--            </td>-->
-<!--            <td th:unless="${approval.status == '대기' }">-->
-<!--                <a>결재완료 - [[${approval.status}]]</a>-->
-<!--            </td>-->
-<!--        </tr>-->
         </tbody>
     </table>
 </div>
