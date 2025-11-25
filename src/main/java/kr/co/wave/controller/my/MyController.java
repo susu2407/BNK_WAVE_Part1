@@ -54,5 +54,6 @@ public class MyController {
     public String ProfileEditPage(){
         return "my/ProfileEdit";
     }
+
 }
 

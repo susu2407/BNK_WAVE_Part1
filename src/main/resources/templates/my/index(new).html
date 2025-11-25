@@ -24,21 +24,13 @@
                 <header class="myp-box-head">
                     <div class="myp-box-title">
                         <p class="hello-text"><strong>홍길동</strong>님 반갑습니다!</p>
-                        <p class="hello-sub">주거래 계좌 현황을 확인해 보세요.</p>
                     </div>
                     <a href="#" class="myp-link-small">자세히 보기</a>
                 </header>
 
                 <div class="myp-greeting-body">
                     <div class="acct-main-info">
-                        <p class="acct-bank">BNK Personality 통장</p>
-                        <p class="acct-number">123-4567-8901-23</p>
-                        <p class="acct-balance-label">계좌 잔액</p>
-                        <p class="acct-balance"><strong>1,234,567</strong>원</p>
-                    </div>
-                    <div class="acct-extra">
-                        <p>최근 입출금 내역, 자동이체 정보 등</p>
-                        <p>상세 화면에서 더 확인할 수 있어요.</p>
+
                     </div>
                 </div>
             </section>
@@ -50,7 +42,7 @@
                 <section class="myp-box myp-card-info">
                     <header class="myp-box-head">
                         <h2 class="myp-box-title-sm">카드 정보</h2>
-                        <a href="#" class="myp-link-small">자세히 보기</a>
+                        <a th:href="@{/my/OwnCard}" class="myp-link-small">자세히 보기</a>
                     </header>
 
                     <div class="myp-card-info-body">
@@ -111,7 +103,7 @@
             <section class="myp-box myp-benefit">
                 <header class="myp-box-head">
                     <h2 class="myp-box-title">이번 달 받은 혜택</h2>
-                    <a href="#" class="myp-link-small">자세히 보기</a>
+                    <a href="" class="myp-link-small">자세히 보기</a>
                 </header>
 
                 <div class="myp-benefit-body">
@@ -270,16 +262,16 @@
 
                 <ul class="extra-service-list">
                     <li>
-                        <span class="svc-badge">유료사용</span>
-                        <span class="svc-name">일반 정기결제관리알람 (일반형)</span>
+                        <span class="svc-badge">미사용</span>
+                        <span class="svc-name">일부 결제금액이용약정 <br>(리볼빙)</span>
                     </li>
                     <li>
-                        <span class="svc-badge">유료사용</span>
-                        <span class="svc-name">휴대폰 알림형</span>
+                        <span class="svc-badge">미사용</span>
+                        <span class="svc-name">휴대폰 알림</span>
                     </li>
                     <li>
-                        <span class="svc-badge">유료사용</span>
-                        <span class="svc-name">비공인증형</span>
+                        <span class="svc-badge">미사용</span>
+                        <span class="svc-name">바로알림</span>
                     </li>
                 </ul>
             </section>
