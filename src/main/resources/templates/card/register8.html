@@ -13,7 +13,7 @@
 </head>
 
 <body>
-    <div id="header"></div>
+<div th:replace="~{common/product_header :: product_header}"></div>
 
     <main class="content">
         <section class="pin-wrap">
@@ -64,7 +64,7 @@
         </section>
     </main>
 
-    <div id="footer"></div>
+<div th:replace="~{common/footer :: footer}"></div>
 
     <script>
         // 공통 헤더/푸터 로드
