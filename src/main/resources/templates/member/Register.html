@@ -5,13 +5,11 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>회원가입</title>
-    <link rel="stylesheet" href="../css/common/product_header_style.css" />
-    <link rel="stylesheet" href="../css/member/member_register_information.css" />
-    <link rel="stylesheet" href="../css/common/footer_style.css" />
+    <link rel="stylesheet" th:href="@{/css/member/member/Register.css}">
 </head>
 
 <body>
-    <div id="header"></div>
+<div th:replace="~{common/product_header :: product_header}"></div>
 
     <main class="content">
         <section class="apply-form-wrap">
@@ -78,7 +76,7 @@
         </section>
     </main>
 
-    <div id="footer"></div>
+    <div th:replace="~{common/footer :: footer}"></div>
 
     <script>
         document.addEventListener('DOMContentLoaded', function () {

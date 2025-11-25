@@ -19,8 +19,9 @@
                         <div class="mega-col">
                             <h4>카드 이용 내역</h4>
                             <ul>
-                                <li><a th:href="@{/my/BillingStates}">이용내역 명세서</a></li>
-                                <li><a href="#">최근 이용 내역</a></li>
+                                <li><a th:href="@{/my/OwnCard}">보유 금융 상품</a></li>
+                                <li><a th:href="@{/my/CardHistory}">이용내역 명세서</a></li>
+                                <li><a th:href="@{/my/RecentHistory}">최근 이용 내역</a></li>
                                 <li><a href="#">결제 위치 지도로 확인하기</a></li>
                             </ul>
                         </div>
@@ -35,7 +36,7 @@
             </li>
 
             <li title="menu2">
-                <a href="/" class="menu_title">혜택</a>
+                <a th:href="@{/my}" class="menu_title">혜택</a>
                 <div class="mega-panel">
                     <div class="mega-inner">
                     </div>
@@ -94,7 +95,9 @@
                 <div class="myp-session-left">
                     <!-- 실제 로그인 사용자 이름 바인딩 -->
                     <button type="button" class="link-name" id="btnUserInfo">
-                        <span th:text="${loginUser.name} + '님'">홍길동님</span>
+                        <a th:href="@{/my/Profile}">
+                            <span th:text="${loginUser.name} + '님'">홍길동님</span>
+                        </a>
                     </button>
                 </div>
                 <div class="myp-session-right">
