@@ -230,8 +230,9 @@
     gap: 18px;
 }
 
-.myp-bottom-box {
-    min-height: 140px;
+.myp-bottom-box.myp-bottom-extra {
+    display: flex;
+    flex-direction: column;
 }
 
 /* 메뉴 리스트 */
@@ -430,18 +431,27 @@
 }
 
 /* 나의 부가서비스 리스트 */
-.extra-service-list {
+.myp-bottom-extra .extra-service-list {
     list-style: none;
-    margin: 4px 0 0;
-    padding: 0;
+    margin: 0;                     /* 위 여백 줄이기 */
+    padding: 4px 0 2px;
     font-size: 12px;
+
+    /* 카드 안 남는 공간을 다 쓰면서 고르게 배치 */
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;   /* 위/중간/아래로 쫙 펼치기 */
+    gap: 0;                           /* 개별 간격은 li padding으로 조절 */
 }
 
-.extra-service-list li {
+.myp-bottom-extra .extra-service-list li {
     display: flex;
     align-items: center;
     gap: 6px;
-    padding: 5px 0;
+
+    /* 각 줄 높이 확보 → 답답하지 않게 */
+    min-height: 32px;
 }
 
 .svc-badge {
@@ -450,12 +460,14 @@
     border-radius: 999px;
     background: #e5e7eb;
     color: #374151;
-    font-size: 11px;
+    font-size: 13px;
     font-weight: 600;
 }
 
 .svc-name {
     color: #111827;
+    font-size: 14px;
+    font-weight: 500;
 }
 
 /* 추천서비스 리스트 */

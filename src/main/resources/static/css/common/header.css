@@ -103,26 +103,51 @@ body {
 /* ===== 우측 유틸 ===== */
 .util {
     display: flex;
-    gap: 36px;
     align-items: center;
     font-size: 13px;
 }
 
+/* 검색창 – 밑줄형 디자인 */
 .search-box {
     display: flex;
     align-items: center;
     gap: 8px;
-    border: 1px solid #000;
-    border-radius: 999px;
-    padding: 4px 12px;
-    min-width: 220px;
+    min-width: 260px;
+
+    border: none;
+    border-bottom: 1px solid #d1d5db;  /* 얇은 선 하나만 */
+    padding: 0 0 4px;                  /* 아래쪽만 살짝 여백 */
 }
 
+/* 포커스 시 밑줄 강조 */
+.search-box:focus-within {
+    border-bottom-color: #111827;
+}
+
+/* 입력창 스타일 */
 .search-box input {
+    flex: 1;
     border: none;
     outline: none;
-    flex: 1;
-    font-size: 12px;
+    background: transparent;
+    font-size: 13px;
+    color: #111827;
+}
+
+/* 플레이스홀더 색상 */
+.search-box input::placeholder {
+    color: #9ca3af;
+}
+
+/* 오른쪽 돋보기 버튼 */
+.search-ico {
+    border: none;
+    background: none;
+    cursor: pointer;
+    font-size: 14px;
+    color: #4b5563;
+    padding: 0;
+    line-height: 1;
 }
 
 .all-nav-btn {

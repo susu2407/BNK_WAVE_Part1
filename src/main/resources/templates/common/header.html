@@ -52,6 +52,7 @@
                             <ul>
                                 <li><a th:href="@{/card/list}">체크카드</a></li>
                                 <li><a th:href="@{/card/list}">신용카드</a></li>
+                                <li><a th:href="@{/card/list}">기업카드</a></li>
                             </ul>
                         </div>
                     </div>
@@ -66,7 +67,6 @@
                             <h4>인증 센터</h4>
                             <ul>
                                 <li><a href="#">카드본인확인서비스</a></li>
-                                <li><a href="#">보안프로그램 설치 안내</a></li>
                             </ul>
                         </div>
                         <div class="mega-col">
@@ -86,8 +86,13 @@
         <div class="util">
             <form th:action="@{/card/list}" method="get">
                 <div class="search-box">
-                    <span class="search-ico">🔍</span>
-                    <input type="text" name="keyword" th:value="${keyword}" placeholder="카드, 메뉴, 혜택을 검색해 보세요">
+                    <input type="text"
+                           name="keyword"
+                           th:value="${keyword}"
+                           placeholder="검색어를 입력해 주세요.">
+                    <button type="submit" class="search-ico" aria-label="검색">
+                        <img th:src="@{/images/search.png}">
+                    </button>
                 </div>
             </form>
             <!-- ▼ 예전 디자인 그대로 세션바 옮겨오기 ▼ -->
@@ -109,7 +114,6 @@
                     </span>
                 </div>
             </section>
-            <button class="all-nav-btn" id="allNavOpen" aria-label="전체 메뉴 열기">☰</button>
         </div>
     </div>
 </header>
