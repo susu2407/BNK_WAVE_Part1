@@ -7,11 +7,10 @@
     <title>보유 카드 목록</title>
 
     <!-- 공통 스타일 -->
-    <link rel="stylesheet" href="../../static/css/common/header.css">
-    <link rel="stylesheet" href="../../static/css/common/footer.css">
-
-    <!-- 이 페이지 전용 -->
-    <link rel="stylesheet" href="../../static/css/member/my/own_card.css">
+<!--    <link rel="stylesheet" href="../../static/css/common/header.css">-->
+<!--    <link rel="stylesheet" href="../../static/css/common/footer.css">-->
+<!--    <link rel="stylesheet" href="../../static/css/member/my/OwnCard.css">-->
+    <link rel="stylesheet" th:href="@{/css/member/my/OwnCard.css}">
 </head>
 
 <body>
@@ -169,6 +168,8 @@
 
     <!-- 공통 푸터 -->
     <div th:replace="~{common/footer :: footer}"></div>
+
+
     <!-- 카드번호 보기 / 본인인증 모달 -->
     <div class="card-pin-modal-overlay" id="cardPinModal">
         <div class="card-pin-modal">

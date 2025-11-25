@@ -30,8 +30,29 @@ public class MyController {
         return "my/apiTest";
     }
 
-    @GetMapping({"/my/BillingStates"})
-    public String myBillingState(){
-        return "my/billing_statements";
+    @GetMapping({"/my/CardHistory"})
+    public String CardHistoryPage(){
+        return "my/CardHistory";
+    }
+
+    @GetMapping({"/my/RecentHistory"})
+    public String RecentHistoryPage(){
+        return "my/RecentHistory";
+    }
+
+    @GetMapping({"/my/OwnCard"})
+    public String OwnCardPage(){
+        return "my/OwnCard";
+    }
+
+    @GetMapping({"/my/Profile"})
+    public String ProfilePage(){
+        return "my/Profile";
+    }
+
+    @GetMapping({"/my/ProfileEdit"})
+    public String ProfileEditPage(){
+        return "my/ProfileEdit";
     }
 }
+
