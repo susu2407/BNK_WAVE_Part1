@@ -85,8 +85,7 @@
                         <div class="form-field-wrapper">
                             <label>
                                 <textarea type="text" id="editor" th:value="${terms.content}" name="content"
-                                          placeholder="약관 내용을 입력하세요" class="terms-textarea update-textarea"
-                                >
+                                          placeholder="약관 내용을 입력하세요" class="terms-textarea update-textarea">
                                     [[${terms.content}]]
                                 </textarea>
                             </label>
@@ -115,8 +114,9 @@
                                 <div class="custom-file-label">기존 파일</div>
                                 <span th:text="${terms.originalName}" id="fileNameDisplay"></span>
                             </div>
-                            <input type="file" th:file="${terms.pdfFile}" name="pdfFile" id="termsFile" accept="application/pdf">  <!-- PDF 파일만 업로드 가능하게 제한 -->
                         </div>
+                        <label for="termsFile" class="custom-file-label">업로드</label>
+                        <input type="file" name="pdfFile" id="termsFile" accept="application/pdf">
                         <div id="preview">
                             <!-- 등록한 파일 간단 정보 -->
                             <p id="fileName">파일명 : -</p>

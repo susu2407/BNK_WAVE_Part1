@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" th:href="@{/css/common/mainContainer.css}">
+</head>
+<style>
+    body {
+        font-family: "Segoe UI", sans-serif;
+        background-color: #f7f9fc;
+        margin: 0;
+        padding: 0;
+    }
+
+    .main-container {
+        margin-top : 150px;
+    }
+
+    #main-content {
+        max-width: 1200px;
+        margin: 30px auto;
+        background: white;
+        padding: 30px;
+        border-radius: 12px;
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    }
+
+    h2 {
+        margin-bottom: 20px;
+    }
+
+    select, textarea, button {
+        font-size: 1rem;
+        padding: 10px;
+        margin-top: 10px;
+        border: 1px solid #ccc;
+        border-radius: 6px;
+    }
+
+    #dept {
+        width: 200px;
+    }
+
+    #chat {
+        border: 1px solid #ccc;
+        padding: 10px;
+        min-height: 250px;
+        max-height: 300px;
+        overflow-y: auto;
+        background-color: #fefefe;
+        margin-top: 20px;
+        margin-bottom: 20px;
+        border-radius: 6px;
+    }
+
+    .message {
+        margin: 10px 0;
+        padding: 10px 14px;
+        border-radius: 20px;
+        line-height: 1.5;
+        max-width: 70%;
+        word-wrap: break-word;
+        display: inline-block;
+        clear: both;
+    }
+
+    .message[data-role="user"] {
+        background-color: #d0ebff;
+        float: right;
+        text-align: right;
+    }
+
+    .message[data-role="assistant"] {
+        background-color: #e6ffe6;
+        float: left;
+        text-align: left;
+    }
+
+    textarea {
+        width: 100%;
+        resize: vertical;
+    }
+
+    button {
+        background-color: #2196f3;
+        color: white;
+        border: none;
+        cursor: pointer;
+    }
+
+    button:hover {
+        background-color: #1976d2;
+    }
+</style>
+<body>
+<div th:replace="~{common/header :: header}"></div>
+
+<main>
+    <div class="main-container">
+        <div id="main-content">
+            <h2>💬 부서별 AI 챗봇 상담</h2>
+
+            <input type="hidden" id="dept" value="${deptName}">
+
+            <div id="chat"></div>
+
+            <label for="question">질문 입력:</label>
+            <textarea id="question" rows="3" placeholder="궁금한 점을 입력해 주세요."></textarea>
+            <br>
+            <button onclick="sendQuestion()">질문 보내기</button>
+        </div>
+    </div>
+</main>
+<div th:replace="~{admin/common/footer :: footer}"></div>
+
+<script>
+    function escapeHtml(text) {
+        return text
+            .replace(/&/g, "&amp;")
+            .replace(/</g, "&lt;")
+            .replace(/>/g, "&gt;");
+    }
+
+    function loadWelcomeMessage() {
+        const dept = document.getElementById("dept").value;
+        const chatArea = document.getElementById("chat");
+        chatArea.innerHTML = ''; // reset chat
+
+        const welcome = "안녕하세요! " + dept + " 챗봇입니다. 무엇이든 물어보세요.";
+        chatArea.innerHTML = '<div class="message" data-role="assistant">' + welcome + '</div>';
+    }
+
+    async function sendQuestion() {
+        const question = document.getElementById("question").value.trim();
+        const dept = document.getElementById("dept").value;
+        const chatArea = document.getElementById("chat");
+
+        if (!question) {
+            alert("질문을 입력하세요.");
+            return;
+        }
+
+        const history = [];
+
+        document.querySelectorAll(".message").forEach(div => {
+            history.push({
+                role: div.dataset.role,
+                content: div.textContent
+            });
+        });
+
+        history.push({role: "user", content: question});
+
+        try {
+            const response = await fetch("/ask", {
+                method: "POST",
+                headers: {"Content-Type": "application/json"},
+                body: JSON.stringify({question, dept, history})
+            });
+
+            const data = await response.json();
+
+            chatArea.innerHTML += '<div class="message" data-role="user">' + escapeHtml(question) + '</div>';
+            chatArea.innerHTML += '<div class="message" data-role="assistant">' + escapeHtml(data.answer).replace(/\n/g, "<br>") + '</div>';
+
+            document.getElementById("question").value = "";
+            chatArea.scrollTop = chatArea.scrollHeight;
+        } catch (error) {
+            console.error("에러 발생:", error);
+            alert("서버 오류가 발생했습니다.");
+        }
+    }
+
+    window.onload = loadWelcomeMessage;
+</script>
+</body>
+</html>

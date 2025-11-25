@@ -26,7 +26,7 @@ public class AdminManageController {
                         @RequestParam(defaultValue = "0") int page,
                         Model model){
 
-        Page<Member> adminList = memberService.getAdminMemberAll(searchType, keyword, page, 10);
+        Page<Member> adminList = memberService.getAdminMemberAll(searchType, keyword, page, 10);    
 
         model.addAttribute("adminList", adminList);
 

@@ -27,7 +27,7 @@ public class TermsApprovalController {
 
         model.addAttribute("termsApprovalList", termsApprovalList);
 
-        return "admin/approval/terms/list";
+        return "admin/approval/terms/list :: approvalTermsFragment";
     }
 
     @GetMapping("/admin/approval/terms/approval")

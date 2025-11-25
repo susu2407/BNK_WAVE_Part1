@@ -27,7 +27,7 @@ public class CardApprovalController {
 
         model.addAttribute("cardApprovalList", cardApprovalList);
 
-        return "admin/approval/card/list";
+        return "admin/approval/card/list :: approvalCardFragment";
     }
 
     @GetMapping("/admin/approval/card/approval")
