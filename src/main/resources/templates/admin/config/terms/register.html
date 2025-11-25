@@ -23,9 +23,12 @@
                         <div class=section-header>
                             <h2>약관명 <span style="color: red">*</span></h2>
                             <p>
-                                약관을 신규 등록하기 전에 동일하거나 유사한 약관이 이미 존재하는지 반드시 확인하시오. <br>
-                                등록 후에는 즉시 서비스에 반영될 수 있으므로, 제목·버전·필수 여부를 신중하게 입력하시오. <br>
-                                (예: 개인정보처리방침_v2025.01)
+                                약관을 신규 등록하기 전에 동일하거나 유사한 약관이 이미 존재하는지 반드시 검색하여 확인하십시오. <br>
+                                등록 후에는 즉시 서비스에 반영될 수 있으므로, 제목, 버전, 필수 여부를 신중하게 입력하십시오. <br>
+                                <br>
+                                예시 형식: [약관주제] - [약관명] - v.0.0.0
+                                <br>
+                                ( 예: 회원관리 - 개인정보방침 - v.0.1.1 )
                             </p>
                         </div>
                         <div class="section-content">
@@ -66,7 +69,12 @@
                     <section class="form-section">
                         <div class="section-header">
                             <h2>약관내용 <span style="color: red">*</span></h2>
-                            <p> </p>
+                            <p>
+                                해당 필드에 입력된 텍스트는 서비스에 법적 효력을 갖는 최종 약관 내용으로 게시됩니다. <br>
+                                오탈자 및 문맥 오류가 없는지 최종 확인하십시오. <br>
+                                <br>
+                                기존 약관의 내용(기존 약관 내용 필드 참고)과 변경 및 추가된 내용을 비교하여 정확한지 검토하십시오.
+                            </p>
                         </div>
                         <div class="section-content">
                             <div class="form-field-wrapper">
@@ -76,30 +84,31 @@
                           </div>
                         </div>
                     </section>
-                  <!--  -->
+                  <!-- 3. 약관 파일 -->
                     <section class="form-section">
                         <div class="section-header">
                             <h2>약관 파일 <span style="color: red">*</span></h2>
                             <p>
-
+                                약관 파일은 사용자 다운로드용 및 안내책자로 제공됩니다. <br>
+                                PDF 파일만 업로드 가능합니다. (다른 형식 파일 등록 불가) <br>
+                                업로드 후 '등록한 파일 미리보기' 버튼을 클릭하여 파일이 정상적으로 표시되는지 확인하고,
+                                업로드하려는 약관 내용과 파일 내용이 일치하는지 최종 검토하십시오. <br>
                             </p>
                         </div>
                         <div class="section-content">
-                            <div>
-                                <div class="file-upload-wrapper">
-                                    <label for="termsFile" class="custom-file-label">파일 선택</label>
-                                    <span id="fileNameDisplay">선택된 파일 없음</span>
-                                    <input type="file" name="pdfFile" id="termsFile" accept="application/pdf">
-                                </div>
-                                <!-- PDF 파일만 업로드 가능하게 제한 -->
+                            <!-- PDF 파일만 업로드 가능하게 제한 -->
+                            <div class="file-upload-wrapper">
+                                <label for="termsFile" class="custom-file-label">파일 선택</label>
+                                <span id="fileNameDisplay">선택된 파일 없음</span>
+                                <input type="file" name="pdfFile" id="termsFile" accept="application/pdf">
                             </div>
                             <div id="preview">
-                                <!-- 미리보기 버튼 -->
-                                <button id="previewBtn" style="display: none;">등록한 파일 미리보기</button>
                                 <!-- 등록한 파일 간단 정보 -->
                                 <p id="fileName">파일명 : -</p>
                                 <p id="fileSize">크기 : -</p>
                                 <p id="fileType">형식 : -</p>
+                                <!-- 미리보기 버튼 -->
+                                <button id="previewBtn" style="display: none;" class="btn preview-btn">등록한 파일 미리보기</button>
                             </div>
                         </div>
                     </section>
@@ -107,14 +116,10 @@
             </form>
 
             <!-- 주요 액션 영역 -->
-            <div class="action-bar">
+            <div class="terms-action-bar ">
                 <!-- 등록버튼 -->
-                <div class="btn register-btn">
-                    <a th:href="@{/admin/config/terms/register}">취소</a>
-                </div>
-                <div class="btn register-btn">
-                    <button>등록</button>
-                </div>
+                <a th:href="@{/admin/config/terms/list}" class="btn register-btn">취소</a>
+                <button class="btn register-btn">등록</button>
             </div>
         </div>
     </div>
@@ -136,7 +141,7 @@
                 const previewBtn = document.getElementById("previewBtn");
 
                 // 미리보기 버튼 보이기
-                previewBtn.style.display = "inline-block";
+                previewBtn.style.display = "flex";
 
                 // 미리보기 버튼 클릭 시 새 창으로 PDF 띄우기
                 previewBtn.onclick = function () {

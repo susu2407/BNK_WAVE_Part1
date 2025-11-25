@@ -2,10 +2,10 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>CARD ADMIN</title>
+    <title>관리자 목록</title>
     <link rel="stylesheet" th:href="@{/css/admin/common/commonCSS.css}">
     <link rel="stylesheet" th:href="@{/css/admin/common/commonActionBarTable.css}">
-    <link rel="stylesheet" th:href="@{/css/admin/admin/list.css}">
+    <link rel="stylesheet" th:href="@{/css/admin/admin/register.css}">
     <script th:src="@{/js/admin/common/aside.js}"></script>
 </head>
 <body>
@@ -34,7 +34,7 @@
                 </form>
                 <!-- 등록버튼 -->
                 <div class="btn register-btn">
-                    <a th:href="@{#}">관리자 등록</a>
+                    <a th:href="@{/admin/admin/register}">관리자 등록</a>
                 </div>
             </div>
             <!-- 본문 -->
@@ -79,8 +79,17 @@
                             <td>[[${admin.memId}]]</td>
                             <td>[[${admin.role}]]</td>
                             <td>[[${#temporals.format(admin.createdAt, 'yyyy-MM-dd HH:mm:ss')}]]</td>
-                            <td>[[${admin.status}]]</td>
-                            <td>수정버튼</td>
+                            <td>
+                                <div class="status-display-item">
+                                    <span th:class="|status-dot ${
+                                        admin.status == '활성' ? 'active' :
+                                        (admin.status == '비활성' ? 'inactive' :
+                                         (admin.status == '퇴직' ? 'retired' : ''))
+                                    }|"></span>
+<!--                                    <span>[[${admin.status}]]</span>-->
+                                </div>
+                            </td>
+                            <td>[수정]</td>
                         </tr>
                     </tbody>
                 </table>

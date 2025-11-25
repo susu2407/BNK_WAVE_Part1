@@ -55,6 +55,8 @@ form {
     padding: 0;
     font-size: 18px;
     outline: none; /* 포커스 시 생기는 기본 외곽선 제거 */
+    background: none;
+    color: inherit;
 }
 
 /* 플레이스홀더 텍스트 스타일링 (매우 중요) */
