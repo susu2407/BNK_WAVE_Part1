@@ -101,8 +101,6 @@
                         </div>
                     </div>
                 </section>
-
-
             </aside>
         </section>
 
@@ -117,8 +115,35 @@
                 </header>
 
                 <div class="myp-benefit-body">
-                    <!-- 나중에 그래프/리스트 들어갈 자리 -->
-                    <p class="placeholder-text">이번 달 주유 / 마트 / 스트리밍 등에서 받은 혜택을 요약해서 보여주는 영역입니다.</p>
+
+                    <!-- 카드별 혜택 슬라이더 -->
+                    <div class="benefit-slider" id="benefitSlider">
+
+                        <!-- 카드 식별 영역 (회색 박스 상단) -->
+                        <div class="benefit-card-header">
+                            <div class="benefit-card-title">
+                                <span class="benefit-card-name" id="benefitCardName">NICHIYA 체크카드</span>
+                                <span class="benefit-card-number" id="benefitCardNumber">4***-****-****-470*</span>
+                            </div>
+                        </div>
+
+                        <!-- 회색 배경 안 막대그래프 영역 -->
+                        <div class="benefit-panel">
+
+                            <!-- 좌우 카드 이동 버튼 -->
+                            <button type="button" class="benefit-nav benefit-nav-prev" id="btnBenefitPrev"
+                                aria-label="이전 카드">‹</button>
+                            <button type="button" class="benefit-nav benefit-nav-next" id="btnBenefitNext"
+                                aria-label="다음 카드">›</button>
+
+                            <!-- 혜택 막대들이 들어가는 곳 (JS로 생성) -->
+                            <div class="benefit-bars" id="benefitBars">
+                                <!-- JS에서 .benefit-bar 들이 생성됨 -->
+
+                            </div>
+                        </div>
+                    </div>
+
                 </div>
             </section>
 
@@ -296,12 +321,14 @@
     <!-- <div th:replace="~{common/footer :: footer}"></div> -->
     <div id="footer"></div>
     <script>
-        // 헤더/푸터 로드 (index와 동일 패턴)
         document.addEventListener('DOMContentLoaded', function () {
+
+            // ===== 공통 헤더 로드 =====
             fetch('../common/header.html')
                 .then(res => res.text())
                 .then(html => {
                     document.getElementById('header').innerHTML = html;
+
                     const headerEl = document.querySelector('.header');
                     if (headerEl) {
                         window.addEventListener('scroll', () => {
@@ -309,25 +336,30 @@
                             else headerEl.classList.remove('scrolled');
                         });
                     }
+
+                    // 👉 헤더가 DOM에 들어간 "이후에" 버튼들 찾기
+                    const userInfoBtn = document.getElementById('btnUserInfo');
+                    const extendBtn = document.getElementById('btnExtend');
+
+                    if (userInfoBtn) {
+                        userInfoBtn.addEventListener('click', () => {
+                            window.location.href = '/member/info';
+                        });
+                    }
+
+                    if (extendBtn) {
+                        extendBtn.addEventListener('click', () => {
+                            alert('로그인 시간이 연장되었습니다. (데모)');
+                        });
+                    }
                 });
 
+            // ===== 공통 푸터 로드 =====
             fetch('../common/footer.html')
                 .then(res => res.text())
                 .then(html => document.getElementById('footer').innerHTML = html);
 
-            // 이름 클릭 → 기본정보 페이지 이동 (실제 URL로 교체)
-            document.getElementById('btnUserInfo').addEventListener('click', () => {
-                // TODO: 사용자 기본정보 페이지 경로로 변경
-                window.location.href = '/member/info';
-            });
-
-            // 로그인 연장 버튼 (실제 세션 연장은 서버 연동 필요)
-            document.getElementById('btnExtend').addEventListener('click', () => {
-                // TODO: 세션 연장 API 호출
-                alert('로그인 시간이 연장되었습니다. (데모)');
-            });
-
-            // 카드 정보 슬라이더
+            // ===== 카드 정보 슬라이더 =====
             const slider = document.getElementById('cardSlider');
             const btnPrev = document.getElementById('btnCardPrev');
             const btnNext = document.getElementById('btnCardNext');
@@ -353,6 +385,93 @@
                 });
             }
 
+            // ===== 이번 달 받은 혜택 슬라이더 =====
+            const benefitData = [
+                {
+                    cardName: 'NICHIYA 체크카드',
+                    cardNumber: '4***-****-****-470*',
+                    benefits: [
+                        { label: '혜택1', max: 100000, used: 80000 },
+                        { label: '혜택2', max: 50000, used: 25000 },
+                        { label: '혜택3', max: 70000, used: 50000 },
+                        { label: '혜택4', max: 30000, used: 12000 }
+                    ]
+                },
+                {
+                    cardName: 'BNK MARKET 카드',
+                    cardNumber: '5***-****-****-123*',
+                    benefits: [
+                        { label: '마트', max: 80000, used: 60000 },
+                        { label: '주유', max: 60000, used: 20000 },
+                        { label: '온라인', max: 40000, used: 15000 }
+                    ]
+                },
+                {
+                    cardName: 'HYUNDAI PLATINUM',
+                    cardNumber: '3***-****-****-999*',
+                    benefits: [
+                        { label: '항공', max: 200000, used: 120000 },
+                        { label: '호텔', max: 150000, used: 60000 },
+                        { label: '면세점', max: 100000, used: 30000 },
+                        { label: '주유', max: 50000, used: 10000 }
+                    ]
+                }
+            ];
+
+            const benefitCardNameEl = document.getElementById('benefitCardName');
+            const benefitCardNumberEl = document.getElementById('benefitCardNumber');
+            const benefitBarsEl = document.getElementById('benefitBars');
+            const btnBenefitPrev = document.getElementById('btnBenefitPrev');
+            const btnBenefitNext = document.getElementById('btnBenefitNext');
+
+            let benefitIndex = 0;
+
+            function renderBenefitCard(index) {
+                if (!benefitBarsEl || !benefitCardNameEl || !benefitCardNumberEl) return;
+
+                const card = benefitData[index];
+                if (!card) return;
+
+                benefitCardNameEl.textContent = card.cardName;
+                benefitCardNumberEl.textContent = card.cardNumber;
+
+                benefitBarsEl.innerHTML = '';
+
+                card.benefits.forEach(b => {
+                    const max = b.max || 0;
+                    const used = b.used || 0;
+                    const ratio = max > 0 ? Math.min(used / max, 1) : 0;
+                    const heightPercent = (ratio * 100).toFixed(0);
+
+                    const bar = document.createElement('div');
+                    bar.className = 'benefit-bar';
+                    bar.innerHTML = `
+                    <div class="benefit-bar-max">
+                        <div class="benefit-bar-used" style="height:${heightPercent}%;"></div>
+                    </div>
+                    <p class="benefit-bar-label">${b.label}</p>
+                    <p class="benefit-bar-amount">
+                        ${used.toLocaleString()}원 / ${max.toLocaleString()}원
+                    </p>
+                `;
+                    benefitBarsEl.appendChild(bar);
+                });
+            }
+
+            // 초기 렌더링
+            renderBenefitCard(benefitIndex);
+
+            // 좌우 버튼
+            if (btnBenefitPrev && btnBenefitNext) {
+                btnBenefitPrev.addEventListener('click', () => {
+                    benefitIndex = (benefitIndex - 1 + benefitData.length) % benefitData.length;
+                    renderBenefitCard(benefitIndex);
+                });
+                btnBenefitNext.addEventListener('click', () => {
+                    benefitIndex = (benefitIndex + 1) % benefitData.length;
+                    renderBenefitCard(benefitIndex);
+                });
+            }
         });
     </script>
 

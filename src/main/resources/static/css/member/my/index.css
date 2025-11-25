@@ -475,7 +475,7 @@
     align-items: center;
     gap: 10px;
     padding: 10px 12px;
-    border-radius: 12px;
+    border-radius: 172px;
     border: 1px solid #edf0f5;
     text-decoration: none;
     color: #111827;
@@ -502,4 +502,175 @@
 .reco-arrow {
     font-size: 14px;
     color: #9ca3af;
+}
+
+/* ===== 이번 달 받은 혜택 – 카드별 막대 그래프 ===== */
+
+/* 전체 슬라이더 컨테이너 */
+.benefit-slider {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+/* 카드명 / 카드번호 영역 */
+.benefit-card-header {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    font-size: 13px;
+}
+
+.benefit-card-title {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    align-items: baseline;
+}
+
+.benefit-card-name {
+    font-weight: 700;
+    font-size: 15px;
+}
+
+.benefit-card-number {
+    font-size: 12px;
+    color: #6b7280;
+}
+
+.benefit-card-desc {
+    margin: 0;
+    font-size: 11px;
+    color: #9ca3af;
+}
+
+/* 회색 배경 막대 영역 */
+.benefit-panel {
+    position: relative;
+    margin-top: 8px;
+    border-radius: 16px;
+    background: #f3f4f6;
+    padding: 20px 44px;
+    box-sizing: border-box;
+    overflow: hidden;
+}
+
+/* 좌우 버튼 */
+.benefit-nav {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 32px;
+    height: 32px;
+    border-radius: 999px;
+    border: 1px solid #d1d5db;
+    background: #ffffff;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 18px;
+    color: #111827;
+    box-shadow: 0 4px 10px rgba(15, 23, 42, 0.08);
+}
+
+.benefit-nav-prev {
+    left: 8px;
+}
+
+.benefit-nav-next {
+    right: 8px;
+}
+
+.benefit-nav:hover {
+    background: #111827;
+    color: #ffffff;
+}
+
+/* 막대들 한 줄 */
+.benefit-bars {
+    display: flex;
+    justify-content: center;
+    align-items: flex-end;
+    gap: 28px;
+    min-height: 160px;
+}
+
+/* 개별 혜택 막대 전체 */
+.benefit-bar {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 6px;
+    font-size: 12px;
+}
+
+/* 바 전체(트랙) – 세로 막대 유지 */
+.benefit-bar-max {
+    width: 52px;
+    height: 140px;
+    /* 전체 높이 (한도) */
+    border-radius: 10px;
+    /* 완전 둥근 캡슐 형태 */
+    border: 1px solid #d1d5db;
+    background: linear-gradient(180deg, #f9fafb, #eef2ff);
+    box-shadow: 0 6px 16px rgba(15, 23, 42, 0.10);
+    display: flex;
+    align-items: flex-end;
+    /* 아래에서부터 채우기 */
+    justify-content: center;
+    overflow: hidden;
+}
+
+/* 실제 사용된 혜택 (밑에서 위로 채워지는 부분) */
+.benefit-bar-used {
+    width: 100%;
+    background: linear-gradient(180deg, #4f46e5, #3b82f6);
+    /* height는 JS에서 %로 세팅됨 */
+}
+
+/* 혜택명 */
+.benefit-bar-label {
+    margin: 0;
+    font-size: 12px;
+    font-weight: 500;
+    color: #111827;
+}
+
+/* “80,000원 / 100,000원” 이런 텍스트 */
+.benefit-bar-amount {
+    margin: 0;
+    font-size: 11px;
+    color: #6b7280;
+}
+
+/* 좁은 화면에서 막대 간격/크기 조정 */
+@media (max-width: 900px) {
+    .benefit-panel {
+        padding: 16px 36px;
+    }
+
+    .benefit-bars {
+        gap: 18px;
+    }
+
+    .benefit-bar-max {
+        width: 46px;
+        height: 130px;
+    }
+}
+
+@media (max-width: 600px) {
+    .benefit-panel {
+        padding: 14px 34px;
+    }
+
+    .benefit-bars {
+        gap: 12px;
+    }
+
+    .benefit-bar-max {
+        width: 42px;
+        height: 120px;
+    }
 }
