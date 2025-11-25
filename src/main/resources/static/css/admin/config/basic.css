@@ -1,0 +1,137 @@
+/*
+    날짜 : 2025-11-25
+    내용 : 관리자>환경설정>기본설정 CSS
+    이름 : 이수연
+*/
+
+/* 전체 영역 */
+.configBasicWrap {
+    width: 1000px;
+    margin: 0 auto;
+}
+
+table {border: none;}
+th, td {text-align: left;}
+th {width: 190px;}
+.btn-td {
+    display: flex;
+    justify-content: flex-end;
+    text-align: center;
+}
+.update-btn {width: 60px;}
+
+/* ㅡㅡㅡ register CSS  ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ*/
+
+.form-wrap {
+    display: flex;
+    flex-direction: column;
+    gap: 60px;
+}
+
+.form-section {
+    display: flex;
+    padding: 30px 5px;
+    border-bottom: 1px solid;
+}
+
+.section-header {
+    width: 300px;
+    padding-right: 40px;
+}
+.section-header p {
+    padding: 15px;
+    color: darkgray;
+    font-size: 12px;
+}
+
+.section-content {
+    width: 700px;
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+
+.form-field-wrapper { /* 세로 나열 */
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    font-weight: 500;
+}
+.form-flex-wrapper { /* 가로 나열 */
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-weight: 500;
+}
+
+/* 공통 적용 */
+input, select {
+    height: 35px;
+    border: none;
+    border-bottom: 1px solid;
+}
+
+/* ㅡㅡㅡ 미리보기 영역 ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ */
+/*  input[type=file] 디자인 ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ */
+/* 1. 실제 input[type="file"]을 숨김 */
+input[type="file"] {
+    display: none;
+}
+
+/* 2. 커스텀 라벨을 버튼처럼 스타일링 */
+.custom-file-label {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #cb2b11;
+    border: 1px solid #D9D9D9;
+    color: white;
+
+    height: 35px;
+    width: 100px;
+    font-size: 14px;
+
+    cursor: pointer; /* 클릭 가능한 요소임을 표시 */
+    margin-right: 15px; /* 파일명 표시 영역과의 간격 */
+}
+
+/* 3. 전체 영역 레이아웃 조정 */
+.file-upload-wrapper {
+    display: flex;
+    align-items: center; /* 수직 중앙 정렬 */
+    padding: 10px 0;
+}
+.file-upload-wrapper span {
+    width: 450px;
+    height: 35px;
+    padding-left: 5px;
+}
+
+/* 4. 파일명 표시 영역 스타일 */
+#fileNameDisplayHeader,
+#fileNameDisplayFooter,
+#fileNameDisplayFavicon {
+    font-size: 16px;
+    color: #555;
+    background-color: white;
+    border-bottom: 1px solid;
+    white-space: nowrap; /* 파일명이 길어도 줄 바꿈 방지 */
+    overflow: hidden;
+    text-overflow: ellipsis; /* 넘치는 텍스트를 ...으로 표시 */
+    width: 350px;
+    height: 35px;
+    padding-left: 5px;
+}
+
+/* ㅡㅡㅡ 취소, 등록 ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ */
+.config-action-bar {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 20px;
+    height: 150px;
+}
+.config-action-bar a {
+    background-color: #d1d1d1;
+    color: black;
+}
