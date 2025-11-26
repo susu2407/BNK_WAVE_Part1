@@ -11,6 +11,10 @@
     <div class="main-container">
         <div id="main-content">
             <section class="idv-wrap">
+                <div class="apply-progress"
+                     data-total="9"
+                     data-step="3">
+                </div>
                 <h1 class="idv-title">본인 확인을 진행해 주세요</h1>
 
                 <!-- 탭 -->
@@ -159,6 +163,28 @@
         }
 
         refreshButtons();
+
+        const progress = document.querySelector('.apply-progress');
+        if (!progress) return;
+
+        const total  = Number(progress.dataset.total || 9); // 기본 10단계
+        const step   = Number(progress.dataset.step  || 1);  // 현재 단계
+
+        // 바 래퍼 생성
+        const bar = document.createElement('div');
+        bar.className = 'apply-progress-bar';
+
+        // 칸 만들기
+        for (let i = 1; i <= total; i++) {
+            const span = document.createElement('span');
+            span.className = 'progress-step';
+            if (i <= step) {
+                span.classList.add('is-active'); // 현재 단계까지 색 칠하기
+            }
+            bar.appendChild(span);
+        }
+
+        progress.appendChild(bar);
     });
 </script>
 </body>

@@ -42,6 +42,7 @@ body {
     /* 얘네는 네가 쓰던 거 그대로 */
     padding-top: 40px;
     margin-bottom: 40px;
+    --nav-offset: 260px;
 }
 
 /* ===== 로고 ===== */
@@ -69,7 +70,7 @@ body {
 
 .nav_menu>li {
     list-style: none;
-    position: static;
+    position: relative;
     /* 메가메뉴가 화면 전체로 내려오게 */
 }
 
@@ -94,10 +95,9 @@ body {
     content: "";
     position: absolute;
     left: 0;
-    bottom: -25px;
-    width: 100%;
-    height: 3px;
-    background: #000;
+    right: 0;
+    top: 100%;      /* li 바로 아래부터 */
+    height: 40px;   /* 헤더 밑부분 높이에 맞춰서 조절 (30~50px 사이에서 맞춰봐) */
 }
 
 /* ===== 우측 유틸 ===== */
@@ -161,19 +161,16 @@ body {
 
 /* ===== 메가메뉴 ===== */
 .mega-panel {
-    position: absolute;
+    position: fixed;             /* ✅ 화면 기준 */
     left: 0;
-    top: var(--header-h);
-    /* 헤더 바로 아래 */
-    width: 100vw;
-    /* 화면 전체 가로 */
+    top: var(--header-h);        /* 헤더 바로 아래 */
+    width: 100vw;                /* 화면 전체 가로 */
     background: #fff;
     border-bottom: 1px solid #ddd;
     box-shadow: 0 12px 24px rgba(0, 0, 0, 0.05);
     display: none;
     z-index: 50;
     min-height: 250px;
-    /* 내려온 흰 영역 높이 */
 }
 
 .nav_menu>li:hover .mega-panel,
@@ -187,6 +184,7 @@ body {
     display: flex;
     gap: 40px;
     padding: 28px 20px 36px;
+    padding-left: var(--nav-offset);
 }
 
 .mega-col {

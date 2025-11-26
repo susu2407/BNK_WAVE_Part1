@@ -11,6 +11,10 @@
     <div class="main-container">
         <div id="main-content">
             <section class="extra-wrap">
+                <div class="apply-progress"
+                     data-total="9"
+                     data-step="4">
+                </div>
                 <h1 class="extra-title">카드 신청을 위해 추가 정보 확인이 필요합니다.</h1>
 
                 <p class="extra-desc">
@@ -144,6 +148,27 @@
             // TODO: 서버 연동 시 fetch/axios로 전송
             alert('입력이 완료되었습니다.');
         });
+        const progress = document.querySelector('.apply-progress');
+        if (!progress) return;
+
+        const total  = Number(progress.dataset.total || 9); // 기본 10단계
+        const step   = Number(progress.dataset.step  || 1);  // 현재 단계
+
+        // 바 래퍼 생성
+        const bar = document.createElement('div');
+        bar.className = 'apply-progress-bar';
+
+        // 칸 만들기
+        for (let i = 1; i <= total; i++) {
+            const span = document.createElement('span');
+            span.className = 'progress-step';
+            if (i <= step) {
+                span.classList.add('is-active'); // 현재 단계까지 색 칠하기
+            }
+            bar.appendChild(span);
+        }
+
+        progress.appendChild(bar);
     });
 </script>
 </body>

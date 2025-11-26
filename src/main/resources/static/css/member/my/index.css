@@ -1,10 +1,9 @@
-/* 공통 레이아웃 – 메인 페이지와 톤 맞춤 */
+/* 공통 레이아웃 */
 .content {
     max-width: 1200px;
     margin: 150px auto;
     padding: 0 10px;
 }
-
 
 /* 공통 카드 박스 */
 .myp-box {
@@ -29,7 +28,7 @@
 }
 
 .myp-box-title-sm {
-    font-size: 15px;
+    font-size: 17px;
     font-weight: 700;
 }
 
@@ -40,69 +39,93 @@
 }
 
 /* ===== 메인 2컬럼 (환영 + 카드 정보) ===== */
+
 .myp-main-row {
     display: grid;
-    grid-template-columns: 2fr 1fr;
+    grid-template-columns: 1.5fr 1fr;
     gap: 24px;
     margin-bottom: 22px;
+    min-height: 270px;
 }
 
-/* 왼쪽 환영 박스 */
+/* 상단 환영 카드 */
+
 .myp-greeting {
     min-height: 220px;
+    background: #CB2B11;
+    border: none;
+    color: #ffffff;
+    padding: 26px 30px;
 }
 
-.hello-text {
-    font-size: 18px;
-    margin: 0 0 4px;
-}
-
-.hello-sub {
-    font-size: 13px;
-    color: #6b7280;
-    margin: 0;
-}
-
-.myp-greeting-body {
+.myp-greeting-inner {
     display: flex;
     justify-content: space-between;
-    gap: 30px;
-    margin-top: 10px;
+    align-items: center;
+    gap: 32px;
 }
 
-.acct-main-info {
-    font-size: 13px;
-    color: #111827;
+.myp-greeting-text {
+    flex: 1;
 }
 
-.acct-bank {
+.myp-greeting-title {
+    margin: 0 0 125px;
+    font-size: 24px;
+    font-weight: 700;
+}
+
+.myp-greeting-title strong {
+    font-weight: 800;
+}
+
+.myp-greeting-sub {
+    margin: 0 0 18px;
+    font-size: 14px;
+    opacity: 0.95;
+}
+
+/* 환영 카드 하단 – 카드 정보 + 링크 */
+
+.myp-greeting-card-info {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px 16px;
+    align-items: baseline;
+}
+
+.myp-greeting-card-name {
+    margin: 0;
+    font-size: 14px;
     font-weight: 600;
-    margin-bottom: 4px;
 }
 
-.acct-number {
-    margin-bottom: 10px;
-    color: #4b5563;
-}
-
-.acct-balance-label {
+.myp-greeting-link {
     font-size: 12px;
-    color: #6b7280;
-    margin-bottom: 2px;
+    color: #e0f2fe;
+    text-decoration: none;
 }
 
-.acct-balance {
-    font-size: 18px;
-}
-
-.acct-extra {
+.myp-greeting-link::after {
+    content: '↗';
     font-size: 11px;
-    color: #6b7280;
-    text-align: right;
-    line-height: 1.5;
+    margin-left: 3px;
+}
+
+.myp-greeting-link:hover {
+    text-decoration: underline;
+}
+
+/* 환영 카드 오른쪽 카드 이미지 */
+
+.myp-greeting-card-visual {
+    flex: 0 0 auto;
+    display: flex;
+    justify-content: flex-end;
 }
 
 /* 오른쪽 카드 정보 컬럼 */
+
 .myp-side-col {
     display: flex;
     flex-direction: column;
@@ -110,6 +133,7 @@
 }
 
 /* 카드 정보 박스 */
+
 .myp-card-info-body {
     display: flex;
     gap: 16px;
@@ -124,11 +148,11 @@
 }
 
 .myp-card-sample {
-    width: 70px;
-    height: 110px;
-    border-radius: 14px;
+    width: 80px;
+    height: 130px;
+    border-radius: 16px;
     background: linear-gradient(145deg, #111827, #4b5563);
-    box-shadow: 0 8px 20px rgba(0, 0, 0, .25);
+    box-shadow: 0 10px 24px rgba(0, 0, 0, .28);
 }
 
 .myp-card-text {
@@ -139,7 +163,7 @@
 .myp-card-name {
     font-weight: 700;
     margin-bottom: 8px;
-    font-size: 14px;
+    font-size: 20px;
 }
 
 .myp-card-benefit-label {
@@ -153,6 +177,7 @@
 }
 
 /* 결제 예정금액 박스 상단 내용 */
+
 .myp-pay-body {
     display: flex;
     justify-content: space-between;
@@ -181,6 +206,7 @@
 }
 
 /* ===== 중간 행: 혜택 + (결제 예정 금액 + 최근 이용 금액) ===== */
+
 .myp-middle-row {
     display: grid;
     grid-template-columns: 2fr 1fr;
@@ -188,9 +214,9 @@
     margin-bottom: 22px;
 }
 
-/* 이번 달 받은 혜택 박스 */
+/* 이번 달 받은 혜택 */
+
 .myp-benefit {
-    /* 예전 margin-bottom 제거 → 중간 행에서 간격 관리 */
     margin-bottom: 0;
 }
 
@@ -203,6 +229,7 @@
 }
 
 /* 결제 예정 박스 하단의 최근 이용 금액 */
+
 .myp-pay-recent {
     margin-top: 10px;
     padding-top: 10px;
@@ -215,18 +242,11 @@
     margin: 0 0 4px;
 }
 
-.myp-pay-recent-text {
-    font-size: 12px;
-    color: #6b7280;
-    margin: 0;
-    line-height: 1.5;
-}
-
 /* ===== 하단 3분할 ===== */
+
 .myp-bottom-row {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
-    /* 3 컬럼 */
     gap: 18px;
 }
 
@@ -235,7 +255,8 @@
     flex-direction: column;
 }
 
-/* 메뉴 리스트 */
+/* 마이메뉴 */
+
 .myp-menu-list {
     list-style: none;
     padding: 0;
@@ -243,7 +264,7 @@
     font-size: 13px;
 }
 
-.myp-menu-list li+li {
+.myp-menu-list li + li {
     margin-top: 4px;
 }
 
@@ -252,7 +273,6 @@
     color: #111827;
 }
 
-/* 마이메뉴 아이콘 */
 .myp-bottom-menu .myp-menu-list li a {
     display: flex;
     align-items: center;
@@ -270,38 +290,8 @@
     font-size: 14px;
 }
 
-/* 내용 placeholder 공통 */
-.placeholder-text {
-    font-size: 12px;
-    color: #6b7280;
-    line-height: 1.5;
-}
-
-/* 반응형 */
-@media (max-width: 900px) {
-    .myp-main-row {
-        grid-template-columns: 1fr;
-    }
-
-    .myp-greeting-body {
-        flex-direction: column;
-        text-align: left;
-    }
-
-    .acct-extra {
-        text-align: left;
-    }
-
-    .myp-middle-row {
-        grid-template-columns: 1fr;
-    }
-
-    .myp-bottom-row {
-        grid-template-columns: 1fr;
-    }
-}
-
 /* 최근 이용내역 리스트 (결제 박스 안) */
+
 .recent-usage-list {
     list-style: none;
     margin: 8px 0 0;
@@ -312,9 +302,8 @@
     padding: 6px 0;
 }
 
-.recent-usage-item+.recent-usage-item {
+.recent-usage-item + .recent-usage-item {
     border-top: 1px solid #f3f4f6;
-    /* 위/아래 살짝 구분선 */
 }
 
 .recent-usage-main {
@@ -328,21 +317,18 @@
     flex: 1;
 }
 
-/* 결제명 */
 .recent-merchant {
     font-size: 13px;
     font-weight: 500;
     margin: 0 0 2px;
 }
 
-/* 사용카드 · 날짜 · 시간 · 결제방법 */
 .recent-meta {
     font-size: 11px;
     color: #6b7280;
     margin: 0;
 }
 
-/* 금액 */
 .recent-amount {
     font-size: 13px;
     font-weight: 600;
@@ -355,8 +341,21 @@
     font-size: 12px;
 }
 
-/* 모바일에서 줄바꿈 대응 */
+/* 반응형 */
+
 @media (max-width: 900px) {
+    .myp-main-row {
+        grid-template-columns: 1fr;
+    }
+
+    .myp-middle-row {
+        grid-template-columns: 1fr;
+    }
+
+    .myp-bottom-row {
+        grid-template-columns: 1fr;
+    }
+
     .recent-usage-main {
         flex-direction: column;
         align-items: flex-start;
@@ -365,11 +364,23 @@
     .recent-amount {
         margin-top: 2px;
     }
+
+    .myp-greeting-inner {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .myp-greeting-card-visual {
+        justify-content: flex-start;
+        margin-top: 10px;
+    }
 }
 
-/* 카드 정보 슬라이더 */
+/* ===== 카드 정보 슬라이더 ===== */
+
 .myp-card-info {
     position: relative;
+    min-height: 270px;
 }
 
 .card-slider {
@@ -377,19 +388,20 @@
     width: 100%;
 }
 
-/* 슬라이드 하나 */
 .card-slide {
     display: none;
     align-items: center;
-    gap: 16px;
+    gap: 18px;
+    min-height: 150px;
+    padding: 10px 4px;
 }
 
-/* 현재 보이는 슬라이드 */
 .card-slide-active {
     display: flex;
 }
 
-/* 카드 색상 다양화 (선택) */
+/* 카드 색상 */
+
 .card-color-1 {
     background: linear-gradient(145deg, #111827, #4b5563);
 }
@@ -403,6 +415,7 @@
 }
 
 /* 좌우 네비게이션 버튼 */
+
 .card-slider-nav {
     position: absolute;
     right: 16px;
@@ -430,27 +443,24 @@
     background: #f3f4f6;
 }
 
-/* 나의 부가서비스 리스트 */
-.myp-bottom-extra .extra-service-list {
+/* 나의 부가서비스 */
+
+.extra-service-list {
     list-style: none;
-    margin: 0;                     /* 위 여백 줄이기 */
+    margin: 0;
     padding: 4px 0 2px;
     font-size: 12px;
-
-    /* 카드 안 남는 공간을 다 쓰면서 고르게 배치 */
     flex: 1;
     display: flex;
     flex-direction: column;
-    justify-content: space-between;   /* 위/중간/아래로 쫙 펼치기 */
-    gap: 0;                           /* 개별 간격은 li padding으로 조절 */
+    justify-content: space-between;
+    gap: 0;
 }
 
-.myp-bottom-extra .extra-service-list li {
+.extra-service-list li {
     display: flex;
     align-items: center;
     gap: 6px;
-
-    /* 각 줄 높이 확보 → 답답하지 않게 */
     min-height: 32px;
 }
 
@@ -470,7 +480,8 @@
     font-weight: 500;
 }
 
-/* 추천서비스 리스트 */
+/* 추천서비스 */
+
 .reco-service-list {
     list-style: none;
     margin: 4px 0 0;
@@ -478,7 +489,7 @@
     font-size: 13px;
 }
 
-.reco-service-list li+li {
+.reco-service-list li + li {
     margin-top: 6px;
 }
 
@@ -518,14 +529,12 @@
 
 /* ===== 이번 달 받은 혜택 – 카드별 막대 그래프 ===== */
 
-/* 전체 슬라이더 컨테이너 */
 .benefit-slider {
     display: flex;
     flex-direction: column;
     gap: 10px;
 }
 
-/* 카드명 / 카드번호 영역 */
 .benefit-card-header {
     display: flex;
     flex-direction: column;
@@ -556,7 +565,6 @@
     color: #9ca3af;
 }
 
-/* 회색 배경 막대 영역 */
 .benefit-panel {
     position: relative;
     margin-top: 8px;
@@ -568,6 +576,7 @@
 }
 
 /* 좌우 버튼 */
+
 .benefit-nav {
     position: absolute;
     top: 50%;
@@ -599,7 +608,8 @@
     color: #ffffff;
 }
 
-/* 막대들 한 줄 */
+/* 막대 영역 */
+
 .benefit-bars {
     display: flex;
     justify-content: center;
@@ -608,7 +618,6 @@
     min-height: 160px;
 }
 
-/* 개별 혜택 막대 전체 */
 .benefit-bar {
     display: flex;
     flex-direction: column;
@@ -617,31 +626,24 @@
     font-size: 12px;
 }
 
-/* 바 전체(트랙) – 세로 막대 유지 */
 .benefit-bar-max {
     width: 52px;
     height: 140px;
-    /* 전체 높이 (한도) */
     border-radius: 10px;
-    /* 완전 둥근 캡슐 형태 */
     border: 1px solid #d1d5db;
     background: linear-gradient(180deg, #f9fafb, #eef2ff);
     box-shadow: 0 6px 16px rgba(15, 23, 42, 0.10);
     display: flex;
     align-items: flex-end;
-    /* 아래에서부터 채우기 */
     justify-content: center;
     overflow: hidden;
 }
 
-/* 실제 사용된 혜택 (밑에서 위로 채워지는 부분) */
 .benefit-bar-used {
     width: 100%;
     background: linear-gradient(180deg, #4f46e5, #3b82f6);
-    /* height는 JS에서 %로 세팅됨 */
 }
 
-/* 혜택명 */
 .benefit-bar-label {
     margin: 0;
     font-size: 12px;
@@ -649,14 +651,14 @@
     color: #111827;
 }
 
-/* “80,000원 / 100,000원” 이런 텍스트 */
 .benefit-bar-amount {
     margin: 0;
     font-size: 11px;
     color: #6b7280;
 }
 
-/* 좁은 화면에서 막대 간격/크기 조정 */
+/* 혜택 막대 반응형 */
+
 @media (max-width: 900px) {
     .benefit-panel {
         padding: 16px 36px;

@@ -12,6 +12,10 @@
         <div id="main-content">
             <section class="apply-form-wrap">
                 <div class="apply-form-box">
+                    <div class="apply-progress"
+                         data-total="9"
+                         data-step="1">
+                    </div>
                     <header class="apply-form-header">
                         <h1>기본 정보 입력 후 동의 여부를 확인해 주세요</h1>
 
@@ -304,6 +308,27 @@
                 // 추가적으로 다른 필수 필드 유효성 검사가 필요하면 여기에 추가합니다.
             });
         }
+        const progress = document.querySelector('.apply-progress');
+        if (!progress) return;
+
+        const total  = Number(progress.dataset.total || 9); // 기본 10단계
+        const step   = Number(progress.dataset.step  || 1);  // 현재 단계
+
+        // 바 래퍼 생성
+        const bar = document.createElement('div');
+        bar.className = 'apply-progress-bar';
+
+        // 칸 만들기
+        for (let i = 1; i <= total; i++) {
+            const span = document.createElement('span');
+            span.className = 'progress-step';
+            if (i <= step) {
+                span.classList.add('is-active'); // 현재 단계까지 색 칠하기
+            }
+            bar.appendChild(span);
+        }
+
+        progress.appendChild(bar);
     });
 </script>
 </body>
