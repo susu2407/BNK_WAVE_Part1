@@ -5,6 +5,7 @@
     <title>CARD ADMIN</title>
     <link rel="stylesheet" th:href="@{/css/admin/common/commonCSS.css}">
     <link rel="stylesheet" th:href="@{/css/admin/common/commonActionBarTable.css}">
+    <link rel="stylesheet" th:href="@{/css/admin/config/basic.css}">
     <script th:src="@{/js/admin/common/aside.js}"></script>
 </head>
 <div th:replace="~{admin/common/header :: header}"></div>
@@ -13,6 +14,20 @@
 <main>
     <div class="main-container">
         <div th:replace="~{admin/common/mainHeader :: mainHeader}"></div>
+
+        <div class="nav-content">
+            <nav class="nav-menu">
+                <ul>
+                    <li><a th:href="@{/admin/config/basic}">기본설정</a></li>
+                    <li  style=" font-weight: 800; color: #cb2b11;">
+                        <a th:href="@{/admin/config/version}" style="color: #cb2b11; font-size: 20px;">버전관리</a>
+                    </li>
+                    <li><a th:href="@{/admin/config/category}">화면관리</a></li>
+                    <li><a th:href="@{/admin/config/banner}">배너관리</a></li>
+                </ul>
+            </nav>
+        </div>
+
         <div id="main-content">
             <div class="space">
                 <h3>카테고리 관리</h3>
