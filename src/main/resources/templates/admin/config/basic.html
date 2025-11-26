@@ -29,18 +29,24 @@
         </div>
 
         <div id="main-content">
-            <div class="configBasicWrap">
+            <div class="configWrap">
                 <section class="form-section">
                     <!-- 1. 버전 -->
                     <div class="section-header">
                         <h3>버전 정보</h3>
-                        <p class="description">현재 사이트 버전입니다.</p>
+                        <p>현재 사이트 버전입니다.</p>
                     </div>
                     <div class="section-content">
-                        <table>
+                        <table class="basic-table">
                             <tr>
                                 <th>사이트 버전</th>
                                 <td>[[${basicConfig.siteInfo.version}]]</td>
+                            </tr>
+                            <tr>
+                                <th></th>
+                                <td class="btn-td">
+                                    <a th:href="@{/admin/config/version}" class="btn register-btn ">버전관리</a>
+                                </td>
                             </tr>
                         </table>
                     </div>
@@ -49,10 +55,10 @@
                 <section class="form-section">
                     <div class="section-header">
                         <h3>사이트</h3>
-                        <p class="description">브라우저 탭, 헤더 및 푸터 노출 정보입니다.</p>
+                        <p>브라우저 탭, 헤더 및 푸터 노출 정보입니다.</p>
                     </div>
                     <div class="section-content">
-                        <table>
+                        <table  class="basic-table">
                             <tr>
                                 <th>제목</th>
                                 <td>[[${basicConfig.siteInfo.title}]]</td>
@@ -74,13 +80,13 @@
                 <section class="form-section">
                     <div class="section-header">
                         <h3>로고</h3>
-                        <p class="description">브라우저 탭, 헤더 및 푸터 노출 로고입니다.</p>
+                        <p>브라우저 탭, 헤더 및 푸터 노출 로고입니다.</p>
                     </div>
                     <div class="section-content">
                         <form th:action="@{/admin/config/basic/upload}" method="post" enctype="multipart/form-data">
                             <div class="form-wrap">
                                 <input type="hidden" name="siteId" th:value="${basicConfig.siteInfo.siteId}">
-                                <table>
+                                <table class="basic-table">
                                     <tr>
                                         <th>헤더로고</th>
                                         <td>
@@ -146,10 +152,10 @@
                 <section class="form-section">
                     <div class="section-header">
                         <h3>기업정보</h3>
-                        <p class="description">푸터에 노출되는 기업정보입니다.</p>
+                        <p>푸터에 노출되는 기업정보입니다.</p>
                     </div>
                     <div class="section-content">
-                        <table>
+                        <table class="basic-table">
                             <tr>
                                 <th>상호명</th>
                                 <td>[[${basicConfig.companyInfo.companyName}]]</td>
@@ -187,10 +193,10 @@
                 <section class="form-section">
                     <div class="section-header">
                         <h3>고객센터 정보</h3>
-                        <p class="description">푸터에 노출되는 고객센터 정보입니다.</p>
+                        <p>푸터에 노출되는 고객센터 정보입니다.</p>
                     </div>
                     <div class="section-content">
-                        <table>
+                        <table class="basic-table">
                             <tr>
                                 <th>전화번호</th>
                                 <td>[[${basicConfig.customerServiceInfo.customerPhone}]]</td>
@@ -220,10 +226,10 @@
                 <section class="form-section">
                     <div class="section-header">
                         <h3>카피라이트</h3>
-                        <p class="description">푸터에 노출되는 카피라이터 정보입니다.</p>
+                        <p>푸터에 노출되는 카피라이터 정보입니다.</p>
                     </div>
                     <div class="section-content">
-                        <table>
+                        <table class="basic-table">
                             <tr>
                                 <th>카피라이트</th>
                                 <td>[[${basicConfig.siteInfo.copyright}]]</td>
@@ -245,7 +251,7 @@
                     <button class="btn register-btn">전체 수정</button>
                 </div>
 
-            </div> <!-- configBasicWrap 끝 -->
+            </div> <!-- configWrap 끝 -->
         </div> <!-- main-content 끝 -->
     </div> <!-- main=container 끝 -->
 </main>

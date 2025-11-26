@@ -27,38 +27,54 @@
                 </ul>
             </nav>
         </div>
+<!--                <div class="tab-bar">-->
+<!--                    <a th:href="@{#}">메인상단배너</a>-->
+<!--                    <a th:href="@{#}">메인슬라이더배너</a>-->
+<!--                    <a th:href="@{#}">상품 상세보기 배너</a>-->
+<!--                    <a th:href="@{#}">회원로그인배너</a>-->
+<!--                    <a th:href="@{#}">마이페이지배너</a>-->
+<!--                </div>-->
 
         <div id="main-content">
-            <div class="tab-bar">
-                <a th:href="@{#}">메인상단배너</a>
-                <a th:href="@{#}">메인슬라이더배너</a>
-                <a th:href="@{#}">상품 상세보기 배너</a>
-                <a th:href="@{#}">회원로그인배너</a>
-                <a th:href="@{#}">마이페이지배너</a>
-            </div>
-            <div>
-                <h3>메인 상단배너</h3>
-                <hr>
-                <table>
-                    <thead>
-                        <tr>
-                            <td>번호</td>
-                            <td>이미지</td>
-                            <td>배너정보</td>
-                            <td>배너위치</td>
-                            <td>시작일</td>
-                            <td>종료일</td>
-                            <td>시작시간</td>
-                            <td>종료시간</td>
-                            <td>관리</td>
-
-                        </tr>
-                    </thead>
-                    <tbody>
-
-                    </tbody>
-                </table>
-            </div>
+                <section class="banner-section">
+                    <table class="banner-table">
+                        <thead>
+                            <tr>
+                                <th>No</th>
+                                <th>제목</th>
+                                <th>이미지</th>
+                                <th>링크</th>
+                                <th>노출위치</th>
+                                <th>노출순서</th>
+                                <th>노출기간</th>
+                                <th>노출여부</th> <!-- (노출,숨김,기간만료) -->
+                                <th>관리일 </th>
+                                <th>클릭 수</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>1</td>
+                                <td>잠만보 카드 상품 홍보</td>
+                                <td class="img-cell">
+                                    <img th:src="@{/images/이미지로드안됨.png}" alt="" class="card-preview-img">
+                                </td>
+                                <td>http://wave/card/view/잠만보 상품 상세보기</td>
+                                <td>메인 상단 슬라이드</td>
+                                <td>1</td>
+                                <td>2025.11.12.14:00 ~ 2025.12.26.23:59</td>
+                                <td>노출</td>
+                                <td>2025.11.10</td>
+                                <td>241회</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </section>
+                <!-- 주요 액션 영역 -->
+                <div class="config-action-bar ">
+                    <!-- 등록버튼 -->
+                    <button class="btn register-btn">등록</button>
+                </div>
         </div>
     </div>
 </main>
