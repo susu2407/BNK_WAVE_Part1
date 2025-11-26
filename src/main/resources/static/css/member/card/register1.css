@@ -120,7 +120,7 @@
 }
 
 .apply-submit {
-    width: 575px;
+    width: 100%;
     background: #CB2B11;
     border: none;
     border-radius: 14px;
@@ -130,7 +130,6 @@
     padding: 14px 0;
     cursor: pointer;
     transition: 0.15s;
-    margin-left: 100px;
 }
 
 @media (max-width: 540px) {

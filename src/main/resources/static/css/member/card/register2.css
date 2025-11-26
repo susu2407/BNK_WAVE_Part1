@@ -98,6 +98,7 @@
     padding: 8px 0;
     font-size: 14px;
     outline: none;
+    margin-bottom: 10px;
 }
 
 .form-item input:focus {
