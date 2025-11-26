@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>카드 신청 완료 (Step 11)</title>
+
+    <link rel="stylesheet" href="../css/common/product_header_style.css" />
+    <link rel="stylesheet" href="../css/common/footer_style.css" />
+</head>
+
+<body>
+<div th:replace="~{common/product_header :: product_header}"></div>
+
+<main class="content" style="padding: 40px; text-align: center;">
+    <section class="complete-wrap" style="max-width: 600px; margin: 0 auto; border: 1px solid #ccc; padding: 30px; border-radius: 8px;">
+
+        <h1 style="color: green;">✓</h1>
+
+        <h1 class="complete-card-name"
+            th:text="${cardItem != null ? cardItem.card.name : '카드명 정보 없음'}"
+            style="font-size: 24px; margin-top: 10px;">
+            체크카드
+        </h1>
+        <p class="complete-main-text" style="font-size: 18px; margin-top: 5px;">신청이 최종 완료되었습니다!</p>
+
+        <hr style="margin: 20px 0;">
+
+        <p class="complete-date" style="font-size: 14px; color: #555;">
+            신청일시:
+            <span class="date-value"
+                  th:text="${applyDate != null ? #temporals.format(applyDate, 'yyyy-MM-dd HH:mm') : '날짜 정보 없음'}">
+                2025-11-26 10:30
+            </span>
+        </p>
+
+        <p style="margin-top: 20px; font-weight: bold;">[DB 저장 성공 확인]</p>
+
+        <section class="benefit-section" style="margin-top: 20px; padding: 15px; background: #f9f9f9; border-radius: 4px;">
+            <h2 class="benefit-title" style="font-size: 16px;">선택된 관심사 (추후 구현 예정):</h2>
+            <p style="font-size: 14px;">주유, 여행 등</p>
+        </section>
+
+        <p class="complete-sub-text" style="margin-top: 20px; color: #333;">
+            신청하신 카드는 <strong>4영업일 이내</strong> 배송됩니다.
+        </p>
+
+        <div style="margin-top: 30px;">
+            <a th:href="@{/}" style="text-decoration: none;">
+                <button type="button" class="btn-confirm"
+                        style="padding: 10px 20px; background-color: #007bff; color: white; border: none; border-radius: 5px; cursor: pointer;">
+                    홈으로 돌아가기
+                </button>
+            </a>
+        </div>
+    </section>
+</main>
+
+<div th:replace="~{common/footer :: footer}"></div>
+
+</body>
+</html>

@@ -4,14 +4,12 @@ import jakarta.transaction.Transactional;
 import kr.co.wave.dto.approval.CardApprovalDTO;
 import kr.co.wave.dto.card.*;
 import kr.co.wave.entity.approval.CardApproval;
-import kr.co.wave.entity.card.AnnualFee;
-import kr.co.wave.entity.card.Benefit;
-import kr.co.wave.entity.card.Card;
+import kr.co.wave.entity.card.*;
+import kr.co.wave.entity.member.Address;
 import kr.co.wave.entity.member.Member;
 import kr.co.wave.repository.approval.CardApprovalRepository;
-import kr.co.wave.repository.card.AnnualFeeRepository;
-import kr.co.wave.repository.card.BenefitRepository;
-import kr.co.wave.repository.card.CardRepository;
+import kr.co.wave.repository.card.*;
+import kr.co.wave.repository.member.AddressRepository;
 import kr.co.wave.repository.member.MemberRepository;
 import kr.co.wave.service.util.FileUploadUtil;
 import lombok.RequiredArgsConstructor;
@@ -28,6 +26,7 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.UUID;
 
 @Service
 @Slf4j
@@ -41,6 +40,9 @@ public class CardService {
     private final ModelMapper modelMapper; // Entity와 DTO를 변환해주는 객체
     private final FileUploadUtil fileUploadUtil; // 저기 util 불러오는 객체
     private final MemberRepository memberRepository;
+    private final MemberCardRepository memberCardRepository;
+    private final AccountRepository accountRepository;
+    private final AddressRepository addressRepository;
 
     // 필요없는데 혹시나 남겨둠
     public Page<CardDTO> getCardAllBySearch(String searchType, String keyword, int page, int size){
@@ -316,13 +318,80 @@ public class CardService {
         cardApprovalRepository.save(cardApproval);
     }
 
-    // 카드 상품 가입 (사용자 정보 임시저장)
+    // 카드 상품 가입 (사용자 정보 임시저장 CardApplyRequestDTO)
     @Transactional
-    public void applyCard(CardApplyDTO cardApplyDTO){
+    public void applyCard(CardApplyRequestDTO dto, String memId) {
 
+        String role = "GENERAL";
+        if(memId == null || memId.isEmpty()){
+            // 비로그인 사용자용 임시 ID 생성
+            memId = "guest_" + UUID.randomUUID();
+            // 비로그인 카드 발급 시 ROLE = "GENERAL" 할당
+            role = "GENERAL";
+        }
+        // 1️⃣ Member 확인 / 생성 또는 업데이트
+        Optional<Member> optionalMember = memberRepository.findById(memId);
+        Member member;
+        if (optionalMember.isPresent()) {
+            member = optionalMember.get();
+            member = Member.builder()
+                    .memId(memId)
+                    .name(dto.getName())
+                    .firstNameEn(dto.getFirstNameEn())
+                    .lastNameEn(dto.getLastNameEn())
+                    .email(dto.getEmail())
+                    .rrn(dto.getRrn())
+                    .zip(dto.getZip())
+                    .address(dto.getAddr1())
+                    .deaddress(dto.getAddr2())
+                    .status("활성")
+                    .role(role)
+                    .build();
+        } else {
+            member = Member.builder()
+                    .memId(memId)
+                    .name(dto.getName())
+                    .firstNameEn(dto.getFirstNameEn())
+                    .lastNameEn(dto.getLastNameEn())
+                    .email(dto.getEmail())
+                    .rrn(dto.getRrn())
+                    .zip(dto.getZip())
+                    .address(dto.getAddr1())
+                    .deaddress(dto.getAddr2())
+                    .status("활성")
+                    .build();
+        }
+        memberRepository.save(member);
 
+        // 2️⃣ Account 저장
+        Account account = Account.builder()
+                .memId(memId)
+                .accountBank(dto.getAccountBank())
+                .accountNumber(dto.getAccountNumber())
+                .accountVerified(dto.getAccountVerified())
+                .pin(dto.getPin())
+                .build();
+        Account savedAccount = accountRepository.save(account);
+
+        // 3️⃣ MemberCard 저장
+        MemberCard memberCard = MemberCard.builder()
+                .memId(memId)
+                .cardId(dto.getCardId())
+                .accountId(String.valueOf(savedAccount.getAccountId()))
+                .expiredAt(LocalDate.now().plusYears(3))
+                .status("비활성")
+                .build();
+        memberCardRepository.save(memberCard);
+
+        // 4️⃣ Address 저장
+        Address address = Address.builder()
+                .memId(memId)
+                .zip(dto.getZip())
+                .addr1(dto.getAddr1())
+                .addr2(dto.getAddr2())
+                .build();
+        addressRepository.save(address);
     }
-
 
 }
 
