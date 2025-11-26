@@ -14,6 +14,20 @@
 <main>
     <div class="main-container">
         <div th:replace="~{admin/common/mainHeader :: mainHeader}"></div>
+
+        <div class="nav-content">
+            <nav class="nav-menu">
+                <ul>
+                    <li style=" font-weight: 800; color: #cb2b11;">
+                        <a th:href="@{/admin/config/basic}" style="color: #cb2b11; font-size: 20px;">기본설정</a>
+                    </li>
+                    <li><a th:href="@{/admin/config/version}">버전관리</a></li>
+                    <li><a th:href="@{/admin/config/category}">화면관리</a></li>
+                    <li><a th:href="@{/admin/config/banner}">배너관리</a></li>
+                </ul>
+            </nav>
+        </div>
+
         <div id="main-content">
             <div class="configBasicWrap">
                 <section class="form-section">
