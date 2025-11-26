@@ -10,6 +10,67 @@
     margin: 0 auto;
 }
 
+
+/* ㅡㅡㅡ tap CSS ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ */
+
+/* ㅡㅡㅡ tap 위치 ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ*/
+.page-header {
+    margin-bottom: 0 !important; /* ★★★ tap 위치를 mainHeader에 딱 붙이기 위함 */
+}
+.nav-content {
+    display: flex;
+    justify-content: center;
+}
+.nav-menu {
+    width: 1000px;
+}
+
+.nav-menu ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    justify-content: space-between;
+}
+
+.nav-menu li {
+    flex-grow: 1;       /* 핵심 : li 요소가 사용 가능한 공간을 모두 채우고, 동일한 비유로 확장 */
+    text-align: center;
+}
+
+.nav-menu li a {
+    /* ★ a태그를 블록 요소로 변경, 너비와 높이를 조절할 수 있음 */
+    display: block;
+    /* ★ li의 전체 너비와 높이를 채움 */
+    width: 100%;
+    height: 100%;
+
+    font-size: 16px;
+    padding: 10px 0; /* Vertical padding for the clickable area */
+
+    text-decoration: none;
+    color: #555; /* Default link color (grayish) */
+    transition: color 0.3s ease;
+}
+
+
+/* ㅡㅡㅡ tap design CSS  ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ*/
+
+.nav-menu li {
+    border-bottom: 1px solid #d9d9d9;
+    border-left: 1px solid #d9d9d9;
+    background-color: white;
+}
+.nav-menu li:last-child {
+    border-right: 1px solid #d9d9d9;
+}
+
+
+
+
+/* ㅡㅡㅡ 기본설정 table CSS ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ */
+
+
 table {border: none;}
 th, td {text-align: left;}
 th {width: 190px;}
