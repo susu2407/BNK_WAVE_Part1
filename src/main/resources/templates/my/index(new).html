@@ -5,468 +5,392 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>마이페이지</title>
-     <link rel="stylesheet" th:href="@{/css/member/my/index.css}">
-<!--    <link rel="stylesheet" href="../../static/css/common/header.css">-->
-<!--    <link rel="stylesheet" href="../../static/css/common/footer.css">-->
-<!--    <link rel="stylesheet" href="../../static/css/member/my/index.css">-->
+    <link rel="stylesheet" th:href="@{/css/member/my/index.css}">
 </head>
 
 <body>
-     <div th:replace="~{common/header :: header}"></div>
-<!--    <div id="header"></div>-->
+<div th:replace="~{common/header :: header}"></div>
 
-    <main class="content">
+<main class="content">
 
-        <!-- 메인 2컬럼 영역 (왼쪽 환영 + 오른쪽 카드 정보) -->
-        <section class="myp-main-row">
-            <!-- 왼쪽: 환영 + 주거래 계좌 -->
-            <section class="myp-box myp-greeting">
-                <header class="myp-box-head">
-                    <div class="myp-box-title">
-                        <p class="hello-text"><strong>홍길동</strong>님 반갑습니다!</p>
-                    </div>
-                    <a href="#" class="myp-link-small">자세히 보기</a>
-                </header>
-
-                <div class="myp-greeting-body">
-                    <div class="acct-main-info">
-
-                    </div>
-                </div>
-            </section>
-
-            <!-- 오른쪽: 카드 정보 컬럼 -->
-            <aside class="myp-side-col">
-
-                <!-- 카드 모형 + 카드명 + 혜택 요약 -->
-                <section class="myp-box myp-card-info">
-                    <header class="myp-box-head">
-                        <h2 class="myp-box-title-sm">카드 정보</h2>
-                        <a th:href="@{/my/OwnCard}" class="myp-link-small">자세히 보기</a>
-                    </header>
-
-                    <div class="myp-card-info-body">
-
-                        <!-- 슬라이더 영역 -->
-                        <div class="card-slider" id="cardSlider">
-                            <!-- 1번 카드 -->
-                            <div class="card-slide card-slide-active">
-                                <div class="myp-card-visual">
-                                    <div class="myp-card-sample card-color-1"></div>
-                                </div>
-                                <div class="myp-card-text">
-                                    <p class="myp-card-name">NICHIYA 체크카드</p>
-                                    <p class="myp-card-benefit-label">이번 달 카드 혜택 금액</p>
-                                    <p class="myp-card-benefit"><strong>35,000</strong>원 할인</p>
-                                </div>
-                            </div>
-
-                            <!-- 2번 카드 -->
-                            <div class="card-slide">
-                                <div class="myp-card-visual">
-                                    <div class="myp-card-sample card-color-2"></div>
-                                </div>
-                                <div class="myp-card-text">
-                                    <p class="myp-card-name">BNK MARKET 카드</p>
-                                    <p class="myp-card-benefit-label">이번 달 카드 혜택 금액</p>
-                                    <p class="myp-card-benefit"><strong>12,500</strong>원 할인</p>
-                                </div>
-                            </div>
-
-                            <!-- 3번 카드 -->
-                            <div class="card-slide">
-                                <div class="myp-card-visual">
-                                    <div class="myp-card-sample card-color-3"></div>
-                                </div>
-                                <div class="myp-card-text">
-                                    <p class="myp-card-name">HYUNDAI PLATINUM</p>
-                                    <p class="myp-card-benefit-label">이번 달 카드 혜택 금액</p>
-                                    <p class="myp-card-benefit"><strong>89,000</strong>원 할인</p>
-                                </div>
-                            </div>
-                        </div>
-
-                        <!-- 좌우 화살표 -->
-                        <div class="card-slider-nav">
-                            <button type="button" class="card-nav-btn" id="btnCardPrev" aria-label="이전 카드">‹</button>
-                            <button type="button" class="card-nav-btn" id="btnCardNext" aria-label="다음 카드">›</button>
-                        </div>
-                    </div>
-                </section>
-            </aside>
-        </section>
-
-        <!-- 중간: 이번 달 받은 혜택 + (결제 예정 금액 + 최근 이용 금액) -->
-        <section class="myp-middle-row">
-
-            <!-- 왼쪽: 이번 달 받은 혜택 -->
-            <section class="myp-box myp-benefit">
-                <header class="myp-box-head">
-                    <h2 class="myp-box-title">이번 달 받은 혜택</h2>
-                    <a href="" class="myp-link-small">자세히 보기</a>
-                </header>
-
-                <div class="myp-benefit-body">
-
-                    <!-- 카드별 혜택 슬라이더 -->
-                    <div class="benefit-slider" id="benefitSlider">
-
-                        <!-- 카드 식별 영역 (회색 박스 상단) -->
-                        <div class="benefit-card-header">
-                            <div class="benefit-card-title">
-                                <span class="benefit-card-name" id="benefitCardName">NICHIYA 체크카드</span>
-                                <span class="benefit-card-number" id="benefitCardNumber">4***-****-****-470*</span>
-                            </div>
-                        </div>
-
-                        <!-- 회색 배경 안 막대그래프 영역 -->
-                        <div class="benefit-panel">
-
-                            <!-- 좌우 카드 이동 버튼 -->
-                            <button type="button" class="benefit-nav benefit-nav-prev" id="btnBenefitPrev"
-                                aria-label="이전 카드">‹</button>
-                            <button type="button" class="benefit-nav benefit-nav-next" id="btnBenefitNext"
-                                aria-label="다음 카드">›</button>
-
-                            <!-- 혜택 막대들이 들어가는 곳 (JS로 생성) -->
-                            <div class="benefit-bars" id="benefitBars">
-                                <!-- JS에서 .benefit-bar 들이 생성됨 -->
-
-                            </div>
-                        </div>
-                    </div>
-
-                </div>
-            </section>
-
-            <!-- 오른쪽: 결제 예정 금액 + 최근 이용 금액 한 박스 -->
-            <section class="myp-box myp-pay-info">
-                <header class="myp-box-head">
-                    <h2 class="myp-box-title-sm">결제 예정 금액</h2>
-                    <a th:href="@{/my/CardHistory}" class="myp-link-small">자세히 보기</a>
-                </header>
-
-                <div class="myp-pay-body">
-                    <div class="pay-col">
-                        <p class="pay-label">이번 달</p>
-                        <p class="pay-sub">오늘 납부 시</p>
-                        <p class="pay-amount"><strong>702,530</strong>원</p>
-                    </div>
-                    <div class="pay-col">
-                        <p class="pay-label">다음 달</p>
-                        <p class="pay-sub">12월 13일</p>
-                        <p class="pay-amount"><strong>425,409</strong>원</p>
-                    </div>
-                </div>
-
-                <!-- 아래쪽: 최근 이용 금액 섹션 추가 -->
-                <div class="myp-pay-recent">
-                    <h3 class="myp-pay-recent-title">최근 이용내역 (최대 3건)</h3>
-
-                    <!-- 최대 3건 노출 -->
-                    <ul class="recent-usage-list">
-                        <!-- 1건 -->
-                        <li class="recent-usage-item">
-                            <div class="recent-usage-main">
-                                <div class="recent-usage-left">
-                                    <p class="recent-merchant">씨유수비사거리점</p>
-                                    <p class="recent-meta">
-                                        현대카드M CHECK · 25.11.18 · 18:26 · 일시불
-                                    </p>
-                                </div>
-                                <p class="recent-amount">
-                                    5,100<span class="won">원</span>
-                                </p>
-                            </div>
-                        </li>
-
-                        <!-- 2건 -->
-                        <li class="recent-usage-item">
-                            <div class="recent-usage-main">
-                                <div class="recent-usage-left">
-                                    <p class="recent-merchant">패스오더 - 주식회사 페이타랩</p>
-                                    <p class="recent-meta">
-                                        현대카드M CHECK · 25.11.18 · 08:38 · 일시불
-                                    </p>
-                                </div>
-                                <p class="recent-amount">
-                                    2,000<span class="won">원</span>
-                                </p>
-                            </div>
-                        </li>
-
-                        <!-- 3건 -->
-                        <li class="recent-usage-item">
-                            <div class="recent-usage-main">
-                                <div class="recent-usage-left">
-                                    <p class="recent-merchant">패스오더 - 주식회사 페이타랩</p>
-                                    <p class="recent-meta">
-                                        현대카드M CHECK · 25.11.17 · 08:37 · 일시불
-                                    </p>
-                                </div>
-                                <p class="recent-amount">
-                                    2,000<span class="won">원</span>
-                                </p>
-                            </div>
-                        </li>
-                    </ul>
-                </div>
-
-            </section>
-
-        </section>
-
-        <!-- 하단 3분할 섹션 (마이메뉴 / 나의 부가서비스 / 추천서비스) -->
-        <section class="myp-bottom-row">
-
-            <!-- 마이메뉴 -->
-            <section class="myp-box myp-bottom-box myp-bottom-menu">
-                <header class="myp-box-head">
-                    <h2 class="myp-box-title-sm">마이메뉴</h2>
-                </header>
-
-                <ul class="myp-menu-list">
-                    <li>
-                        <a href="#">
-                            <span class="menu-icon">💳</span>
-                            카드 사용등록
-                        </a>
-                    </li>
-                    <li>
-                        <a href="#">
-                            <span class="menu-icon">🔔</span>
-                            카드 분실신고
-                        </a>
-                    </li>
-                    <li>
-                        <a href="#">
-                            <span class="menu-icon">💸</span>
-                            결제계좌 변경
-                        </a>
-                    </li>
-                    <li>
-                        <a href="#">
-                            <span class="menu-icon">👤</span>
-                            개인정보 변경
-                        </a>
-                    </li>
-                </ul>
-            </section>
-
-            <!-- 나의 부가서비스 -->
-            <section class="myp-box myp-bottom-box myp-bottom-extra">
-                <header class="myp-box-head">
-                    <h2 class="myp-box-title-sm">나의 부가서비스</h2>
-                    <a href="#" class="myp-link-small">전체 보기 &gt;</a>
-                </header>
-
-                <ul class="extra-service-list">
-                    <li>
-                        <span class="svc-badge">미사용</span>
-                        <span class="svc-name">일부 결제금액이용약정 <br>(리볼빙)</span>
-                    </li>
-                    <li>
-                        <span class="svc-badge">미사용</span>
-                        <span class="svc-name">휴대폰 알림</span>
-                    </li>
-                    <li>
-                        <span class="svc-badge">미사용</span>
-                        <span class="svc-name">바로알림</span>
-                    </li>
-                </ul>
-            </section>
-
-            <!-- 추천서비스 -->
-            <section class="myp-box myp-bottom-box myp-bottom-reco">
-                <header class="myp-box-head">
-                    <h2 class="myp-box-title-sm">추천서비스</h2>
-                </header>
-
-                <ul class="reco-service-list">
-                    <li>
-                        <a href="#" class="reco-item-link">
-                            <div class="reco-icon"></div>
-                            <span class="reco-text">분할납부 서비스</span>
-                            <span class="reco-arrow">›</span>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="#" class="reco-item-link">
-                            <div class="reco-icon"></div>
-                            <span class="reco-text">마케팅수신동의</span>
-                            <span class="reco-arrow">›</span>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="#" class="reco-item-link">
-                            <div class="reco-icon"></div>
-                            <span class="reco-text">기프트카드</span>
-                            <span class="reco-arrow">›</span>
-                        </a>
-                    </li>
-                </ul>
-            </section>
-
-        </section>
-
-    </main>
-     <div th:replace="~{common/footer :: footer}"></div>
-<!--    <div id="footer"></div>-->
-    <script>
-        document.addEventListener('DOMContentLoaded', function () {
-
-            // ===== 공통 헤더 로드 =====
-            fetch('../common/header.html')
-                .then(res => res.text())
-                .then(html => {
-                    document.getElementById('header').innerHTML = html;
-
-                    const headerEl = document.querySelector('.header');
-                    if (headerEl) {
-                        window.addEventListener('scroll', () => {
-                            if (window.scrollY > 10) headerEl.classList.add('scrolled');
-                            else headerEl.classList.remove('scrolled');
-                        });
-                    }
-
-                    // 👉 헤더가 DOM에 들어간 "이후에" 버튼들 찾기
-                    const userInfoBtn = document.getElementById('btnUserInfo');
-                    const extendBtn = document.getElementById('btnExtend');
-
-                    if (userInfoBtn) {
-                        userInfoBtn.addEventListener('click', () => {
-                            window.location.href = '/member/info';
-                        });
-                    }
-
-                    if (extendBtn) {
-                        extendBtn.addEventListener('click', () => {
-                            alert('로그인 시간이 연장되었습니다. (데모)');
-                        });
-                    }
-                });
-
-            // ===== 공통 푸터 로드 =====
-            fetch('../common/footer.html')
-                .then(res => res.text())
-                .then(html => document.getElementById('footer').innerHTML = html);
-
-            // ===== 카드 정보 슬라이더 =====
-            const slider = document.getElementById('cardSlider');
-            const btnPrev = document.getElementById('btnCardPrev');
-            const btnNext = document.getElementById('btnCardNext');
-
-            if (slider && btnPrev && btnNext) {
-                const slides = Array.from(slider.querySelectorAll('.card-slide'));
-                let cardIndex = 0;
-
-                function showCard(index) {
-                    slides.forEach((slide, i) => {
-                        slide.classList.toggle('card-slide-active', i === index);
-                    });
-                }
-
-                btnPrev.addEventListener('click', () => {
-                    cardIndex = (cardIndex - 1 + slides.length) % slides.length;
-                    showCard(cardIndex);
-                });
-
-                btnNext.addEventListener('click', () => {
-                    cardIndex = (cardIndex + 1) % slides.length;
-                    showCard(cardIndex);
-                });
-            }
-
-            // ===== 이번 달 받은 혜택 슬라이더 =====
-            const benefitData = [
-                {
-                    cardName: 'NICHIYA 체크카드',
-                    cardNumber: '4***-****-****-470*',
-                    benefits: [
-                        { label: '혜택1', max: 100000, used: 80000 },
-                        { label: '혜택2', max: 50000, used: 25000 },
-                        { label: '혜택3', max: 70000, used: 50000 },
-                        { label: '혜택4', max: 30000, used: 12000 }
-                    ]
-                },
-                {
-                    cardName: 'BNK MARKET 카드',
-                    cardNumber: '5***-****-****-123*',
-                    benefits: [
-                        { label: '마트', max: 80000, used: 60000 },
-                        { label: '주유', max: 60000, used: 20000 },
-                        { label: '온라인', max: 40000, used: 15000 }
-                    ]
-                },
-                {
-                    cardName: 'HYUNDAI PLATINUM',
-                    cardNumber: '3***-****-****-999*',
-                    benefits: [
-                        { label: '항공', max: 200000, used: 120000 },
-                        { label: '호텔', max: 150000, used: 60000 },
-                        { label: '면세점', max: 100000, used: 30000 },
-                        { label: '주유', max: 50000, used: 10000 }
-                    ]
-                }
-            ];
-
-            const benefitCardNameEl = document.getElementById('benefitCardName');
-            const benefitCardNumberEl = document.getElementById('benefitCardNumber');
-            const benefitBarsEl = document.getElementById('benefitBars');
-            const btnBenefitPrev = document.getElementById('btnBenefitPrev');
-            const btnBenefitNext = document.getElementById('btnBenefitNext');
-
-            let benefitIndex = 0;
-
-            function renderBenefitCard(index) {
-                if (!benefitBarsEl || !benefitCardNameEl || !benefitCardNumberEl) return;
-
-                const card = benefitData[index];
-                if (!card) return;
-
-                benefitCardNameEl.textContent = card.cardName;
-                benefitCardNumberEl.textContent = card.cardNumber;
-
-                benefitBarsEl.innerHTML = '';
-
-                card.benefits.forEach(b => {
-                    const max = b.max || 0;
-                    const used = b.used || 0;
-                    const ratio = max > 0 ? Math.min(used / max, 1) : 0;
-                    const heightPercent = (ratio * 100).toFixed(0);
-
-                    const bar = document.createElement('div');
-                    bar.className = 'benefit-bar';
-                    bar.innerHTML = `
-                    <div class="benefit-bar-max">
-                        <div class="benefit-bar-used" style="height:${heightPercent}%;"></div>
-                    </div>
-                    <p class="benefit-bar-label">${b.label}</p>
-                    <p class="benefit-bar-amount">
-                        ${used.toLocaleString()}원 / ${max.toLocaleString()}원
+    <!-- 상단: 환영 카드 + 카드 정보 -->
+    <section class="myp-main-row">
+        <!-- 왼쪽 환영 카드 -->
+        <section class="myp-box myp-greeting">
+            <div class="myp-greeting-inner">
+                <div class="myp-greeting-text">
+                    <p class="myp-greeting-title">
+                        <strong>홍길동</strong>님, 안녕하세요.
                     </p>
-                `;
-                    benefitBarsEl.appendChild(bar);
+                    <p class="myp-greeting-sub">
+                        최근 이 카드를 많이 사용하셨네요!
+                    </p>
+
+                    <div class="myp-greeting-card-info">
+                        <p class="myp-greeting-card-name">NICHIYA 체크카드</p>
+                        <a th:href="@{/my/OwnCard}" class="myp-greeting-link">
+                            보유 카드 보기
+                        </a>
+                    </div>
+                </div>
+
+                <div class="myp-greeting-card-visual">
+                    <div class="myp-card-visual">
+                        <div class="myp-card-sample card-color-1"></div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 오른쪽 카드 정보 -->
+        <aside class="myp-side-col">
+            <section class="myp-box myp-card-info">
+                <header class="myp-box-head">
+                    <h2 class="myp-box-title-sm">카드 정보</h2>
+                    <a th:href="@{/my/OwnCard}" class="myp-link-small">자세히 보기</a>
+                </header>
+
+                <div class="myp-card-info-body">
+                    <div class="card-slider" id="cardSlider">
+                        <div class="card-slide card-slide-active">
+                            <div class="myp-card-visual">
+                                <div class="myp-card-sample card-color-1"></div>
+                            </div>
+                            <div class="myp-card-text">
+                                <p class="myp-card-name">NICHIYA 체크카드</p>
+                                <p class="myp-card-benefit-label">이번 달 카드 혜택 금액</p>
+                                <p class="myp-card-benefit"><strong>35,000</strong>원 할인</p>
+                            </div>
+                        </div>
+
+                        <div class="card-slide">
+                            <div class="myp-card-visual">
+                                <div class="myp-card-sample card-color-2"></div>
+                            </div>
+                            <div class="myp-card-text">
+                                <p class="myp-card-name">BNK MARKET 카드</p>
+                                <p class="myp-card-benefit-label">이번 달 카드 혜택 금액</p>
+                                <p class="myp-card-benefit"><strong>12,500</strong>원 할인</p>
+                            </div>
+                        </div>
+
+                        <div class="card-slide">
+                            <div class="myp-card-visual">
+                                <div class="myp-card-sample card-color-3"></div>
+                            </div>
+                            <div class="myp-card-text">
+                                <p class="myp-card-name">HYUNDAI PLATINUM</p>
+                                <p class="myp-card-benefit-label">이번 달 카드 혜택 금액</p>
+                                <p class="myp-card-benefit"><strong>89,000</strong>원 할인</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="card-slider-nav">
+                        <button type="button" class="card-nav-btn" id="btnCardPrev" aria-label="이전 카드">‹</button>
+                        <button type="button" class="card-nav-btn" id="btnCardNext" aria-label="다음 카드">›</button>
+                    </div>
+                </div>
+            </section>
+        </aside>
+    </section>
+
+    <!-- 중간: 이번 달 혜택 + 결제 예정/최근 이용 -->
+    <section class="myp-middle-row">
+        <section class="myp-box myp-benefit">
+            <header class="myp-box-head">
+                <h2 class="myp-box-title">이번 달 받은 혜택</h2>
+                <a href="#" class="myp-link-small">자세히 보기</a>
+            </header>
+
+            <div class="myp-benefit-body">
+                <div class="benefit-slider" id="benefitSlider">
+                    <div class="benefit-card-header">
+                        <div class="benefit-card-title">
+                            <span class="benefit-card-name" id="benefitCardName">NICHIYA 체크카드</span>
+                            <span class="benefit-card-number" id="benefitCardNumber">4***-****-****-470*</span>
+                        </div>
+                    </div>
+
+                    <div class="benefit-panel">
+                        <button type="button" class="benefit-nav benefit-nav-prev" id="btnBenefitPrev" aria-label="이전 카드">‹</button>
+                        <button type="button" class="benefit-nav benefit-nav-next" id="btnBenefitNext" aria-label="다음 카드">›</button>
+
+                        <div class="benefit-bars" id="benefitBars"></div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="myp-box myp-pay-info">
+            <header class="myp-box-head">
+                <h2 class="myp-box-title-sm">결제 예정 금액</h2>
+                <a th:href="@{/my/CardHistory}" class="myp-link-small">자세히 보기</a>
+            </header>
+
+            <div class="myp-pay-body">
+                <div class="pay-col">
+                    <p class="pay-label">이번 달</p>
+                    <p class="pay-sub">오늘 납부 시</p>
+                    <p class="pay-amount"><strong>702,530</strong>원</p>
+                </div>
+                <div class="pay-col">
+                    <p class="pay-label">다음 달</p>
+                    <p class="pay-sub">12월 13일</p>
+                    <p class="pay-amount"><strong>425,409</strong>원</p>
+                </div>
+            </div>
+
+            <div class="myp-pay-recent">
+                <h3 class="myp-pay-recent-title">최근 이용내역 (최대 3건)</h3>
+                <ul class="recent-usage-list">
+                    <li class="recent-usage-item">
+                        <div class="recent-usage-main">
+                            <div class="recent-usage-left">
+                                <p class="recent-merchant">씨유수비사거리점</p>
+                                <p class="recent-meta">
+                                    현대카드M CHECK · 25.11.18 · 18:26 · 일시불
+                                </p>
+                            </div>
+                            <p class="recent-amount">
+                                5,100<span class="won">원</span>
+                            </p>
+                        </div>
+                    </li>
+                    <li class="recent-usage-item">
+                        <div class="recent-usage-main">
+                            <div class="recent-usage-left">
+                                <p class="recent-merchant">패스오더 - 주식회사 페이타랩</p>
+                                <p class="recent-meta">
+                                    현대카드M CHECK · 25.11.18 · 08:38 · 일시불
+                                </p>
+                            </div>
+                            <p class="recent-amount">
+                                2,000<span class="won">원</span>
+                            </p>
+                        </div>
+                    </li>
+                    <li class="recent-usage-item">
+                        <div class="recent-usage-main">
+                            <div class="recent-usage-left">
+                                <p class="recent-merchant">패스오더 - 주식회사 페이타랩</p>
+                                <p class="recent-meta">
+                                    현대카드M CHECK · 25.11.17 · 08:37 · 일시불
+                                </p>
+                            </div>
+                            <p class="recent-amount">
+                                2,000<span class="won">원</span>
+                            </p>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </section>
+    </section>
+
+    <!-- 하단 3분할: 마이메뉴 / 나의 부가서비스 / 추천서비스 -->
+    <section class="myp-bottom-row">
+        <section class="myp-box myp-bottom-box myp-bottom-menu">
+            <header class="myp-box-head">
+                <h2 class="myp-box-title-sm">마이메뉴</h2>
+            </header>
+            <ul class="myp-menu-list">
+                <li>
+                    <a href="#">
+                        <span class="menu-icon">💳</span>
+                        카드 사용등록
+                    </a>
+                </li>
+                <li>
+                    <a href="#">
+                        <span class="menu-icon">🔔</span>
+                        카드 분실신고
+                    </a>
+                </li>
+                <li>
+                    <a href="#">
+                        <span class="menu-icon">💸</span>
+                        결제계좌 변경
+                    </a>
+                </li>
+                <li>
+                    <a href="#">
+                        <span class="menu-icon">👤</span>
+                        개인정보 변경
+                    </a>
+                </li>
+            </ul>
+        </section>
+
+        <section class="myp-box myp-bottom-box myp-bottom-extra">
+            <header class="myp-box-head">
+                <h2 class="myp-box-title-sm">나의 부가서비스</h2>
+                <a href="#" class="myp-link-small">전체 보기 &gt;</a>
+            </header>
+            <ul class="extra-service-list">
+                <li>
+                    <span class="svc-badge">미사용</span>
+                    <span class="svc-name">일부 결제금액이용약정 <br>(리볼빙)</span>
+                </li>
+                <li>
+                    <span class="svc-badge">미사용</span>
+                    <span class="svc-name">휴대폰 알림</span>
+                </li>
+                <li>
+                    <span class="svc-badge">미사용</span>
+                    <span class="svc-name">바로알림</span>
+                </li>
+            </ul>
+        </section>
+
+        <section class="myp-box myp-bottom-box myp-bottom-reco">
+            <header class="myp-box-head">
+                <h2 class="myp-box-title-sm">추천서비스</h2>
+            </header>
+            <ul class="reco-service-list">
+                <li>
+                    <a href="#" class="reco-item-link">
+                        <div class="reco-icon"></div>
+                        <span class="reco-text">분할납부 서비스</span>
+                        <span class="reco-arrow">›</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="#" class="reco-item-link">
+                        <div class="reco-icon"></div>
+                        <span class="reco-text">마케팅수신동의</span>
+                        <span class="reco-arrow">›</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="#" class="reco-item-link">
+                        <div class="reco-icon"></div>
+                        <span class="reco-text">기프트카드</span>
+                        <span class="reco-arrow">›</span>
+                    </a>
+                </li>
+            </ul>
+        </section>
+    </section>
+</main>
+
+<div th:replace="~{common/footer :: footer}"></div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        /* 카드 정보 슬라이더 */
+        const slider = document.getElementById('cardSlider');
+        const btnPrev = document.getElementById('btnCardPrev');
+        const btnNext = document.getElementById('btnCardNext');
+
+        if (slider && btnPrev && btnNext) {
+            const slides = Array.from(slider.querySelectorAll('.card-slide'));
+            let cardIndex = 0;
+
+            function showCard(index) {
+                slides.forEach((slide, i) => {
+                    slide.classList.toggle('card-slide-active', i === index);
                 });
             }
 
-            // 초기 렌더링
-            renderBenefitCard(benefitIndex);
+            btnPrev.addEventListener('click', () => {
+                cardIndex = (cardIndex - 1 + slides.length) % slides.length;
+                showCard(cardIndex);
+            });
 
-            // 좌우 버튼
-            if (btnBenefitPrev && btnBenefitNext) {
-                btnBenefitPrev.addEventListener('click', () => {
-                    benefitIndex = (benefitIndex - 1 + benefitData.length) % benefitData.length;
-                    renderBenefitCard(benefitIndex);
-                });
-                btnBenefitNext.addEventListener('click', () => {
-                    benefitIndex = (benefitIndex + 1) % benefitData.length;
-                    renderBenefitCard(benefitIndex);
-                });
+            btnNext.addEventListener('click', () => {
+                cardIndex = (cardIndex + 1) % slides.length;
+                showCard(cardIndex);
+            });
+        }
+
+        /* 이번 달 받은 혜택 슬라이더 */
+        const benefitData = [
+            {
+                cardName: 'NICHIYA 체크카드',
+                cardNumber: '4***-****-****-470*',
+                benefits: [
+                    { label: '혜택1', max: 100000, used: 80000 },
+                    { label: '혜택2', max: 50000, used: 25000 },
+                    { label: '혜택3', max: 70000, used: 50000 },
+                    { label: '혜택4', max: 30000, used: 12000 }
+                ]
+            },
+            {
+                cardName: 'BNK MARKET 카드',
+                cardNumber: '5***-****-****-123*',
+                benefits: [
+                    { label: '마트', max: 80000, used: 60000 },
+                    { label: '주유', max: 60000, used: 20000 },
+                    { label: '온라인', max: 40000, used: 15000 }
+                ]
+            },
+            {
+                cardName: 'HYUNDAI PLATINUM',
+                cardNumber: '3***-****-****-999*',
+                benefits: [
+                    { label: '항공', max: 200000, used: 120000 },
+                    { label: '호텔', max: 150000, used: 60000 },
+                    { label: '면세점', max: 100000, used: 30000 },
+                    { label: '주유', max: 50000, used: 10000 }
+                ]
             }
-        });
-    </script>
+        ];
 
+        const benefitCardNameEl = document.getElementById('benefitCardName');
+        const benefitCardNumberEl = document.getElementById('benefitCardNumber');
+        const benefitBarsEl = document.getElementById('benefitBars');
+        const btnBenefitPrev = document.getElementById('btnBenefitPrev');
+        const btnBenefitNext = document.getElementById('btnBenefitNext');
+
+        let benefitIndex = 0;
+
+        function renderBenefitCard(index) {
+            if (!benefitBarsEl || !benefitCardNameEl || !benefitCardNumberEl) return;
+
+            const card = benefitData[index];
+            if (!card) return;
+
+            benefitCardNameEl.textContent = card.cardName;
+            benefitCardNumberEl.textContent = card.cardNumber;
+
+            benefitBarsEl.innerHTML = '';
+
+            card.benefits.forEach(b => {
+                const max = b.max || 0;
+                const used = b.used || 0;
+                const ratio = max > 0 ? Math.min(used / max, 1) : 0;
+                const heightPercent = (ratio * 100).toFixed(0);
+
+                const bar = document.createElement('div');
+                bar.className = 'benefit-bar';
+                bar.innerHTML = `
+                        <div class="benefit-bar-max">
+                            <div class="benefit-bar-used" style="height:${heightPercent}%;"></div>
+                        </div>
+                        <p class="benefit-bar-label">${b.label}</p>
+                        <p class="benefit-bar-amount">
+                            ${used.toLocaleString()}원 / ${max.toLocaleString()}원
+                        </p>
+                    `;
+                benefitBarsEl.appendChild(bar);
+            });
+        }
+
+        renderBenefitCard(benefitIndex);
+
+        if (btnBenefitPrev && btnBenefitNext) {
+            btnBenefitPrev.addEventListener('click', () => {
+                benefitIndex = (benefitIndex - 1 + benefitData.length) % benefitData.length;
+                renderBenefitCard(benefitIndex);
+            });
+
+            btnBenefitNext.addEventListener('click', () => {
+                benefitIndex = (benefitIndex + 1) % benefitData.length;
+                renderBenefitCard(benefitIndex);
+            });
+        }
+    });
+</script>
 </body>
-
 </html>

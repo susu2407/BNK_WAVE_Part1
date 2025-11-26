@@ -147,3 +147,26 @@
         grid-template-columns: 1fr;
     }
 }
+
+/* ===== 카드 신청 진행도 바 ===== */
+.apply-progress {
+    margin-bottom: 22px;
+}
+
+.apply-progress-bar {
+    display: flex;
+    gap: 6px;
+}
+
+/* 각 칸 */
+.progress-step {
+    flex: 1;
+    height: 2px;
+    border-radius: 999px;
+    background: #f1f5f9;    /* 회색 */
+}
+
+/* 진행된 칸 */
+.progress-step.is-active {
+    background: #111111;    /* 검정색 */
+}
