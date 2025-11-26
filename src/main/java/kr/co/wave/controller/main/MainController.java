@@ -3,6 +3,7 @@ package kr.co.wave.controller.main;
 
 import kr.co.wave.dto.card.CardWithInfoDTO;
 import kr.co.wave.service.card.CardService;
+import kr.co.wave.service.member.MemberService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
@@ -15,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 public class MainController {
 
     private final CardService cardService;
+    private final MemberService memberService;
 
     @GetMapping("/")
     public String index(@RequestParam(defaultValue = "") String searchType,

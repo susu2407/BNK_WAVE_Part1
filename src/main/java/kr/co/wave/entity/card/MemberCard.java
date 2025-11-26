@@ -38,4 +38,8 @@ public class MemberCard {
 
     @Column(name="ACCOUNT_ID")
     private String accountId;
+
+    // 추가필드 - 카드 발급 후 상태 현황
+    @Column(name="STATUS")
+    private String status;
 }
