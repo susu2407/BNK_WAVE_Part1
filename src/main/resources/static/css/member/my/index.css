@@ -394,10 +394,25 @@
     gap: 18px;
     min-height: 150px;
     padding: 10px 4px;
+    opacity: 0;
 }
 
 .card-slide-active {
     display: flex;
+    opacity: 1;
+    animation: cardSlideIn 0.35s ease;
+}
+
+/* 실제 움직임 정의 */
+@keyframes cardSlideIn {
+    from {
+        opacity: 0;
+        transform: translateX(24px);   /* 오른쪽에서 살짝 들어오는 느낌 */
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
 }
 
 /* 카드 색상 */
@@ -425,8 +440,8 @@
 }
 
 .card-nav-btn {
-    width: 22px;
-    height: 22px;
+    width: 32px;
+    height: 32px;
     border-radius: 999px;
     border: 1px solid #e5e7eb;
     background: #fff;

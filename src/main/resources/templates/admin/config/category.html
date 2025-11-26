@@ -29,18 +29,32 @@
         </div>
 
         <div id="main-content">
-            <div class="space">
-                <h3>카테고리 관리</h3>
-                <p class="description">메인, 상품 페이지 사이드 카테고리 메뉴입니다.</p>
-                <ul>
-                    <a th:href="@{#}" class="category">1차 카테고리</a>
-                    <ul class="category-submenu">
-                        <li>2차 카테고리</li>
-                    </ul>
-                </ul>
-            </div>
-        </div>
-    </div>
+            <div class="configWrap">
+                <section class="form-section">
+                    <div class="section-header">
+                        <h3>카테고리 관리</h3>
+                        <p>메인, 상품 페이지 사이드 카테고리 메뉴입니다.</p>
+                    </div>
+                    <div class="section-content">
+                        <ul>
+                            <a th:href="@{#}" class="category">1차 카테고리</a>
+                            <ul class="category-submenu">
+                                <li>2차 카테고리</li>
+                            </ul>
+                        </ul>
+                    </div>
+                </section>
+
+                <!-- 주요 액션 영역 -->
+                <div class="config-action-bar ">
+                    <!-- 등록버튼 -->
+                    <a th:href="@{/admin}" class="btn register-btn">취소</a>
+                    <button class="btn register-btn">전체 수정</button>
+                </div>
+
+            </div> <!-- configWrap 끝 -->
+        </div> <!-- main-content 끝 -->
+    </div> <!-- main=container 끝 -->
 </main>
 <div th:replace="~{admin/common/footer :: footer}"></div>
 </body>
