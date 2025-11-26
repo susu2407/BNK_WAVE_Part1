@@ -89,4 +89,14 @@ public class MemberService {
         return memberRepository.findAdminAll(st, kw, pageable);
     }
 
+    // 관리자
+    public Page<Member> getMemberAll(String searchType, String keyword, int page, int size) {
+        // 검색어/타입 공백 처리
+        String st = (searchType == null) ? "" : searchType.trim();
+        String kw = (keyword == null) ? "" : keyword.trim();
+        Pageable pageable = PageRequest.of(page, size);
+
+        return memberRepository.findMemberAll(st, kw, pageable);
+    }
+
 }

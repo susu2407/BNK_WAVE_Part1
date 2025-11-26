@@ -7,9 +7,7 @@ import kr.co.wave.dto.config.TermsDTO;
 import kr.co.wave.dto.config.TermsRepositoryDTO;
 import kr.co.wave.dto.config.TermsWarningDTO;
 import kr.co.wave.dto.config.TermsWithInfoDTO;
-import kr.co.wave.entity.approval.CardApproval;
 import kr.co.wave.entity.approval.TermsApproval;
-import kr.co.wave.entity.card.Card;
 import kr.co.wave.entity.config.Terms;
 import kr.co.wave.repository.approval.TermsApprovalRepository;
 import kr.co.wave.repository.config.TermsRepository;
@@ -30,13 +28,14 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.io.File;
-import java.io.IOException;
 import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -162,12 +161,39 @@ public class TermsService {
 
     @Transactional
     public void updateTerms(TermsDTO termsDTO) {
+        Terms terms = termsRepository.findById(termsDTO.getTermsId())
+                .orElseThrow(() -> new RuntimeException("Terms not found"));
 
-        termsDTO.setContent(termsDTO.getContent());
-        termsDTO.setIsRequired(termsDTO.isRequired());
-        termsDTO.setUpdatedAt(termsDTO.getUpdatedAt());
+        // 기존 파일 이름을 가져옴
+        String originalName = null;
+        String pdfPath = null;
 
-        termsRepository.save(modelMapper.map(termsDTO, Terms.class));
+        // 파일이 존재할 경우에만 파일 저장 및 수정
+        if (termsDTO.getPdfFile() != null && !termsDTO.getPdfFile().isEmpty()) {
+            originalName = termsDTO.getPdfFile().getOriginalFilename(); // 파일 원래 이름
+            pdfPath = fileUploadUtil.saveFile(termsDTO.getPdfFile(), "terms"); // 저장할 상대 경로 반환, terms = 저장할 폴더 이름
+        } else {
+            // 파일이 없을 경우 기존 파일 경로 유지 (변경 없음)
+            Optional<Terms> originFile = termsRepository.findById(termsDTO.getTermsId());
+            if (originFile.isPresent()) {
+                TermsRepositoryDTO originFileDTO = modelMapper.map(originFile, TermsRepositoryDTO.class);
+                originalName = originFileDTO.getOriginalName();
+                pdfPath = originFileDTO.getPdfFile();
+            }
+        }
+
+        // Terms 객체 빌드
+        Terms updateTerms = Terms.builder()
+                .termsId(terms.getTermsId())
+                .title(termsDTO.getTitle())
+                .content(termsDTO.getContent())
+                .isRequired(termsDTO.isRequired())
+                .pdfFile(pdfPath)
+                .originalName(originalName)
+                .updatedAt(LocalDate.now())  // 현재 시간으로 수정일 갱신
+                .build();
+
+        termsRepository.save(updateTerms);
     }
 
     @Transactional

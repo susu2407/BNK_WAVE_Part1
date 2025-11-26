@@ -486,23 +486,30 @@
     height: auto;
 }
 
-/* 로그인 후 로그인 패널 */
-/* 기본 상태: 로그인 폼만 보이도록 */
+/*
+로그인 후 로그인 패널
+기본 상태: 로그인 폼만 보이도록
 #servicePanel {
     display: none;
     padding: 16px 18px 18px;
 }
 
-/* 로그인 후 상태: .logged-in 클래스가 붙으면 폼 숨기고 서비스 박스 보여줌 */
+로그인 후 상태: .logged-in 클래스가 붙으면 폼 숨기고 서비스 박스 보여줌
 .login-card.new.logged-in .login-tabs2,
 .login-card.new.logged-in .login-panels2,
 .login-card.new.logged-in .login-divide {
     display: none;
 }
+*/
+
+#servicePanel {
+    padding: 16px 18px 18px;
+}
 
 .login-card.new.logged-in #servicePanel {
     display: block;
 }
+
 
 /* 인사말 타이틀 */
 .myp-box-title-sm.service-box-title {
@@ -607,9 +614,14 @@
     margin-top: 18px;
 }
 
+.serviceDiv {
+    flex: 1;
+    max-width: 50%;
+}
+
 /* 공통 버튼 베이스 – 기존 red-btn 느낌 차용 */
 .svc-ctrl-btn {
-    flex: 1;
+    width: 100%;
     height: 44px;
     border-radius: 8px;
     font-size: 13px;

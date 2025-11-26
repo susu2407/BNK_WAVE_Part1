@@ -30,7 +30,6 @@ public class MainController {
         model.addAttribute("cardPage", cardPage);
         model.addAttribute("cards",cardPage.getContent()); // 리스트만 가져오기
 
-
         return "index";
     }
 

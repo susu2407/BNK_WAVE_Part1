@@ -38,5 +38,30 @@ public interface MemberRepository extends JpaRepository<Member, String> {
     Page<Member> findAdminAll(@Param("searchType") String searchType,
                                         @Param("keyword") String keyword,
                                         Pageable pageable);
+
+    @Query(
+            value = """
+              select new kr.co.wave.dto.MemberDTO(
+                 m.memId, m.password, m.name, m.role, m.createdAt, m.status
+              )
+              from Member m
+              where lower(m.role) not like 'admin%'
+                and (
+                    (:keyword is null or :keyword = '')
+                    or (
+                      ( :searchType is null or :searchType = '' ) and (
+                        lower(m.name) like lower(concat('%', :keyword, '%')) or
+                        lower(m.role) like lower(concat('%', :keyword, '%'))
+                      )
+                    )
+                    or (:searchType = 'name' and lower(m.name) like lower(concat('%', :keyword, '%')))
+                    or (:searchType = 'role' and lower(m.role) like lower(concat('%', :keyword, '%')))
+                )
+              order by m.memId desc
+            """
+    )
+    Page<Member> findMemberAll(@Param("searchType") String searchType,
+                              @Param("keyword") String keyword,
+                              Pageable pageable);
 }
 
