@@ -388,7 +388,41 @@
                         <span class="link-divider">|</span>
                         <a href="#" class="payment-link">전월 한도 확인</a>
                     </div>
-                </div>
+                    <!-- ▼▼ 새로 추가되는 [이용내역 위치 / 지도] 카드 ▼▼ -->
+                    <div class="usage-map-card">
+                        <div class="usage-map-header">
+                            <!-- 날짜 선택 드롭다운 -->
+                            <div class="usage-map-date-select">
+                                <button type="button" class="map-date-trigger" id="btnMapDate">
+                                    <span id="mapDateText">날짜 선택</span>
+                                    <span class="map-date-arrow">▼</span>
+                                </button>
+
+                                <!-- 날짜 옵션 드롭다운 (JS에서 채울 예정) -->
+                                <div class="map-date-dropdown" id="mapDateDropdown">
+                                    <!-- JS로 날짜 버튼들 추가 -->
+                                </div>
+                            </div>
+
+                            <!-- 전체 보기 (새 탭에서 지도 크게 보기) -->
+                            <a href="#" class="map-view-all" id="btnMapViewAll" target="_blank" rel="noopener">
+                                전체 보기
+                            </a>
+                        </div>
+
+                        <div class="usage-map-body">
+                            <!-- 실제 지도 들어갈 자리 -->
+                            <div class="usage-map-placeholder" id="mapContainer">
+                                선택한 일자의 이용 내역 위치가<br>
+                                이 영역에 지도 형태로 표시됩니다.
+                            </div>
+
+                            <!-- 이용내역 기간 안내 문구 -->
+                            <p class="usage-map-help">
+                                * <span class="usage-map-period">25.11.04 ~ 25.12.03</span> 기간 내의 날짜만 선택할 수 있어요.
+                            </p>
+                        </div>
+                    </div>
             </section>
         </section>
     </main>
@@ -580,6 +614,78 @@
             } else if (moreBtn) {
                 // 항목이 0개면 버튼 필요 없음
                 moreBtn.style.display = 'none';
+            }
+
+            // ===== 이용내역 위치 / 지도 섹션 =====
+            // 1) 이용내역 기간 텍스트를 지도 안내 문구에도 복사
+            const periodTextEl = document.querySelector('.summary-period');
+            const mapPeriodEl = document.querySelector('.usage-map-period');
+
+            if (periodTextEl && mapPeriodEl) {
+                mapPeriodEl.textContent = periodTextEl.textContent.trim();
+            }
+
+            // 2) 날짜 선택 드롭다운 (예시 데이터)
+            const btnMapDate = document.getElementById('btnMapDate');
+            const mapDateDropdown = document.getElementById('mapDateDropdown');
+            const mapDateText = document.getElementById('mapDateText');
+            const btnMapViewAll = document.getElementById('btnMapViewAll');
+
+            if (btnMapDate && mapDateDropdown && mapDateText) {
+                // TODO: 실제로는 서버에서 "해당 기간 내 이용 날짜 목록"을 가져와서 채워주면 됨
+                const sampleDates = ['25.11.18', '25.11.17', '25.11.16'];
+
+                sampleDates.forEach(d => {
+                    const btn = document.createElement('button');
+                    btn.type = 'button';
+                    btn.className = 'map-date-option';
+                    btn.dataset.date = d;
+                    btn.textContent = d;
+                    mapDateDropdown.appendChild(btn);
+                });
+
+                // 드롭다운 열기/닫기
+                btnMapDate.addEventListener('click', function (e) {
+                    e.stopPropagation();
+                    mapDateDropdown.classList.toggle('open');
+                });
+
+                // 날짜 선택
+                mapDateDropdown.addEventListener('click', function (e) {
+                    const option = e.target.closest('.map-date-option');
+                    if (!option) return;
+
+                    const selectedDate = option.dataset.date;
+                    mapDateText.textContent = selectedDate;
+                    mapDateDropdown.classList.remove('open');
+
+                    // TODO: 여기서 selectedDate 기준으로 지도 데이터 조회 + #mapContainer 렌더링
+                    console.log('지도용 선택 날짜:', selectedDate);
+                });
+
+                // 바깥 클릭 시 드롭다운 닫기
+                document.addEventListener('click', function (e) {
+                    if (!mapDateDropdown.contains(e.target) && e.target !== btnMapDate) {
+                        mapDateDropdown.classList.remove('open');
+                    }
+                });
+            }
+
+            // 3) 전체 보기 - 새 탭으로 이동
+            if (btnMapViewAll && mapDateText) {
+                btnMapViewAll.addEventListener('click', function (e) {
+                    e.preventDefault();
+
+                    const selectedDate = mapDateText.textContent.trim();
+                    if (!selectedDate || selectedDate === '날짜 선택') {
+                        alert('먼저 날짜를 선택해 주세요.');
+                        return;
+                    }
+
+                    // TODO: 실제 전체 지도 페이지 URL 규칙에 맞게 수정
+                    const url = `/map/usage?date=${encodeURIComponent(selectedDate)}`;
+                    window.open(url, '_blank');
+                });
             }
 
         });

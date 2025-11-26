@@ -17,6 +17,10 @@
 
     <main class="content">
         <section class="pin-wrap">
+            <div class="apply-progress"
+                 data-total="9"
+                 data-step="7">
+            </div>
             <h1 class="pin-title">
                 사용할 카드 비밀번호<br />숫자 4자리를 입력해 주세요.
             </h1>
@@ -184,6 +188,28 @@
             });
 
             sync(); // 초기 상태 반영
+
+            const progress = document.querySelector('.apply-progress');
+            if (!progress) return;
+
+            const total  = Number(progress.dataset.total || 9); // 기본 10단계
+            const step   = Number(progress.dataset.step  || 1);  // 현재 단계
+
+            // 바 래퍼 생성
+            const bar = document.createElement('div');
+            bar.className = 'apply-progress-bar';
+
+            // 칸 만들기
+            for (let i = 1; i <= total; i++) {
+                const span = document.createElement('span');
+                span.className = 'progress-step';
+                if (i <= step) {
+                    span.classList.add('is-active'); // 현재 단계까지 색 칠하기
+                }
+                bar.appendChild(span);
+            }
+
+            progress.appendChild(bar);
         });
     </script>
 

@@ -7,7 +7,7 @@
     <title>영문명 및 해외결제 설정</title>
 
     <link rel="stylesheet" href="../css/common/product_header_style.css" />
-    <link rel="stylesheet" href="../css/member/card/register7.css" />
+    <link rel="stylesheet" href="../../static/css/member/card/register6.css" />
     <link rel="stylesheet" href="../css/common/footer_style.css" />
 </head>
 
@@ -21,6 +21,10 @@
         <input type="hidden" id="overseasUse" name="overseasUse" value="" />
 
         <section class="en-wrap">
+            <div class="apply-progress"
+                 data-total="9"
+                 data-step="5">
+            </div>
             <p class="page-guide">여권의 영문 이름과 다르다면 수정해 주세요.</p>
 
             <div class="row-2">
@@ -164,6 +168,28 @@
 
         // **제출 로직 제거:** 버튼의 type="submit" 속성으로 인해 폼은 자동으로 POST /card/apply/step6로 전송됩니다.
         // 추가적인 eventListener가 필요 없습니다.
+
+        const progress = document.querySelector('.apply-progress');
+        if (!progress) return;
+
+        const total  = Number(progress.dataset.total || 9); // 기본 10단계
+        const step   = Number(progress.dataset.step  || 1);  // 현재 단계
+
+        // 바 래퍼 생성
+        const bar = document.createElement('div');
+        bar.className = 'apply-progress-bar';
+
+        // 칸 만들기
+        for (let i = 1; i <= total; i++) {
+            const span = document.createElement('span');
+            span.className = 'progress-step';
+            if (i <= step) {
+                span.classList.add('is-active'); // 현재 단계까지 색 칠하기
+            }
+            bar.appendChild(span);
+        }
+
+        progress.appendChild(bar);
     });
 </script>
 

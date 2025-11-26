@@ -14,6 +14,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import java.time.LocalDateTime;
+
 @Controller
 @RequiredArgsConstructor
 @Slf4j
@@ -402,8 +404,38 @@ public class CardController {
         // 2. 카드 상품 정보 조회 (뷰 표시용)
         CardWithInfoDTO cardInfo = cardService.getCardWithInfoById(cardId);
         model.addAttribute("cardItem", cardInfo);
+        model.addAttribute("applyDate", LocalDateTime.now());
 
         return "card/register10";
+    }
+
+    @PostMapping("/card/register10")
+    public String register10Post(HttpSession session) {
+
+        CardApplyRequestDTO applyInfo = (CardApplyRequestDTO) session.getAttribute("applyInfo");
+        String memId = (String) session.getAttribute("loginId");
+
+        if (applyInfo == null) {
+            return "redirect:/card/register2?cardId=" + applyInfo.getCardId();
+        }
+
+        // 실제 저장 로직 (네 서비스에 있는 메서드)
+        cardService.applyCard(applyInfo, memId);
+
+        session.removeAttribute("applyInfo");
+
+        return "redirect:/card/register11?cardId=" + applyInfo.getCardId();
+    }
+
+    // 💡 추가: 최종 완료 페이지를 보여줄 GET 메서드 (register11.html과 연결)
+    @GetMapping("/card/register11")
+    public String register11(@RequestParam int cardId, Model model) {
+        // 완료 페이지에서 보여줄 카드 정보와 신청 일시를 모델에 담아 전달합니다.
+        CardWithInfoDTO cardInfo = cardService.getCardWithInfoById(cardId);
+        model.addAttribute("cardItem", cardInfo);
+        model.addAttribute("applyDate", LocalDateTime.now());
+
+        return "card/register11";
     }
 
 
