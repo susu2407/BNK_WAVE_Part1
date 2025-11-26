@@ -35,6 +35,10 @@ public class MemberDetails implements UserDetails {
         return member.getMemId();
     }
 
+    public String getUserNickname() {
+        return member.getName();
+    }
+
     @Override
     public boolean isAccountNonExpired() {
         // 계정 만료 여부(true:만료안됨, false: 만료)

@@ -1,3 +1,5 @@
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <header class="header">
     <link rel="stylesheet" th:href="@{/css/common/header.css}">
     <div class="header-inner">
@@ -102,12 +104,12 @@
                 </div>
             </form>
             <!-- ▼ 예전 디자인 그대로 세션바 옮겨오기 ▼ -->
-            <section class="myp-session-bar" th:if="${loginUser != null}">
+            <section sec:authorize="isAuthenticated()" class="myp-session-bar">
                 <div class="myp-session-left">
                     <!-- 실제 로그인 사용자 이름 바인딩 -->
                     <button type="button" class="link-name" id="btnUserInfo">
                         <a th:href="@{/my/Profile}">
-                            <span th:text="${loginUser.name} + '님'">홍길동님</span>
+                            <span th:text="${#authentication.principal.userNickname} + '님'">유저이름님</span>
                         </a>
                     </button>
                 </div>

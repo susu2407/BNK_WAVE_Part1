@@ -12,7 +12,7 @@ import java.util.List;
 @RequiredArgsConstructor
 public class AdminMainController {
 
-    @GetMapping("/admin")
+    @GetMapping({"/admin", "/admin/"})
     public String adminIndexPage() {
         return "admin/index";
     }

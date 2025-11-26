@@ -27,13 +27,18 @@ public class    SecurityConfig {
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
 
         http.httpBasic(HttpBasicConfigurer::disable)        // 기본 HTTP 인증 비활성
-                .formLogin(FormLoginConfigurer::disable)    // 폼 로그인 비활성
-                .sessionManagement(config -> config.sessionCreationPolicy(SessionCreationPolicy.STATELESS)) // 세션 비활성
-                .addFilterBefore(new JwtAuthenticationFilter(jwtProvider), UsernamePasswordAuthenticationFilter.class);
+                .formLogin(FormLoginConfigurer::disable);    // 폼 로그인 비활성
+                // .sessionManagement(config -> config.sessionCreationPolicy(SessionCreationPolicy.STATELESS)) // 세션 비활성
+                // .addFilterBefore(new JwtAuthenticationFilter(jwtProvider), UsernamePasswordAuthenticationFilter.class);
+
+        http.addFilterBefore(new JwtAuthenticationFilter(jwtProvider),
+                        UsernamePasswordAuthenticationFilter.class);
 
         http.formLogin(form -> form
                 .loginPage("/member/login")
                 .loginProcessingUrl("/login")  // 통합 처리 URL
+                .usernameParameter("memId")
+                .passwordParameter("password")
                 .successHandler((request, response, authentication) -> {
                     boolean isAdmin = authentication.getAuthorities()
                             .stream()
@@ -66,9 +71,16 @@ public class    SecurityConfig {
                             : "/member/login?error=true";
                     res.sendRedirect(redirectUrl);
                 })
-                .usernameParameter("memId")
-                .passwordParameter("password")
+
+
         );
+
+        // 로그아웃 설정
+        http.logout(logout -> logout
+                .logoutUrl("/member/logout")
+                .invalidateHttpSession(true)
+                .deleteCookies("JSESSIONID",  "remember-me")
+                .logoutSuccessUrl("/?logout=true"));
 
         // 인가 설정
         http.authorizeHttpRequests(authorize -> authorize

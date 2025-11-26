@@ -88,6 +88,7 @@ public class AdminTermsController {
     @GetMapping("/admin/config/terms/update")
     public String updateTerms(@RequestParam String termsId, Model model){
 
+        model.addAttribute("termsId", termsId);
         model.addAttribute("warningList", termsService.getTitles());
         model.addAttribute("terms", termsService.getTermsById(Integer.parseInt(termsId)));
         return "admin/config/terms/update";
@@ -99,7 +100,7 @@ public class AdminTermsController {
 
         termsService.updateTerms(termsDTO);
 
-        return "admin/config/terms/update";
+        return "redirect:/admin/config/terms/list";
     }
 
 }
