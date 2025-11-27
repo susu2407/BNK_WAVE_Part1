@@ -4,10 +4,12 @@ import jakarta.servlet.http.HttpSession;
 import kr.co.wave.dto.card.CardApplyDTO;
 import kr.co.wave.dto.card.CardApplyRequestDTO;
 import kr.co.wave.dto.card.CardWithInfoDTO;
+import kr.co.wave.security.MemberDetails;
 import kr.co.wave.service.card.CardService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -60,13 +62,30 @@ public class CardController {
         return "card/view2";
     }
 
-    @GetMapping("/card/register1")
-    public String register1(int cardId, Model model) {
+    @GetMapping("/card/register1") // 11.27 박효빈 수정 로그인 사용자는 register5 page로 이동하게
+    public String register1(int cardId, Model model, @AuthenticationPrincipal MemberDetails memberDetails) {
 
+        // 카드 상품 정보 조회
         CardWithInfoDTO cardInfo = cardService.getCardWithInfoById(cardId);
         model.addAttribute("cardItem", cardInfo);
 
-        return "card/register1";
+        // 로그인 여부 확인
+        String loginId = null; // 초기화
+        if (memberDetails != null) {
+            // 시큐리티에서 가져온 getUsername() 메서드로 MemId 가져옴
+            loginId = memberDetails.getUsername();
+        }
+
+        if (loginId != null) {
+            // 3. 로그인 사용자 처리: Step 5로 사용자 던지기
+            log.info("✅ 로그인 사용자({})입니다. Step 5로 즉시 리다이렉트합니다.", loginId);
+            return "redirect:/card/register5?cardId=" + cardId;
+
+        } else {
+            // 4. 비로그인 사용자 처리: Step 1 페이지 보여주기
+            log.info("❌ 비로그인 사용자입니다. Step 1 페이지를 보여줍니다. (버튼 클릭 시 Step 2로 이동)");
+            return "card/register1";
+        }
     }
 
     @GetMapping("/card/register2")
@@ -126,19 +145,29 @@ public class CardController {
 //    }
 
     @GetMapping("/card/register5")
-    public String register4(@RequestParam int cardId, HttpSession session, Model model) {
+    public String register4(@RequestParam int cardId, HttpSession session, Model model, @AuthenticationPrincipal MemberDetails memberDetails) {
 
         log.info("=== register5 진입 ===");
         log.info("cardId: {}", cardId);
+
+        // UserDetails를 사용해 loginId 가져오기
+        String loginId = (memberDetails != null) ? memberDetails.getUsername() : null;
 
         // 1. 세션에서 임시 저장된 신청 정보(applyInfo)를 불러옵니다.
         CardApplyRequestDTO applyInfo = (CardApplyRequestDTO) session.getAttribute("applyInfo");
 
         if (applyInfo == null) {
-            log.warn("세션에 'applyInfo'가 없습니다. 비정상적인 접근이거나 세션이 만료되었습니다.");
-            // 세션 정보가 없으면, 신청 단계 2로 돌려보내 재입력을 유도합니다.
-            // 이 때, cardId는 유지하여 상품 정보는 다시 볼 수 있게 합니다.
-            return "redirect:/card/register2?cardId=" + cardId;
+            // 2-1. applyInfo가 없는 경우 (최초 접근이거나 세션 만료)
+            if (loginId != null) {
+                log.info("로그인 사용자({})입니다. DB 정보로 applyInfo를 초기화합니다.", loginId);
+                // **추가해야 할 서비스 메서드 호출**
+                 applyInfo = cardService.initializeApplyInfoForLoggedInUser(loginId, cardId);
+                session.setAttribute("applyInfo", applyInfo);
+            } else {
+                // 2-2. 비로그인 사용자이거나, 로그인 정보도 applyInfo도 없는 경우 (비정상 접근)
+                log.warn("세션 정보 누락 및 비로그인 상태. Step 2로 리다이렉트.");
+                return "redirect:/card/register2?cardId=" + cardId;
+            }
         }
 
         log.info("세션에서 불러온 CardApplyRequestDTO 정보: {}", applyInfo);

@@ -317,6 +317,42 @@ public class CardService {
 
         cardApprovalRepository.save(cardApproval);
     }
+    // 11.27 추가된 메서드: 로그인 사용자의 카드 신청 정보 초기화 (Step 5 시작용)
+    public CardApplyRequestDTO initializeApplyInfoForLoggedInUser(String memId, int cardId) {
+        // 1. 회원 ID(memId)를 사용하여 DB에서 Member 엔티티를 조회합니다.
+        Optional<Member> optionalMember = memberRepository.findById(memId);
+
+        // 2. 조회 결과가 없을 경우 처리
+        if (optionalMember.isEmpty()) {
+            log.warn("로그인된 사용자 ID ({})에 해당하는 Member 정보가 DB에 없습니다. 빈 DTO를 반환합니다.", memId);
+            CardApplyRequestDTO emptyDto = new CardApplyRequestDTO();
+            emptyDto.setCardId(cardId);
+            return emptyDto;
+        }
+
+        // 3. Member 엔티티를 추출합니다.
+        Member member = optionalMember.get();
+
+        // 4. DB의 Member 정보를 CardApplyRequestDTO 필드에 매핑합니다.
+        // Member 정보를 Step 2 필수 정보와 Step 6/9 정보를 포함하여 DTO에 매핑
+        CardApplyRequestDTO dto = CardApplyRequestDTO.builder()
+                .cardId(cardId)
+                // Step 2 정보: 사용자 이름, 이메일, 주민등록번호
+                .name(member.getName())
+                .email(member.getEmail())
+                .rrn(member.getRrn())
+                // Step 6 정보: 영문 이름 (DB에 저장되어 있다면)
+                .firstNameEn(member.getFirstNameEn())
+                .lastNameEn(member.getLastNameEn())
+                // Step 9 정보: 주소 (DB에 저장되어 있다면)
+                .zip(member.getZip())
+                .addr1(member.getAddress())
+                .addr2(member.getDeaddress())
+                // 이외의 필드는 Step 5 이후 단계에서 사용자 입력으로 채워질 예정
+                .build();
+
+        return dto;
+    }
 
     // 카드 상품 가입 (사용자 정보 임시저장 CardApplyRequestDTO)
     @Transactional
