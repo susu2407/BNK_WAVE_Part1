@@ -13,7 +13,7 @@
             <section class="apply-form-wrap">
                 <div class="apply-form-box">
                     <div class="apply-progress"
-                         data-total="9"
+                         data-total="8"
                          data-step="1">
                     </div>
                     <header class="apply-form-header">
@@ -311,7 +311,7 @@
         const progress = document.querySelector('.apply-progress');
         if (!progress) return;
 
-        const total  = Number(progress.dataset.total || 9); // 기본 10단계
+        const total  = Number(progress.dataset.total || 8); // 기본 10단계
         const step   = Number(progress.dataset.step  || 1);  // 현재 단계
 
         // 바 래퍼 생성

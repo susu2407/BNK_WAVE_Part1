@@ -12,7 +12,7 @@
         <div id="main-content">
             <section class="verify-wrap">
                 <div class="apply-progress"
-                     data-total="9"
+                     data-total="8"
                      data-step="2">
                 </div>
                 <h1 class="verify-title"><strong>사용자</strong> 님, 본인인증을 진행해 주세요.</h1>
@@ -253,8 +253,8 @@
         const progress = document.querySelector('.apply-progress');
         if (!progress) return;
 
-        const total  = Number(progress.dataset.total || 9); // 기본 10단계
-        const step   = Number(progress.dataset.step  || 1);  // 현재 단계
+        const total  = Number(progress.dataset.total || 8); // 기본 10단계
+        const step   = Number(progress.dataset.step  || 2);  // 현재 단계
 
         // 바 래퍼 생성
         const bar = document.createElement('div');

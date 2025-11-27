@@ -15,10 +15,7 @@
 
     <main class="content">
         <section class="complete-wrap">
-            <div class="apply-progress"
-                 data-total="9"
-                 data-step="9">
-            </div>
+
             <!-- 동그라미 체크 -->
             <div class="complete-icon">✓</div>
 
@@ -43,34 +40,6 @@
 
 <div th:replace="~{common/footer :: footer}"></div>
 
-       
-<script>
-            // ▼ 필요하면 JS로 신청일시 세팅 (예시)
-            // const dateSpan = document.querySelector('.date-value');
-            // dateSpan.textContent = '2025-11-17 14:32'; // 서버/템플릿 값으로 교체
-
-            const progress = document.querySelector('.apply-progress');
-            if (!progress) return;
-
-            const total  = Number(progress.dataset.total || 9); // 기본 10단계
-            const step   = Number(progress.dataset.step  || 1);  // 현재 단계
-
-            // 바 래퍼 생성
-            const bar = document.createElement('div');
-            bar.className = 'apply-progress-bar';
-
-            // 칸 만들기
-            for (let i = 1; i <= total; i++) {
-                const span = document.createElement('span');
-                span.className = 'progress-step';
-                if (i <= step) {
-                    span.classList.add('is-active'); // 현재 단계까지 색 칠하기
-                }
-                bar.appendChild(span);
-            }
-
-            progress.appendChild(bar);
-</script>
 
 <script>
     // 혜택 선택 버튼 토글만 남김
