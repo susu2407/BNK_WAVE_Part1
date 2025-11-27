@@ -37,35 +37,8 @@
                 <!-- 서버/템플릿 값으로 교체 -->
             </p>
 
-            <!-- ▼ 추가: 혜택 선택 영역 -->
-            <section class="benefit-section">
-                <h2 class="benefit-title">고객님의 최근 관심사를 선택해주세요</h2>
 
-                <div class="benefit-grid">
-                    <button type="button" class="benefit-option">주유</button>
-                    <button type="button" class="benefit-option">건강</button>
-                    <button type="button" class="benefit-option">여행</button>
-                    <button type="button" class="benefit-option">문화생활</button>
-                </div>
-
-                <!-- 흠흠흠 -->
-            </section>
-
-            <!-- 배송 안내 -->
-            <p class="complete-sub-text">
-                신청하신 카드는 <strong>4영업일 이내</strong> 배송됩니다.
-            </p>
-
-            <!-- 확인 버튼 -->
-            <button type="button" class="btn-confirm" id="btnConfirm">확인</button>
-        </section>
-
-        <!-- 배송 안내 -->
-        <p class="complete-sub-text">
-            신청하신 카드는 <strong>4영업일 이내</strong> 배송됩니다.
-        </p>
-
-        <!-- 확인 버튼 (form submit) -->
+        <!-- 확인 버튼 (form submit) 확인 누르면 DB에 최종 저장됨 -->
         <form th:action="@{/card/register10}" method="post">
             <button type="submit" class="btn-confirm">확인</button>
         </form>
@@ -102,6 +75,7 @@
 
             progress.appendChild(bar);
 </script>
+
 <script>
     // 혜택 선택 버튼 토글만 남김
     const benefitButtons = document.querySelectorAll('.benefit-option');
