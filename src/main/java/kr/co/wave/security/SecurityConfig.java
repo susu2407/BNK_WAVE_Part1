@@ -50,14 +50,14 @@ public class    SecurityConfig {
                     // Member 로그인에서 ADMIN 권한이면 차단
                     if("member".equals(loginType) && isAdmin) {
                         request.getSession().invalidate();
-                        response.sendRedirect(ctx + "/member/login?error=role");
+                        response.sendRedirect(ctx + "/wave?loginError=role");
                         return;
                     }
 
                     // Admin 로그인에서 ADMIN 권한 없으면 차단
                     if("admin".equals(loginType) && !isAdmin) {
                         request.getSession().invalidate();
-                        response.sendRedirect(ctx + "/admin/login?error=role");
+                        response.sendRedirect(ctx + "/wave/admin/login?error=role");
                         return;
                     }
 
@@ -67,8 +67,8 @@ public class    SecurityConfig {
                 .failureHandler((req, res, ex) -> {
                     String loginType = req.getParameter("loginType");
                     String redirectUrl = "admin".equals(loginType)
-                            ? "/admin/login?error=true"
-                            : "/member/login?error=true";
+                            ? "/wave/admin/login?error=true"
+                            : "/wave?loginError=true";
                     res.sendRedirect(redirectUrl);
                 })
 
@@ -96,6 +96,15 @@ public class    SecurityConfig {
 
         // 기타 설정
         http.csrf(CsrfConfigurer::disable);
+
+        // 세션 타임아웃 설정: 20분
+        http.sessionManagement(session -> session
+                        .sessionCreationPolicy(SessionCreationPolicy.IF_REQUIRED)
+                        .invalidSessionUrl("/session-invalid")
+                        .sessionFixation().changeSessionId() // 세션 고정 공격 방지 (권장)
+                        .maximumSessions(1)
+                        .expiredUrl("/session-expired")
+                );
 
         return http.build();
     }

@@ -86,10 +86,13 @@ public class TermsService {
 
         Terms terms = Terms.builder().
                 title(termsDTO.getTitle()).
+                category(termsDTO.getCategory()).
                 content(termsDTO.getContent()).
                 isRequired(termsDTO.isRequired()).
                 pdfFile(pdfPath).
                 originalName(originalName).
+                termStatus("비활성").
+                version("0.0.1").
                 build();
 
         termsRepository.save(terms);
@@ -160,43 +163,6 @@ public class TermsService {
     }
 
     @Transactional
-    public void updateTerms(TermsDTO termsDTO) {
-        Terms terms = termsRepository.findById(termsDTO.getTermsId())
-                .orElseThrow(() -> new RuntimeException("Terms not found"));
-
-        // 기존 파일 이름을 가져옴
-        String originalName = null;
-        String pdfPath = null;
-
-        // 파일이 존재할 경우에만 파일 저장 및 수정
-        if (termsDTO.getPdfFile() != null && !termsDTO.getPdfFile().isEmpty()) {
-            originalName = termsDTO.getPdfFile().getOriginalFilename(); // 파일 원래 이름
-            pdfPath = fileUploadUtil.saveFile(termsDTO.getPdfFile(), "terms"); // 저장할 상대 경로 반환, terms = 저장할 폴더 이름
-        } else {
-            // 파일이 없을 경우 기존 파일 경로 유지 (변경 없음)
-            Optional<Terms> originFile = termsRepository.findById(termsDTO.getTermsId());
-            if (originFile.isPresent()) {
-                TermsRepositoryDTO originFileDTO = modelMapper.map(originFile, TermsRepositoryDTO.class);
-                originalName = originFileDTO.getOriginalName();
-                pdfPath = originFileDTO.getPdfFile();
-            }
-        }
-
-        // Terms 객체 빌드
-        Terms updateTerms = Terms.builder()
-                .termsId(terms.getTermsId())
-                .title(termsDTO.getTitle())
-                .content(termsDTO.getContent())
-                .isRequired(termsDTO.isRequired())
-                .pdfFile(pdfPath)
-                .originalName(originalName)
-                .updatedAt(LocalDate.now())  // 현재 시간으로 수정일 갱신
-                .build();
-
-        termsRepository.save(updateTerms);
-    }
-
-    @Transactional
     public Terms getTermsById(int termsId) {
         Optional<Terms> optionalTerms = termsRepository.findById(termsId);
 
@@ -207,6 +173,7 @@ public class TermsService {
 
         return null;
     }
+
     // 약관 활성화
     @Transactional
     public void activateTerms(int termsId){
@@ -234,5 +201,110 @@ public class TermsService {
     @Transactional
     public List<TermsWarningDTO> getTitles(){
         return termsRepository.findAllTitles();
+    }
+
+    @Transactional
+    public void updateTerms(TermsDTO termsDTO) {
+        Terms terms = termsRepository.findById(termsDTO.getTermsId())
+                .orElseThrow(() -> new RuntimeException("Terms not found"));
+
+        // 기존 파일 이름을 가져옴
+        String originalName = null;
+        String pdfPath = null;
+
+        boolean isFileChanged = false;
+        boolean isContentChanged = false;
+
+        // 파일이 존재할 경우에만 파일 저장 및 수정
+        if (termsDTO.getPdfFile() != null && !termsDTO.getPdfFile().isEmpty()) {
+            originalName = termsDTO.getPdfFile().getOriginalFilename(); // 파일 원래 이름
+            pdfPath = fileUploadUtil.saveFile(termsDTO.getPdfFile(), "terms"); // 저장할 상대 경로 반환, terms = 저장할 폴더 이름
+            
+            isFileChanged = true;
+        } else {
+            // 파일이 없을 경우 기존 파일 경로 유지 (변경 없음)
+            Optional<Terms> originFile = termsRepository.findById(termsDTO.getTermsId());
+            if (originFile.isPresent()) {
+                TermsRepositoryDTO originFileDTO = modelMapper.map(originFile, TermsRepositoryDTO.class);
+                originalName = originFileDTO.getOriginalName();
+                pdfPath = originFileDTO.getPdfFile();
+            }
+        }
+
+        // 내용이 같지 않으면
+        if (!termsDTO.getContent().equals(terms.getContent()) || !termsDTO.getCategory().equals(terms.getCategory())) {
+            isContentChanged = true;
+        }
+
+        // 버전 정보 업데이트:
+        if (isFileChanged && isContentChanged) {
+            // 파일 변경과 내용 수정 둘 다 발생한 경우 (1.0.1 증가)
+            termsDTO.setVersion(incrementVersionForFileAndContentChange(termsDTO.getVersion()));
+        } else if (isFileChanged) {
+            // 파일 변경만 발생한 경우 (1.0.0 증가)
+            termsDTO.setVersion(incrementVersionForFileChange(termsDTO.getVersion()));
+        } else if (isContentChanged) {
+            // 내용 수정만 발생한 경우 (0.0.1 증가)
+            termsDTO.setVersion(incrementVersionForUpdate(termsDTO.getVersion()));
+        }
+
+        // Terms 객체 빌드
+        Terms updateTerms = Terms.builder()
+                .termsId(terms.getTermsId())
+                .category(termsDTO.getCategory())
+                .title(termsDTO.getTitle())
+                .content(termsDTO.getContent())
+                .isRequired(termsDTO.isRequired())
+                .pdfFile(pdfPath)
+                .originalName(originalName)
+                .createdAt(termsDTO.getCreatedAt())
+                .updatedAt(LocalDate.now())  // 현재 시간으로 수정일 갱신
+                .version(termsDTO.getVersion())
+                .termStatus(termsDTO.getTermStatus())
+                .build();
+
+        termsRepository.save(updateTerms);
+    }
+
+    // 파일 변경 및 내용 수정이 모두 일어난 경우 버전 증가 로직
+    private String incrementVersionForFileAndContentChange(String currentVersion) {
+        String[] versionParts = currentVersion.split("\\.");
+        int major = Integer.parseInt(versionParts[0]);
+        int minor = Integer.parseInt(versionParts[1]);
+        int patch = Integer.parseInt(versionParts[2]);
+
+        // 파일 변경은 major 버전 증가, 내용 수정은 patch 버전 증가
+        major++;  // 파일 변경 시 major 버전 증가
+        patch++;  // 내용 수정 시 patch 버전 증가
+
+        return major + "." + minor + "." + patch;
+    }
+
+    // 수정 시, 버전 마지막 숫자만 증가
+    private String incrementVersionForUpdate(String currentVersion) {
+        String[] versionParts = currentVersion.split("\\.");
+        int major = Integer.parseInt(versionParts[0]);
+        int minor = Integer.parseInt(versionParts[1]);
+        int patch = Integer.parseInt(versionParts[2]);
+
+        // 패치 버전만 증가
+        patch++;
+
+        return major + "." + minor + "." + patch;
+    }
+
+    // 파일 변경 시, 첫 번째 숫자 증가
+    private String incrementVersionForFileChange(String currentVersion) {
+        String[] versionParts = currentVersion.split("\\.");
+        int major = Integer.parseInt(versionParts[0]);
+        int minor = Integer.parseInt(versionParts[1]);
+        int patch = Integer.parseInt(versionParts[2]);
+
+        // 첫 번째 숫자 증가하고, 나머지는 0으로 설정
+        major++;
+        minor = 0;
+        patch = 0;
+
+        return major + ".0.0";
     }
 }

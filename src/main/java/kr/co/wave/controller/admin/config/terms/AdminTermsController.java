@@ -40,7 +40,8 @@ public class AdminTermsController {
 
     // 약관 등록으로 이동
     @GetMapping("/admin/config/terms/register")
-    public String adminConfigRegister() {
+    public String adminConfigRegister(Model model) {
+        model.addAttribute("warningList", termsService.getTitles());
         return "admin/config/terms/register";
     }
 
@@ -91,6 +92,7 @@ public class AdminTermsController {
         model.addAttribute("termsId", termsId);
         model.addAttribute("warningList", termsService.getTitles());
         model.addAttribute("terms", termsService.getTermsById(Integer.parseInt(termsId)));
+
         return "admin/config/terms/update";
     }
 
