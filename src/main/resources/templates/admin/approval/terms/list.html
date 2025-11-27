@@ -2,10 +2,10 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Approval</title>
+    <title>WAVE CARD</title>
     <link rel="stylesheet" th:href="@{/css/admin/common/commonCSS.css}">
     <link rel="stylesheet" th:href="@{/css/admin/common/commonActionBarTable.css}">
-    <link rel="stylesheet" th:href="@{/css/admin/config/configCommon.css}">
+    <link rel="stylesheet" th:href="@{/css/admin/approval/approval.css}">
     <script th:src="@{/js/admin/common/aside.js}"></script>
 </head>
 <body>
@@ -15,11 +15,20 @@
     <div class="main-container">
         <div th:replace="~{admin/common/mainHeader :: mainHeader}"></div>
         <div id="main-content">
-            <div class="tabs">
-                <a th:href="@{/admin/approval/card/list}">상품 승인</a>
-                <a th:href="@{/admin/approval/terms/list}">약관 승인</a>
-                <a th:href="@{/admin/approval/member/cardList}">상품 가입 승인</a>
+
+            <!-- 탭 -->
+            <div class="nav-content">
+                <nav class="nav-menu">
+                    <ul>
+                        <li><a th:href="@{/admin/approval/card/list}">상품 승인</a></li>
+                        <li class="approval-select-area">
+                            <a th:href="@{/admin/approval/terms/list}" class="approval-select-a">약관 승인</a>
+                        </li>
+                        <li><a th:href="@{/admin/approval/member/cardList}">상품 가입 승인</a></li>
+                    </ul>
+                </nav>
             </div>
+
             <!-- 주요 액션 영역 -->
             <div class="action-bar">
                 <!-- 등록버튼 -->
@@ -38,31 +47,6 @@
                     <button type="submit" class="btn search-btn">검색</button>
                 </form>
             </div>
-
-            <!-- 정렬
-            <div class="sort">
-                <p>정렬</p>
-                <form method="get" th:action="@{/qna/list}">
-                    <input type="hidden" name="searchType"
-                           th:value="${param.searchType != null ? param.searchType[0] : ''}">
-                    <input type="hidden" name="keyword" th:value="${param.keyword != null ? param.keyword[0] : ''}">
-                    <input type="hidden" name="answered" th:value="${param.answered != null ? param.answered[0] : ''}">
-                    <input type="hidden" name="size" th:value="${qnAList.size}">
-
-                    <select name="sortBy">
-                        <option value="createdAt" th:selected="${param.sortBy == 'createdAt'}">날짜</option>
-                        <option value="title" th:selected="${param.sortBy == 'title'}">제목</option>
-                    </select>
-
-                    <select name="direction">
-                        <option value="asc" th:selected="${param.direction == 'asc'}">오름차순</option>
-                        <option value="desc" th:selected="${param.direction == 'desc'}">내림차순</option>
-                    </select>
-
-                    <button type="submit" class="sort-btn">정렬 적용</button>
-                </form>
-            </div>
-        -->
 
             <!-- 본문 -->
             <div class="content">
