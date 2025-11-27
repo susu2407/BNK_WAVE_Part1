@@ -175,16 +175,18 @@
 
     <!-- 비활성화 사유 입력 모달 -->
     <div id="inactivateModal" style="display:none; position:fixed;
-    top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.4);">
+    top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.4);
+    ">
 
-        <div style="background:white; padding:20px; width:400px; margin:100px auto; border-radius:8px;">
+        <div style="background:white; padding:20px; width:600px; margin:100px auto; border-radius:8px;">
             <h3>카드 비활성화</h3>
 
             <form id="inactivateForm" th:action="@{/admin/card/inactivate}" method="post">
                 <input type="hidden" name="cardId" id="modalCardId">
 
                 <label>비활성화 사유</label><br>
-                <textarea name="reason" required style="width:100%; height:80px;"></textarea>
+                <textarea name="reason" required
+                          style="width:100%; height:80px; overflow: auto; resize: none; border: 1px solid #cb2b11 ;outline-color: #cb2b11;"></textarea>
 
                 <div style="margin-top:15px; text-align:right;">
                     <button type="button" onclick="closeInactivateModal()">취소</button>
