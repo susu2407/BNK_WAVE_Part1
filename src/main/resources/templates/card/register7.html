@@ -206,9 +206,7 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>결제 계좌 정보 입력</title>
-    <link rel="stylesheet" href="../css/common/product_header_style.css" />
-    <link rel="stylesheet" href="../css/member/card/register6.css" />
-    <link rel="stylesheet" href="../css/common/footer_style.css" />
+    <link rel="stylesheet" th:href="@{/css/member/card/register7.css}" />
     <style>
         .masked { font-family: monospace; letter-spacing: 2px; }
     </style>
@@ -219,9 +217,21 @@
 
 <main class="content">
     <section class="acc-wrap">
-        <div class="apply-progress"
-             data-total="9"
-             data-step="6">
+
+        <!-- 진행도 바(정적) -->
+        <div class="apply-progress">
+            <div class="apply-progress-bar">
+                <!-- 총 9칸 중 6칸 활성 -->
+                <span class="progress-step is-active"></span>
+                <span class="progress-step is-active"></span>
+                <span class="progress-step is-active"></span>
+                <span class="progress-step is-active"></span>
+                <span class="progress-step is-active"></span>
+                <span class="progress-step is-active"></span>
+                <span class="progress-step"></span>
+                <span class="progress-step"></span>
+                <span class="progress-step"></span>
+            </div>
         </div>
 
         <h1 class="acc-title">결제 계좌 정보 입력</h1>
@@ -255,24 +265,27 @@
             <!-- 계좌번호 입력 -->
             <div class="field">
                 <label for="accNo" class="label">계좌번호</label>
-                <input id="accNo" type="text" inputmode="numeric" name="accountNumber" placeholder="숫자만 입력" maxlength="14">
+                <input id="accNo" type="text" inputmode="numeric"
+                       name="accountNumber" placeholder="숫자만 입력" maxlength="14">
                 <div class="underline"></div>
             </div>
 
-            <!-- 화면용 마스킹 -->
-            <div>
-                <span class="label">화면 표시용 계좌:</span>
-                <span id="maskedAcc" class="masked">-</span>
+            <!-- 화면용 마스킹(서버에서 채우거나 그대로 둬도 됨) -->
+            <div class="masked-row">
+                <span class="label">화면 표시용 계좌</span>
+                <span id="maskedAcc" class="masked">***마스킹된 계좌번호***</span>
             </div>
 
             <!-- 인증번호 입력 -->
             <div class="field">
                 <label for="authCode" class="label">인증번호 3자리 (선택)</label>
-                <input id="authCode" type="text" name="accountVerified" inputmode="numeric" maxlength="3" placeholder="인증번호 입력">
+                <input id="authCode" type="text" name="accountVerified"
+                       inputmode="numeric" maxlength="3" placeholder="인증번호 입력">
+                <div class="underline"></div>
             </div>
 
             <!-- 버튼 -->
-            <div style="margin-top:20px;">
+            <div class="btn-row">
                 <button type="submit" name="skip" value="true" class="btn-skip">건너뛰기</button>
                 <button type="submit" class="btn-submit">인증 완료</button>
             </div>
