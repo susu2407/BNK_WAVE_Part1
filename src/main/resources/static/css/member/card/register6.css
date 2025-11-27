@@ -70,8 +70,8 @@
 }
 
 /* 포커스 시 밑줄 진하게 */
-.field input:focus + .underline,
-.field select:focus {
+.field input:focus + .underline
+{
     border-bottom-color: #111;
     background-color: #111;
 }
