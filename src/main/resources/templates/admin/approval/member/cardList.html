@@ -5,6 +5,8 @@
     <title>Approval</title>
     <link rel="stylesheet" th:href="@{/css/admin/common/commonCSS.css}">
     <link rel="stylesheet" th:href="@{/css/admin/common/commonActionBarTable.css}">
+    <link rel="stylesheet" th:href="@{/css/admin/config/configCommon.css}">
+    <link rel="stylesheet" th:href="@{/css/admin/approval/approval.css}">
     <script th:src="@{/js/admin/common/aside.js}"></script>
 </head>
 <body>
@@ -14,11 +16,19 @@
     <div class="main-container">
         <div th:replace="~{admin/common/mainHeader :: mainHeader}"></div>
         <div id="main-content">
-            <div class="tabs">
-                <a th:href="@{/admin/approval/card/list}">상품 승인</a>
-                <a th:href="@{/admin/approval/terms/list}">약관 승인</a>
-                <a th:href="@{/admin/approval/product/list}">상품 가입 승인</a>
+
+            <div class="nav-content">
+                <nav class="nav_menu">
+                    <ul>
+                        <li><a th:href="@{/admin/approval/card/list}">상품 승인</a></li>
+                        <li><a th:href="@{/admin/approval/terms/list}">약관 승인</a></li>
+                        <li style=" font-weight: 800; color: #cb2b11;">
+                            <a th:href="@{/admin/approval/member/cardList}" style="color: #cb2b11; font-size: 20px;">상품 가입 승인</a>
+                        </li>
+                    </ul>
+                </nav>
             </div>
+
             <!-- 주요 액션 영역 -->
             <div class="action-bar">
                 <!-- 등록버튼 -->

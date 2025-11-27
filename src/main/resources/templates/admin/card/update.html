@@ -160,12 +160,13 @@
                             <p>상품에 사용될 카드 이미지와 홍보용 이미지를 업로드합니다. 고객이 보는 주요 시각 요소입니다.</p>
                         </div>
                         <div class="section-content">
-                            <label for="thumbnail">이미지</label>
+                            <label for="thumbnail">기존 이미지</label>
                             <img th:src="@{'/' + ${cardItem.card.thumbnail}}" alt="thumbnail" width="150">
                             <input id="thumbnail" type="file" name="thumbnail" accept="image/*">
                         </div>
                     </section>
 
+                    <!-- 마지막. 취소/수정 버튼 -->
                     <div class="form-flex-wrapper btn-section-submit">
                         <a th:href="@{/admin/card/list}" class="btn register-btn">취소</a>
                         <button type="submit" class="btn register-btn">수정</button>
