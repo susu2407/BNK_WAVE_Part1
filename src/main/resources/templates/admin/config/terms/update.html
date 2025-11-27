@@ -18,6 +18,9 @@
 
             <form th:action="@{/admin/config/terms/update}" method="post" enctype="multipart/form-data">
                 <input type="hidden" name="termsId" th:value="${terms.termsId}">
+                <input type="hidden" name="version" th:value="${terms.version}">
+                <input type="hidden" name="termStatus" th:value="${terms.termStatus}">
+                <input type="hidden" name="createdAt" th:value="${terms.createdAt}">
                 <!-- 1.약관명 -->
                 <section class="form-section">
                     <div class=section-header>
@@ -33,17 +36,17 @@
                     <div class="section-content">
                         <div class="form-field-wrapper">
                             <label class="form-flex-wrapper">
-                                <select required>
+                                <select name="category" required>
                                     <option value="" disabled selected hidden>약관 구분을 선택하세요.</option>
-                                    <option value="개인정보">개인정보 전용 약관</option>
-                                    <option value="상품">상품 전용 약관</option>
-                                    <option value="광고">광고ㆍ마케딩 전용 약관</option>
-                                    <option value="서비스">서비스 전용 약관</option>
-                                    <option value="웹">웹 이용약관</option>
-                                    <option value="앱">앱 이용약관</option>
-                                    <option value="계약ㆍ법적 고지">계약ㆍ법적 고지 약관</option>
-                                    <option value="부가정책">부가정책</option>
-                                    <option value="운영정책">운영정책</option>
+                                    <option value="개인정보" th:selected="${terms.category == '개인정보'}">개인정보 전용 약관</option>
+                                    <option value="상품" th:selected="${terms.category == '상품'}">상품 전용 약관</option>
+                                    <option value="광고" th:selected="${terms.category == '광고'}">광고ㆍ마케딩 전용 약관</option>
+                                    <option value="서비스" th:selected="${terms.category == '서비스'}">서비스 전용 약관</option>
+                                    <option value="웹" th:selected="${terms.category == '웹'}">웹 이용약관</option>
+                                    <option value="앱" th:selected="${terms.category == '앱'}">앱 이용약관</option>
+                                    <option value="계약ㆍ법적 고지" th:selected="${terms.category == '계약ㆍ법적 고지'}">계약ㆍ법적 고지 약관</option>
+                                    <option value="부가정책" th:selected="${terms.category == '부가정책'}">부가정책</option>
+                                    <option value="운영정책" th:selected="${terms.category == '운영정책'}">운영정책</option>
                                 </select>
                                 <span class="checkbox-required">
                                     <input type="checkbox" th:checked="${terms.isRequired}" name="isRequired" >
@@ -205,6 +208,8 @@
     const box = document.getElementById('suggestionBox');
     const items = document.querySelectorAll('#suggestionBox > li');
 
+    box.style.display = 'none';
+
     input.addEventListener('input', function() {
         const val = this.value.trim().toLowerCase();
         if (!val) return box.style.display = 'none';
@@ -222,6 +227,22 @@
 
         box.style.display = count > 0 ? 'block' : 'none';
     });
+
+    // 페이지가 로드된 후, titleInput에 있는 값으로 필터링을 트리거
+    const initialValue = input.value.trim().toLowerCase();
+    if (initialValue) {
+        let count = 0;
+        items.forEach(item => {
+            const title = item.getAttribute('data-title');
+            if (title && title.toLowerCase().includes(initialValue) && count < 5) {
+                item.style.display = 'block';
+                count++;
+            } else {
+                item.style.display = 'none';
+            }
+        });
+        box.style.display = count > 0 ? 'block' : 'none';
+    }
 
     function selectTitle(el) {
         input.value = el.dataset.title;

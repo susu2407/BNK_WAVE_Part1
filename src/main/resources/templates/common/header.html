@@ -1,6 +1,11 @@
 <html xmlns:th="http://www.thymeleaf.org"
       xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <header class="header">
+    <script th:inline="javascript">
+        window.BASE_URL = /*[[@{/}]]*/ "/";
+    </script>
+    <script th:src="@{/js/common/header.js}"></script>
+    <script th:src="@{/js/common/sessionTimer.js}"></script>
     <link rel="stylesheet" th:href="@{/css/common/header.css}">
     <div class="header-inner">
         <div class="logo">
@@ -125,80 +130,3 @@
         </div>
     </div>
 </header>
-
-<script>
-    // 스크롤 시 헤더 그림자
-    window.addEventListener('scroll', () => {
-        const header = document.querySelector('.header');
-        if (window.scrollY > 10) {
-            header.classList.add('scrolled');
-        } else {
-            header.classList.remove('scrolled');
-        }
-    });
-
-    // ===== 로그인 세션 타이머 (공통) =====
-    (function () {
-        const timerEl = document.getElementById('sessionTimer');
-        const btnExtend = document.getElementById('btnExtend');
-        const btnUserInfo = document.getElementById('btnUserInfo');
-
-        // 세션바가 없는 페이지(비로그인 등)는 스킵
-        if (!timerEl || !btnExtend) return;
-
-        const DEFAULT_SECONDS = 10 * 60; // 10분 예시
-        let remain = DEFAULT_SECONDS;
-        let timerId = null;
-
-        function formatTime(sec) {
-            const m = Math.floor(sec / 60);
-            const s = sec % 60;
-            return String(m).padStart(2, '0') + ':' + String(s).padStart(2, '0');
-        }
-
-        function updateView() {
-            timerEl.textContent = formatTime(remain);
-        }
-
-        function startTimer() {
-            if (timerId) clearInterval(timerId);
-            timerId = setInterval(() => {
-                remain--;
-                if (remain <= 0) {
-                    clearInterval(timerId);
-                    timerId = null;
-                    remain = 0;
-                    updateView();
-                    alert('로그인 시간이 만료되었습니다. 다시 로그인해 주세요.');
-                    // location.href = '/login'; // 필요하면 활성화
-                    return;
-                }
-                updateView();
-            }, 1000);
-        }
-
-        // 로그인 연장 버튼
-        btnExtend.addEventListener('click', () => {
-            // TODO: 실제 세션 연장 API 호출
-            // fetch('/api/session/extend', { method: 'POST' });
-
-            remain = DEFAULT_SECONDS;
-            updateView();
-            if (!timerId) startTimer();
-
-            // 데모용
-            // alert('로그인 시간이 연장되었습니다.');
-        });
-
-        // 이름 클릭 시 마이페이지로 이동
-        if (btnUserInfo) {
-            btnUserInfo.addEventListener('click', () => {
-                window.location.href = '/member/my'; // 실제 마이페이지 경로로 수정
-            });
-        }
-
-        // 초기 시작
-        updateView();
-        startTimer();
-    })();
-</script>

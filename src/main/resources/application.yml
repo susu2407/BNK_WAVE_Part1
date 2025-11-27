@@ -2,6 +2,8 @@ server:
   port: 8080
   servlet:
     context-path: /wave
+    session:
+      timeout: 20m
 
 spring:
   web:
@@ -50,5 +52,3 @@ jwt:
 file:
   upload:
     path: uploads
-
-
