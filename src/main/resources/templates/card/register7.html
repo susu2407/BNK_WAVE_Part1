@@ -206,7 +206,7 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>결제 계좌 정보 입력</title>
-    <link rel="stylesheet" th:href="@{/css/member/card/register6.css}" />
+    <link rel="stylesheet" th:href="@{/css/member/card/register7.css}" />
     <style>
         .masked { font-family: monospace; letter-spacing: 2px; }
     </style>
@@ -219,19 +219,9 @@
     <section class="acc-wrap">
 
         <!-- 진행도 바(정적) -->
-        <div class="apply-progress">
-            <div class="apply-progress-bar">
-                <!-- 총 9칸 중 6칸 활성 -->
-                <span class="progress-step is-active"></span>
-                <span class="progress-step is-active"></span>
-                <span class="progress-step is-active"></span>
-                <span class="progress-step is-active"></span>
-                <span class="progress-step is-active"></span>
-                <span class="progress-step is-active"></span>
-                <span class="progress-step"></span>
-                <span class="progress-step"></span>
-                <span class="progress-step"></span>
-            </div>
+        <div class="apply-progress"
+             data-total="8"
+             data-step="5">
         </div>
 
         <h1 class="acc-title">결제 계좌 정보 입력</h1>
@@ -311,6 +301,29 @@
         maskedSpan.textContent = masked;
     });
 
+    document.addEventListener('DOMContentLoaded', function () {
+        const progress = document.querySelector('.apply-progress');
+        if (!progress) return;
+
+        const total = Number(progress.dataset.total || 8); // 기본 10단계
+        const step = Number(progress.dataset.step || 7);  // 현재 단계
+
+        // 바 래퍼 생성
+        const bar = document.createElement('div');
+        bar.className = 'apply-progress-bar';
+
+        // 칸 만들기
+        for (let i = 1; i <= total; i++) {
+            const span = document.createElement('span');
+            span.className = 'progress-step';
+            if (i <= step) {
+                span.classList.add('is-active'); // 현재 단계까지 색 칠하기
+            }
+            bar.appendChild(span);
+        }
+
+        progress.appendChild(bar);
+    });
 </script>
 
 </body>
