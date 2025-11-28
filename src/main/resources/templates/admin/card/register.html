@@ -209,7 +209,21 @@
 </main>
 <div th:replace="~{admin/common/footer :: footer}"></div>
 <script>
+    // input[type="file"]
+    document.getElementById('termsFile').addEventListener('change', function() {
+        const fileNameDisplay = document.getElementById('fileNameDisplay');
 
+        // 파일이 선택되었는지 확인
+        if (this.files && this.files.length > 0) {
+            // 첫 번째 파일의 이름을 가져와 표시
+            fileNameDisplay.textContent = this.files[0].name;
+            fileNameDisplay.style.color = '#333'; // 텍스트 색상 변경
+        } else {
+            // 파일 선택이 취소된 경우
+            fileNameDisplay.textContent = '선택된 파일 없음';
+            fileNameDisplay.style.color = '#555';
+        }
+    });
 </script>
 </body>
 </html>

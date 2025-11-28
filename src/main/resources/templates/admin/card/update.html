@@ -88,7 +88,7 @@
                         </div>
                     </section>
 
-                    <!-- 3. 혜택 컨테이너 -->
+                    <!-- 3. 혜택 -->
                     <section class="form-section">
                         <div class="section-header">
                             <h2>혜택 정보</h2>
@@ -134,7 +134,7 @@
                                         <label>월 최대 혜택 한도</label>
                                         <label class="input-with-unit" style="width: 150px">
                                             <input type="text" th:value="${benefit.limit}" name="limit"
-                                                   placeholder="한도 금액" style="width: 150px;" class="product-num-input">
+                                                   placeholder="한도 금액" style="width: 150px; text-align: right;" class="product-num-input">
                                             <span class="unit">원</span>
                                         </label>
                                     </div>
@@ -162,7 +162,12 @@
                         <div class="section-content">
                             <label for="thumbnail">기존 이미지</label>
                             <img th:src="@{'/' + ${cardItem.card.thumbnail}}" alt="thumbnail" width="150">
-                            <input id="thumbnail" type="file" name="thumbnail" accept="image/*">
+
+                            <div class="file-upload-wrapper">
+                                <label class="custom-file-label">수정 파일 선택</label>
+                                <span id="fileNameDisplay">수정된 파일 없음</span>
+                                <input type="file" name="thumbnail"  id="thumbnail" accept="image/*">
+                            </div>
                         </div>
                     </section>
 
@@ -178,6 +183,22 @@
     </div>
 </main>
 <div th:replace="~{admin/common/footer :: footer}"></div>
+<script>
+    // input[type="file"]
+    document.getElementById('termsFile').addEventListener('change', function() {
+        const fileNameDisplay = document.getElementById('fileNameDisplay');
 
+        // 파일이 선택되었는지 확인
+        if (this.files && this.files.length > 0) {
+            // 첫 번째 파일의 이름을 가져와 표시
+            fileNameDisplay.textContent = this.files[0].name;
+            fileNameDisplay.style.color = '#333'; // 텍스트 색상 변경
+        } else {
+            // 파일 선택이 취소된 경우
+            fileNameDisplay.textContent = '선택된 파일 없음';
+            fileNameDisplay.style.color = '#555';
+        }
+    });
+</script>
 </body>
 </html>
