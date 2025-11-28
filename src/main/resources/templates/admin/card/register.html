@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>CARD ADMIN</title>
+    <title>WAVE CARD ADMIN</title>
     <!-- 상품 등록 -->
     <link rel="stylesheet" th:href="@{/css/admin/common/commonCSS.css}">
     <link rel="stylesheet" th:href="@{/css/admin/common/commonActionBarTable.css}">
@@ -28,11 +28,13 @@
                         <div class="section-content">
                             <div class="form-field-wrapper">
                                 <label for="name" style="width: 50px">상품명</label>
-                                <input id="name" type="text" name="name" required class="product-name-input">
+                                <input id="name" type="text" name="name" required
+                                       placeholder="국문 상품명을 입력하세요." class="product-name-input">
                             </div>
                             <div class="form-field-wrapper">
                                 <label for="engName" style="width: 50px">영어명</label>
-                                <input id="engName" type="text" name="engName" required class="product-name-input">
+                                <input id="engName" type="text" name="engName" required
+                                       placeholder="영문 상품명을 입력하세요." class="product-name-input">
                             </div>
                             <div class="form-flex-wrapper">
                                 <label for="type" style="width: 30px">타입</label>
@@ -69,8 +71,8 @@
                                 <div class="form-flex-wrapper" >
                                     <select name="" id="" required>
                                         <option value="type" disabled selected hidden>타입 선택</option>
-                                        <option value="국내">국내</option>
-                                        <option value="해외">해외</option>
+                                        <option value="국내">국내전용</option>
+                                        <option value="해외">해외겸용</option>
                                     </select>
                                     <div class="input-with-unit">
                                         <input type="text" name="annualFeeName" style="width: 300px"
@@ -172,7 +174,7 @@
                             <label class="terms-title">
                                 <!-- 약관명 검색 입력 -->
                                 <input type="text" name="title" id="titleInput" autocomplete="off"
-                                       placeholder="약관명을 입력하세요.">
+                                       placeholder="약관명을 입력하세요." class="terms-select-input">
                             </label>
                             <!-- 검색 결과 리스트 -->
                             <div class="form-field-wrapper">
@@ -207,7 +209,21 @@
 </main>
 <div th:replace="~{admin/common/footer :: footer}"></div>
 <script>
+    // input[type="file"]
+    document.getElementById('termsFile').addEventListener('change', function() {
+        const fileNameDisplay = document.getElementById('fileNameDisplay');
 
+        // 파일이 선택되었는지 확인
+        if (this.files && this.files.length > 0) {
+            // 첫 번째 파일의 이름을 가져와 표시
+            fileNameDisplay.textContent = this.files[0].name;
+            fileNameDisplay.style.color = '#333'; // 텍스트 색상 변경
+        } else {
+            // 파일 선택이 취소된 경우
+            fileNameDisplay.textContent = '선택된 파일 없음';
+            fileNameDisplay.style.color = '#555';
+        }
+    });
 </script>
 </body>
 </html>

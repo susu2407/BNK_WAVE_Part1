@@ -1,0 +1,32 @@
+/*
+    내용 : 관리자 상품 목록 CSS
+*/
+
+/* ㅡㅡㅡ 상태 ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ */
+
+/* 초안 */
+.status-text.draft {
+    color: gray;
+}
+
+/* 승인대기 */
+.status-text.pending {
+    color: #1976D2;
+}
+
+/* 활성화 */
+.status-text.active {
+    color: green;
+}
+
+/* 반려 */
+.status-text.rejected {
+    color: red;
+}
+
+/* ㅡㅡㅡ tbody 셀 내용 표시 ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ */
+.status-display-item {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}

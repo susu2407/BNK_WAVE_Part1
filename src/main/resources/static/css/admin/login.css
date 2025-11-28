@@ -18,17 +18,17 @@ form {
     flex-direction: column;
     justify-content: center;
     align-items: center;
+    margin-bottom: 200px;
 }
 
-.BNK-logo {
+.LOGO {
     width: 500px;
-    margin-bottom: 50px;
 }
 
 .input-box {
     display: flex; /* 내부 요소(아이콘, input)를 가로로 나열 */
     align-items: center;    /* 수직 중앙 정렬 */
-    width: 300px;
+    width: 260px;
     height: 40px;
     margin-bottom: 10px;
 
