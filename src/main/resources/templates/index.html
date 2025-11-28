@@ -17,14 +17,18 @@
                 <div class="hero-slider" id="heroSlider">
                     <div class="hero-track">
                         <!-- 1번 슬라이드 -->
-                        <article class="hero-slide hero1" th:each="item : ${cardPage}" >
+                        <article class="hero-slide hero1" th:each="item : ${randomCards}" >
+
                             <div class="hero-text">
                                 <h2>[[${item.card.name}]]</h2>
-                                <p>[[${item.card.description}]]</p>                            </div>
+                                <p>[[${item.card.description}]]</p>
+                            </div>
                             <div class="hero-visual">
                                 <!-- 여기 카드/이미지 들어가는 자리 -->
                                 <div class="fake-card">
-                                    <img th:src="@{${item.card.background != null ? '/' + item.card.background : '/' + item.card.thumbnail}}">
+                                    <a th:href="@{/card/view2(cardId=${item.card.cardId})}">
+                                        <img th:src="@{${item.card.background != null ? '/' + item.card.background : '/' + item.card.thumbnail}}">
+                                    </a>
                                 </div>
                             </div>
                         </article>
@@ -167,7 +171,7 @@
             <!-- 오른쪽 카드 리스트 -->
             <div class="orig-list">
                 <!-- 카드 1 -->
-                <article class="orig-item" th:each="item : ${cardPage}">
+                <article class="orig-item" th:each="item : ${randomCards}">
                     <a th:href="@{/card/view2(cardId=${item.card.cardId})}">
                         <img th:src="@{${item.card.background != null ? '/' + item.card.background : '/' + item.card.thumbnail}}">
 

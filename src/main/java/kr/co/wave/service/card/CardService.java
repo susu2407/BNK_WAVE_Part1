@@ -389,7 +389,7 @@ public class CardService {
             // @Transactional에 의해 메서드 종료 시 자동 반영됨 (Dirty Checking)
 
         } else {
-            // 🌟 신규 멤버: Builder를 통해 객체 생성 🌟
+            //  신규 멤버: Builder를 통해 객체 생성 🌟
             member = Member.builder()
                     .memId(memId)
                     .name(dto.getName())
@@ -444,6 +444,45 @@ public class CardService {
                 .limit(4)
                 .toList();
     }
+
+    // 랜덤 카드 4개 뽑아오기 추가용
+    @Transactional
+    public List<CardWithInfoDTO> getRandom4ActiveCards() {
+        // 1. Pageable 객체를 사용하여 상위 4개만 가져오도록 요청
+        Pageable top4 = PageRequest.of(0, 4);
+
+        // Repository에서 무작위 활성 카드 4개만 가져오기
+        List<CardDTO> random4Cards = cardRepository.findRandomCardsWithCustomSort("활성", top4);
+
+        // 2. 각 카드에 혜택 / 연회비 정보 붙이기
+        List<CardWithInfoDTO> randomCardList = new ArrayList<>();
+
+        for (CardDTO cardDTO : random4Cards) {
+            CardWithInfoDTO dto = new CardWithInfoDTO();
+
+            // 카드 기본정보
+            dto.setCard(cardDTO);
+
+            // 혜택 목록
+            List<Benefit> benefits = benefitRepository.findByCard_CardId(cardDTO.getCardId());
+            dto.setBenefitList(benefits);
+
+            // 혜택 카테고리
+            List<String> categoryList = benefits.stream()
+                    .map(Benefit::getBenefitCategory)
+                    .toList();
+            dto.setCategoryString(String.join(",", categoryList));
+
+            // 연회비 목록
+            List<AnnualFee> annualFees = annualFeeRepository.findByCard_CardId(cardDTO.getCardId());
+            dto.setAnnualFeeList(annualFees);
+
+            randomCardList.add(dto);
+        }
+
+        return randomCardList;
+    }
+
 
 }
 
