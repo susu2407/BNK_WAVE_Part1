@@ -7,6 +7,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
+import java.util.Date;
 import java.util.List;
 
 public interface NoticeRepository extends JpaRepository<Notice, Integer> {
@@ -34,4 +35,5 @@ public interface NoticeRepository extends JpaRepository<Notice, Integer> {
 
     // 최신글 5개 찾아오기
     List<Notice> findTop5ByOrderByCreatedAtDesc();
+
 }
