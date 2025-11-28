@@ -48,6 +48,10 @@ input, select, textarea {
     border: none;
     border-bottom: 1px solid;
 }
+input:focus, select:focus, textarea:focus {
+    /* 굵기와 스타일은 유지하고 색상만 변경 */
+    outline-color: #cb2b11;
+}
 
 
 /* 추가, 삭제 버튼 */
@@ -94,8 +98,9 @@ input, select, textarea {
     padding-bottom: 5px;
 }
 
-.product-name-input {
+.product-name-input, .terms-select-input {
     min-width: 500px;
+    padding-left: 10px;
 }
 .product-desc-textarea {
     min-width: 500px;
@@ -105,10 +110,10 @@ input, select, textarea {
     border: none;
     border-bottom: 1px solid;
 }
-.product-desc-textarea:focus {
-    /* 굵기와 스타일은 유지하고 색상만 파란색으로 변경 */
-    outline-color: #cb2b11;
-}
+/*.product-desc-textarea:focus {*/
+/*    !* 굵기와 스타일은 유지하고 색상만 변경 *!*/
+/*    outline-color: #cb2b11;*/
+/*}*/
 .benefitContainer {
     gap: 10px;
 }

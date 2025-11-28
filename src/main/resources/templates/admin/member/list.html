@@ -62,7 +62,7 @@
                                     </div>
                                     <div class="status-item">
                                         <span class="status-dot retired"></span>
-                                        <span>휴먼</span>
+                                        <span>휴면</span>
                                     </div>
                                     )
                                 </div>
@@ -84,7 +84,7 @@
                                     <span th:class="|status-dot ${
                                         admin.status == '활성' ? 'active' :
                                         (admin.status == '비활성' ? 'inactive' :
-                                         (admin.status == '휴먼' ? 'retired' : ''))
+                                         (admin.status == '휴면' ? 'retired' : ''))
                                     }|"></span>
 <!--                                    <span>[[${admin.status}]]</span>-->
                                 </div>
