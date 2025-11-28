@@ -38,34 +38,36 @@ public interface CardRepository extends JpaRepository<Card, Integer> {
     Page<CardDTO> findCardAllBySearch(@Param("searchType") String searchType,
                                       @Param("keyword") String keyword,
                                       Pageable pageable);
+
     @Query("""
-    SELECT new kr.co.wave.dto.card.CardDTO(
-        c.cardId, c.name, c.engName, c.type, c.isCompany,
-        c.description, c.thumbnail, c.background, c.status,
-        c.createdAt, c.updatedAt
-    )
-    FROM Card c
-    WHERE c.status = '활성'
-      AND (
-            :keyword = '' 
-            OR c.name LIKE %:keyword%
-            OR c.engName LIKE %:keyword%
-            OR c.type LIKE %:keyword%
-            OR c.description LIKE %:keyword%
-            OR c.cardId IN (
-                SELECT b.card.cardId FROM Benefit b
-                WHERE b.benefitCategory LIKE %:keyword%
+            SELECT new kr.co.wave.dto.card.CardDTO(
+                c.cardId, c.name, c.engName, c.type, c.isCompany,
+                c.description, c.thumbnail, c.background, c.status,
+                c.createdAt, c.updatedAt
             )
-        )
-    ORDER BY c.cardId DESC
-    """)
+            FROM Card c
+            WHERE c.status = '활성'
+              AND (
+                    :keyword = '' 
+                    OR c.name LIKE %:keyword%
+                    OR c.engName LIKE %:keyword%
+                    OR c.type LIKE %:keyword%
+                    OR c.description LIKE %:keyword%
+                    OR c.cardId IN (
+                        SELECT b.card.cardId FROM Benefit b
+                        WHERE b.benefitCategory LIKE %:keyword%
+                    )
+                )
+            ORDER BY c.cardId DESC
+            """)
     Page<CardDTO> findCardAllBySearch2(@Param("searchType") String searchType,
-                                      @Param("keyword") String keyword,
-                                      Pageable pageable);
+                                       @Param("keyword") String keyword,
+                                       Pageable pageable);
 
     // 신용카드만
     @Query("SELECT c FROM Card c WHERE c.type = '신용'")
     List<Card> findByTypeCredit();
+
 
     // 체크카드만
     @Query("SELECT c FROM Card c WHERE c.type = '체크'")
@@ -74,14 +76,36 @@ public interface CardRepository extends JpaRepository<Card, Integer> {
 
     // 11.28 박효빈 추가 (랜덤 4개 쿼리 추가 - 추천 카드 뽑기 어려워서 일단은 메인 페이지 정상화를 위함)
     @Query("""
-SELECT new kr.co.wave.dto.card.CardDTO(
-    c.cardId, c.name, c.engName, c.type, c.isCompany,
-    c.description, c.thumbnail, c.background, c.status,
-    c.createdAt, c.updatedAt
-)
-FROM Card c
-WHERE c.status = '활성'
-ORDER BY function('DBMS_RANDOM.VALUE')
-""")
+            SELECT new kr.co.wave.dto.card.CardDTO(
+                c.cardId, c.name, c.engName, c.type, c.isCompany,
+                c.description, c.thumbnail, c.background, c.status,
+                c.createdAt, c.updatedAt
+            )
+            FROM Card c
+            WHERE c.status = '활성'
+            ORDER BY function('DBMS_RANDOM.VALUE')
+            """)
     List<CardDTO> findRandomCardsWithCustomSort(@Param("status") String status, Pageable pageable);
+
+
+    @Query(
+            value = """
+                      select new kr.co.wave.dto.card.CardDTO(
+                         c.cardId, c.name, c.engName, c.type, c.isCompany, c.description, c.thumbnail, c.background, c.status, c.createdAt, c.updatedAt
+                      )
+                      from Card c
+                      where c.type = '신용'             
+                                            """
+    )
+    List<CardDTO> findCardAllWhereCredit();
+
+    @Query(
+            value = """
+                      select new kr.co.wave.dto.card.CardDTO(
+                         c.cardId, c.name, c.engName, c.type, c.isCompany, c.description, c.thumbnail, c.background, c.status, c.createdAt, c.updatedAt
+                      )
+                      from Card c
+                      where c.type = '체크'             """
+    )
+    List<CardDTO> findCardAllWhereCheck();
 }
