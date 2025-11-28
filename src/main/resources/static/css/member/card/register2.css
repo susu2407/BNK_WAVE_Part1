@@ -16,7 +16,8 @@
     flex-direction: column;
     gap: 24px;
     max-width: 695px;
-    margin: auto;
+    margin: 30px auto 40px;
+
 }
 
 /* 상단 기본정보 박스 */

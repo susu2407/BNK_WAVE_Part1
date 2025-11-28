@@ -8,7 +8,7 @@
 
     <!-- 공통 헤더/푸터, 페이지 CSS -->
 <!--    <link rel="stylesheet" href="../css/common/product_header_style.css" />-->
-    <link rel="stylesheet" th:href="@{/css/member/card/register.css}" />
+    <link rel="stylesheet" th:href="@{/css/member/card/register8.css}" />
 <!--    <link rel="stylesheet" href="../css/common/footer_style.css" />-->
 </head>
 
@@ -18,8 +18,8 @@
     <main class="content">
         <section class="pin-wrap">
             <div class="apply-progress"
-                 data-total="9"
-                 data-step="7">
+                 data-total="8"
+                 data-step="6">
             </div>
             <h1 class="pin-title">
                 사용할 카드 비밀번호<br />숫자 4자리를 입력해 주세요.
@@ -188,12 +188,14 @@
             });
 
             sync(); // 초기 상태 반영
+        });
 
+        document.addEventListener('DOMContentLoaded', function () {
             const progress = document.querySelector('.apply-progress');
             if (!progress) return;
 
-            const total  = Number(progress.dataset.total || 9); // 기본 10단계
-            const step   = Number(progress.dataset.step  || 1);  // 현재 단계
+            const total = Number(progress.dataset.total || 8); // 기본 10단계
+            const step = Number(progress.dataset.step || 7);  // 현재 단계
 
             // 바 래퍼 생성
             const bar = document.createElement('div');

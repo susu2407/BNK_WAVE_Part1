@@ -12,8 +12,8 @@
         <div id="main-content">
             <section class="extra-wrap">
                 <div class="apply-progress"
-                     data-total="9"
-                     data-step="4">
+                     data-total="8"
+                     data-step="3">
                 </div>
                 <h1 class="extra-title">카드 신청을 위해 추가 정보 확인이 필요합니다.</h1>
 
@@ -151,8 +151,8 @@
         const progress = document.querySelector('.apply-progress');
         if (!progress) return;
 
-        const total  = Number(progress.dataset.total || 9); // 기본 10단계
-        const step   = Number(progress.dataset.step  || 1);  // 현재 단계
+        const total  = Number(progress.dataset.total || 8); // 기본 10단계
+        const step   = Number(progress.dataset.step  || 3);  // 현재 단계
 
         // 바 래퍼 생성
         const bar = document.createElement('div');

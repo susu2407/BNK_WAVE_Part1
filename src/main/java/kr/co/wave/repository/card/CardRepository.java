@@ -71,4 +71,17 @@ public interface CardRepository extends JpaRepository<Card, Integer> {
     @Query("SELECT c FROM Card c WHERE c.type = '체크'")
     List<Card> findByTypeCheck();
 
+
+    // 11.28 박효빈 추가 (랜덤 4개 쿼리 추가 - 추천 카드 뽑기 어려워서 일단은 메인 페이지 정상화를 위함)
+    @Query("""
+SELECT new kr.co.wave.dto.card.CardDTO(
+    c.cardId, c.name, c.engName, c.type, c.isCompany,
+    c.description, c.thumbnail, c.background, c.status,
+    c.createdAt, c.updatedAt
+)
+FROM Card c
+WHERE c.status = '활성'
+ORDER BY function('DBMS_RANDOM.VALUE')
+""")
+    List<CardDTO> findRandomCardsWithCustomSort(@Param("status") String status, Pageable pageable);
 }

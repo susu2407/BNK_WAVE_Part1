@@ -7,7 +7,7 @@
 /* 공통 레이아웃 */
 .content {
     max-width: 800px;
-    margin: 80px auto;
+    margin: 30px auto 40px;
     padding: 0 10px;
 }
 
@@ -19,7 +19,7 @@
     box-shadow: 0 8px 30px rgba(0, 0, 0, .03);
     padding: 28px 24px 24px;
     max-width: 695px;
-    margin: auto;
+    margin: 30px auto 40px;
 }
 
 .addr-title {
