@@ -27,6 +27,17 @@ header {
     height: 48px;
 }
 
+/* ㅡㅡㅡ 헤더의 아이콘들의 영역 ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ */
+/* 로그인 타이머 구역 css */
+.btn-session-extend {
+    all: unset;
+    cursor: pointer;
+}
+.login-plus_icon {
+    width: 10px;
+    height: 100%;
+}
+
 .header-icons {
     flex-shrink: 0; /* 절대 줄어들지 않도록 */
 }
@@ -40,6 +51,18 @@ header {
     height: 30px;
     margin: 20px;
     vertical-align: middle; /* 세로 가운데에 오도록 */
+}
+.header-icons img:nth-child(1) {
+    margin-left: 5px;
+}
+.myp-session-bar a {
+    font-size: 20px;
+    font-weight: bold;
+    text-align: center;
+}
+.session-timer {
+    font-size: 20px;
+    font-weight: bold;
 }
 
 /* ====== 검색 영역 ====== */
