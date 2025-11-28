@@ -13,7 +13,13 @@
 <div th:replace="~{admin/common/aside :: aside}"></div>
 <main>
     <div class="main-container">
-    <div th:replace="~{admin/common/mainHeader :: mainHeader}"></div>
+        <div class="page-header">
+            <link rel="stylesheet" th:href="@{/css/admin/common/mainHeader.css}">
+            <h1 class="page-title">고객관리</h1>
+            <nav class="page-breadcrumb">
+                관리자 &gt; 고객관리 &gt; 고객목록
+            </nav>
+        </div>
         <div id="main-content">
             <!-- 주요 액션 영역 -->
             <div class="action-bar">
