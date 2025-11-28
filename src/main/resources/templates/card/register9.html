@@ -21,7 +21,7 @@
     <main class="content">
         <section class="addr-wrap">
             <div class="apply-progress"
-                 data-total="9"
+                 data-total="8"
                  data-step="8">
             </div>
             <h1 class="addr-title">카드 수령 주소 입력</h1>
@@ -136,8 +136,8 @@
             const progress = document.querySelector('.apply-progress');
             if (!progress) return;
 
-            const total  = Number(progress.dataset.total || 9); // 기본 10단계
-            const step   = Number(progress.dataset.step  || 1);  // 현재 단계
+            const total  = Number(progress.dataset.total || 8); // 기본 10단계
+            const step   = Number(progress.dataset.step  || 8);  // 현재 단계
 
             // 바 래퍼 생성
             const bar = document.createElement('div');
