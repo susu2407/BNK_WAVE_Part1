@@ -5,6 +5,7 @@
     <title>WAVE CARD ADMIN</title>
     <link rel="stylesheet" th:href="@{/css/admin/common/commonCSS.css}">
     <link rel="stylesheet" th:href="@{/css/admin/common/commonActionBarTable.css}">
+    <link rel="stylesheet" th:href="@{/css/admin/config/list.css}">
     <script th:src="@{/js/admin/common/aside.js}"></script>
 </head>
 <div th:replace="~{admin/common/header :: header}"></div>
@@ -45,7 +46,6 @@
                     <th>번호</th>
                     <th>약관구분</th>
                     <th>약관명</th>
-                    <th>약관내용</th>
                     <th>필수여부</th>
                     <th>상태</th>
                     <th>PDF파일</th>
@@ -55,23 +55,23 @@
                 </thead>
                 <tbody>
                     <tr th:each="item, stat : ${termsList.content}">
-                        <td>운영정책</td>
                         <td>[[${termsList.totalElements - (termsList.number * termsList.size + stat.index)}]]</td>
+                        <td>[[${item.term.category}]]</td>
                         <td>[[${item.term.title}]]</td>
-                        <td>[[${item.term.content}]]</td>
                         <td>[[${item.term.isRequired}]]</td>
                         <td>[[${item.term.termStatus}]]</td>
-                        <td><a th:href="@{/terms/download/{id}(id=${item.term.termsId})}">
-                            [[${item.term.originalName}]]
-                        </a></td>
                         <td>
-                        <!-- 새 창에서 PDF 파일 열기 위해 target="_blank" 추가 -->
-                        <a th:href="@{/terms/pdfView/{id}(id=${item.term.termsId})}" target="_blank">
-                            [[${item.term.originalName}]]
-                        </a>
+                            <a th:href="@{/terms/download/{id}(id=${item.term.termsId})}">
+                                <img th:src="@{/images/file-down.png}" alt="file-down">
+                            </a>
+                        </td>
+                        <td>
+                            <!-- 새 창에서 PDF 파일 열기 위해 target="_blank" 추가 -->
+                            <a th:href="@{/terms/pdfView/{id}(id=${item.term.termsId})}" target="_blank">
+                                <img th:src="@{/images/scan-eye.png}" alt="scan">
+                            </a>
                         <td th:if="${item.term.termStatus == '비활성'}">
                             <a th:href="@{/admin/config/terms/update(termsId=${item.term.termsId})}">수정</a> <br>
-                            <a th:href="@{/admin/config/terms/view(termsId=${item.term.termsId})}">삭제</a> <br>
                             <a th:href="@{/admin/config/terms/activate(termsId=${item.term.termsId})}"
                                onclick="return confirm('활성화하면 더 이상 상품 정보를 변경할 수 없습니다.\n계속 진행하시겠습니까?');">
                                 활성화
@@ -88,7 +88,6 @@
                                 </a>
                             </div>
                         </td>
-                    </td>
                     </tr>
                 </tbody>
             </table>

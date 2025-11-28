@@ -54,11 +54,14 @@
                     <thead>
                     <tr>
                         <th>No</th>
-                        <th>카드번호</th>
-                        <th>사유</th>
+                        <th>카드명</th>
+                        <th>이미지</th>
+                        <th>혜택요약</th>
+                        <th>약관</th> <!-- 미리보기 -->
+                        <th>요청자</th>
                         <th>요청일</th>
-                        <th>결재일</th>
                         <th>상태</th>
+                        <th>결재일</th>
                         <th>관리</th>
                     </tr>
                     </thead>
@@ -71,8 +74,8 @@
                         </td>
                         <td>[[${approval.reason}]]</td>
                         <td>[[${#temporals.format(approval.requestedAt, 'yyyy-MM-dd')}]]</td>
-                        <td>[[${#temporals.format(approval.approvedAt, 'yyyy-MM-dd')}]]</td>
                         <td>[[${approval.status}]]</td>
+                        <td>[[${#temporals.format(approval.approvedAt, 'yyyy-MM-dd')}]]</td>
                         <td th:if="${approval.status == '대기'}">
                             <a th:href="@{/admin/approval/card/approval(cardId=${approval.approvalId})}">승인</a> <br>
                             <a th:href="@{/admin/approval/card/rejection(cardId=${approval.approvalId})}">반려</a> <br>
