@@ -5,6 +5,7 @@ import kr.co.wave.dto.card.CardRequestDTO;
 import kr.co.wave.entity.config.Category;
 import kr.co.wave.service.card.CardService;
 import kr.co.wave.service.config.CategoryService;
+import kr.co.wave.service.config.TermsService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.security.web.webauthn.api.PublicKeyCose;
@@ -20,6 +21,7 @@ import java.util.List;
 @RequiredArgsConstructor
 public class AdminCardController {
 
+    private final TermsService termsService;
     private final CardService cardService;
     private final CategoryService categoryService;
 
@@ -75,6 +77,7 @@ public class AdminCardController {
     public String cardRegister(Model model) {
         List<Category> categoryList = categoryService.getCategoryAll();
 
+        model.addAttribute("warningList", termsService.getTitles());
         model.addAttribute("categoryList", categoryList);
 
         return "admin/card/register";

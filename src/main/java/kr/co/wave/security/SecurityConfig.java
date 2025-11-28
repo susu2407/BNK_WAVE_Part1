@@ -35,7 +35,6 @@ public class    SecurityConfig {
                         UsernamePasswordAuthenticationFilter.class);
 
         http.formLogin(form -> form
-                .loginPage("/member/login")
                 .loginProcessingUrl("/login")  // 통합 처리 URL
                 .usernameParameter("memId")
                 .passwordParameter("password")

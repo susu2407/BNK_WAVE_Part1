@@ -39,7 +39,7 @@ public interface TermsRepository extends JpaRepository<Terms, Integer> {
                                                   Pageable pageable);
 
     // 모든 약관명 조회
-    @Query("SELECT new kr.co.wave.dto.config.TermsWarningDTO(t.title, t.version, t.termStatus) " +
+    @Query("SELECT new kr.co.wave.dto.config.TermsWarningDTO(t.termsId, t.title, t.version, t.termStatus) " +
             "FROM Terms t")
     List<TermsWarningDTO> findAllTitles();
 }

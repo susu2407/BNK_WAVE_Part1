@@ -317,6 +317,7 @@ public class CardService {
 
         cardApprovalRepository.save(cardApproval);
     }
+
     // 11.27 추가된 메서드: 로그인 사용자의 카드 신청 정보 초기화 (Step 5 시작용)
     public CardApplyRequestDTO initializeApplyInfoForLoggedInUser(String memId, int cardId) {
         // 1. 회원 ID(memId)를 사용하여 DB에서 Member 엔티티를 조회합니다.
@@ -437,6 +438,16 @@ public class CardService {
         addressRepository.save(address);
     }
 
+
+    @Transactional
+    public List<Card> getTypeCredit() {
+        return cardRepository.findByTypeCredit();
+    }
+
+    @Transactional
+    public List<Card> getTypeCheck() {
+        return cardRepository.findByTypeCheck();
+    }
     // 인기카드 (PopularCardDTO) - MemberCardRepositoryd와 연결
     public List<PopularCardDTO> getPopularCards() {
         return memberCardRepository.findPopularCards()
@@ -482,7 +493,6 @@ public class CardService {
 
         return randomCardList;
     }
-
 
 }
 

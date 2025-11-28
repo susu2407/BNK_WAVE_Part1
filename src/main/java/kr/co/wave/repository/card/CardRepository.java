@@ -7,6 +7,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
+import org.springframework.http.ResponseEntity;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -57,11 +58,18 @@ public interface CardRepository extends JpaRepository<Card, Integer> {
             )
         )
     ORDER BY c.cardId DESC
-""")
+    """)
     Page<CardDTO> findCardAllBySearch2(@Param("searchType") String searchType,
                                       @Param("keyword") String keyword,
                                       Pageable pageable);
 
+    // 신용카드만
+    @Query("SELECT c FROM Card c WHERE c.type = '신용'")
+    List<Card> findByTypeCredit();
+
+    // 체크카드만
+    @Query("SELECT c FROM Card c WHERE c.type = '체크'")
+    List<Card> findByTypeCheck();
 
 
     // 11.28 박효빈 추가 (랜덤 4개 쿼리 추가 - 추천 카드 뽑기 어려워서 일단은 메인 페이지 정상화를 위함)

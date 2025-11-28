@@ -1,5 +1,12 @@
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <header th:fragment="header">
     <link rel="stylesheet" th:href="@{/css/admin/common/header.css}">
+    <script th:inline="javascript">
+        window.BASE_URL = /*[[@{/}]]*/ "/";
+    </script>
+    <script th:src="@{/js/common/sessionTimer.js}"></script>
+
     <div id="header-container">
         <div id="header-wrap">
             <a th:href="@{/admin}" class="admin-logo">
@@ -20,6 +27,22 @@
                     <img th:src="@{/images/log-out.svg}" alt="logout">
                 </a>
             </div>
+            <section sec:authorize="isAuthenticated()" class="myp-session-bar">
+                <div class="myp-session-left">
+                    <!-- 실제 로그인 사용자 이름 바인딩 -->
+                    <a th:href="@{/my/Profile}">
+                        <span th:text="${#authentication.principal.userNickname} + '님'">유저이름님</span>
+                    </a>
+                </div>
+                <div class="myp-session-right">
+                    <button type="button" class="btn-session-extend" id="btnExtend">
+                        로그인 연장
+                    </button>
+                    <span class="session-timer" id="sessionTimer">
+                        09:58
+                    </span>
+                </div>
+            </section>
         </div>
     </div>
 </header>
