@@ -5,6 +5,7 @@
     <title>상품관리-목록</title>
     <link rel="stylesheet" th:href="@{/css/admin/common/commonCSS.css}">
     <link rel="stylesheet" th:href="@{/css/admin/common/commonActionBarTable.css}">
+    <link rel="stylesheet" th:href="@{/css/admin/card/list.css}">
     <script th:src="@{/js/admin/common/aside.js}"></script>
 </head>
 <body>
@@ -86,8 +87,9 @@
                             th:class="${stat.even} ? 'even-row' : 'odd-row'">
                             <td>[[${cardList.totalElements - (cardList.number * cardList.size + stat.index)}]]</td>
                             <td>
-                                <a th:href="@{/admin/card/view(cardId=${cardItem.card.cardId})}">[[${cardItem.card.name}]]
-                                    <br> ([[${cardItem.card.engName}]])</a>
+                                <a th:href="@{/admin/card/view(cardId=${cardItem.card.cardId})}">
+                                    [[${cardItem.card.name}]] <br>
+                                    ([[${cardItem.card.engName}]])</a>
                             </td>
                             <td>[[${cardItem.card.type}]]</td>
                             <!-- 혜택 -->
@@ -108,12 +110,13 @@
                                     </li>
                                 </ul>
                             </td>
+
                             <td>[[${cardItem.card.status}]]</td>
+
                             <td>[[${#temporals.format(cardItem.card.createdAt, 'yyyy-MM-dd')}]]</td>
                             <td>[[${#temporals.format(cardItem.card.updatedAt, 'yyyy-MM-dd')}]]</td>
                             <td th:if="${cardItem.card.status == '비활성'}">
                                 <a th:href="@{/admin/card/update(cardId=${cardItem.card.cardId})}">수정</a> <br>
-                                <a th:href="@{/admin/card/view(cardId=${cardItem.card.cardId})}">삭제</a> <br>
                                 <a th:href="@{/admin/card/activate(cardId=${cardItem.card.cardId})}"
                                    onclick="return confirm('활성화하면 더 이상 상품 정보를 변경할 수 없습니다.\n계속 진행하시겠습니까?');">
                                     활성화
