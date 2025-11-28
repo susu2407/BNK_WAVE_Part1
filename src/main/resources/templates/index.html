@@ -209,8 +209,8 @@
             <div class="orig-left">
                 <h2 class="orig-title">Legend<br>Cards</h2>
                 <p class="orig-text">
-                    카드 설명 예시입니다.<br>
-                    카드 설명 예시2입니다.
+                    인기카드<br>
+                    인기가 많은 카드라는 뜻
                 </p>
                 <a href="/cards/originals" class="orig-more">전체보기 ›</a>
             </div>
@@ -218,40 +218,40 @@
             <!-- 오른쪽 카드 리스트 -->
             <div class="orig-list">
                 <!-- 카드 1 -->
-                <article class="orig-item">
-                    <a href="https://example.com/the-red">
-                        <img src="https://i.namu.wiki/i/IAJvonqqxo949GavmMtyQOX05yvPs8vXZpJWZ5orEB4ZUMzsEUpj3D6osRLF8WbcXVbpB05ZGwriavHWsSGRbg.webp"
-                             alt="카드1">
+                <article class="orig-item" th:each="popcard : ${popularCards}">
+                        <a th:href="@{/card/view2(cardId=${popcard.cardId})}">
+                        <img th:src="@{${popcard.thumbnail}}"
+                             th:alt="${popcard.name}">
                     </a>
-                    <h3 class="orig-name">Blue Eyes White Dragon</h3>
+                    <h3 class="orig-name" th:text="${popcard.name}">Blue Eyes White Dragon</h3>
                 </article>
 
-                <!-- 카드 2 -->
-                <article class="orig-item">
-                    <a href="https://example.com/the-pink">
-                        <img src="https://item.kakaocdn.net/do/221e5f43bfec8da08db90dd41d7e80879f5287469802eca457586a25a096fd31"
-                             alt="카드2">
-                    </a>
-                    <h3 class="orig-name">파멸의 예언자</h3>
-                </article>
+<!--                &lt;!&ndash; 카드 2 &ndash;&gt;-->
+<!--                <article class="orig-item">-->
+<!--                    <a href="https://example.com/the-pink">-->
+<!--                        <img src="https://item.kakaocdn.net/do/221e5f43bfec8da08db90dd41d7e80879f5287469802eca457586a25a096fd31"-->
+<!--                             alt="카드2">-->
+<!--                    </a>-->
+<!--                    <h3 class="orig-name">파멸의 예언자</h3>-->
+<!--                </article>-->
 
-                <!-- 카드 3 -->
-                <article class="orig-item">
-                    <a href="https://example.com/summit">
-                        <img src="https://item.kakaocdn.net/do/8e9c5b6084a4f06c14baf8341edc9062f43ad912ad8dd55b04db6a64cddaf76d"
-                             alt="카드3">
-                    </a>
-                    <h3 class="orig-name">Summit</h3>
-                </article>
+<!--                &lt;!&ndash; 카드 3 &ndash;&gt;-->
+<!--                <article class="orig-item">-->
+<!--                    <a href="https://example.com/summit">-->
+<!--                        <img src="https://item.kakaocdn.net/do/8e9c5b6084a4f06c14baf8341edc9062f43ad912ad8dd55b04db6a64cddaf76d"-->
+<!--                             alt="카드3">-->
+<!--                    </a>-->
+<!--                    <h3 class="orig-name">Summit</h3>-->
+<!--                </article>-->
 
-                <!-- 카드 4 -->
-                <article class="orig-item">
-                    <a href="https://example.com/boutique">
-                        <img src="https://koreafuture.co.kr/data/cheditor4/2504/9e64c0509d6db35311252f453fc322c0dfbe1dbc.jpg"
-                             alt="카드4">
-                    </a>
-                    <h3 class="orig-name">Boutique – Copper</h3>
-                </article>
+<!--                &lt;!&ndash; 카드 4 &ndash;&gt;-->
+<!--                <article class="orig-item">-->
+<!--                    <a href="https://example.com/boutique">-->
+<!--                        <img src="https://koreafuture.co.kr/data/cheditor4/2504/9e64c0509d6db35311252f453fc322c0dfbe1dbc.jpg"-->
+<!--                             alt="카드4">-->
+<!--                    </a>-->
+<!--                    <h3 class="orig-name">Boutique – Copper</h3>-->
+<!--                </article>-->
             </div>
         </div>
         <div class="info-row">

@@ -62,4 +62,28 @@ public class Member {
 
     @Column(name="STATUS")
     private String status;
+
+    // 카드 신청 단계에서 수집된 정보만 업데이트하는 메서드
+    public void updateApplicationInfo(
+            String name,
+            String firstNameEn,
+            String lastNameEn,
+            String email,
+            String rrn,
+            String zip,
+            String address,
+            String deaddress
+    ) {
+        this.name = name;
+        this.firstNameEn = firstNameEn;
+        this.lastNameEn = lastNameEn;
+        this.email = email;
+        this.rrn = rrn;
+        this.zip = zip;
+        this.address = address;
+        this.deaddress = deaddress;
+        this.status = "활성"; // 상태도 이 시점에 활성으로 업데이트
+        // role은 업데이트하지 않습니다. (기존 role 유지)
+    }
+
 }

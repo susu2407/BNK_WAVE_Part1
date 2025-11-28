@@ -438,25 +438,32 @@ public class CardController {
         return "card/register10";
     }
 
-    @PostMapping("/card/register10")
-    public String register10Post(HttpSession session) {
+    @PostMapping("/card/register10") // 11.27 변경 (회원정보 memId 가져옮
+    public String register10Post(HttpSession session, @AuthenticationPrincipal MemberDetails memberDetails) { // 👈 MemberDetails 파라미터 추가
 
         CardApplyRequestDTO applyInfo = (CardApplyRequestDTO) session.getAttribute("applyInfo");
-        String memId = (String) session.getAttribute("loginId");
+        String memId = null;
+
+        if (memberDetails != null) {
+            // MemberDetails에서 ID를 안전하게 추출
+            memId = memberDetails.getUsername();
+        }
+        // memId가 null이면 비로그인 사용자이므로, 서비스에서 guest_UUID로 처리하게 둡니다.
 
         if (applyInfo == null) {
-            return "redirect:/card/register2?cardId=" + applyInfo.getCardId();
+            // applyInfo가 null이면 cardId를 가져올 수 없으므로, 비정상 접근으로 처리
+            log.warn("최종 신청 단계에서 applyInfo 세션 누락.");
+            return "redirect:/card/list"; // 안전한 곳으로 리다이렉트
         }
 
-        // 실제 저장 로직 (네 서비스에 있는 메서드)
+        // 실제 저장 로직
         cardService.applyCard(applyInfo, memId);
-
-        session.removeAttribute("applyInfo");
+        session.removeAttribute("applyInfo"); // 최종 완료 후 세션 데이터 제거
 
         return "redirect:/card/register11?cardId=" + applyInfo.getCardId();
     }
 
-    // 💡 추가: 최종 완료 페이지를 보여줄 GET 메서드 (register11.html과 연결)
+    // 최종 완료 페이지를 보여줄 GET 메서드
     @GetMapping("/card/register11")
     public String register11(@RequestParam int cardId, Model model) {
         // 완료 페이지에서 보여줄 카드 정보와 신청 일시를 모델에 담아 전달합니다.

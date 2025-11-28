@@ -358,48 +358,56 @@ public class CardService {
     @Transactional
     public void applyCard(CardApplyRequestDTO dto, String memId) {
 
-        String role = "GENERAL";
-        if(memId == null || memId.isEmpty()){
+        System.out.println("전달된 memId: " + memId);
+
+        String guestRole = "GENERAL";
+        boolean isNewMember = false;
+
+        if (memId == null || memId.isEmpty()) {
             // 비로그인 사용자용 임시 ID 생성
             memId = "guest_" + UUID.randomUUID();
-            // 비로그인 카드 발급 시 ROLE = "GENERAL" 할당
-            role = "GENERAL";
+            isNewMember = true;
         }
+
         // 1️⃣ Member 확인 / 생성 또는 업데이트
         Optional<Member> optionalMember = memberRepository.findById(memId);
         Member member;
-        if (optionalMember.isPresent()) {
-            member = optionalMember.get();
-            member = Member.builder()
-                    .memId(memId)
-                    .name(dto.getName())
-                    .firstNameEn(dto.getFirstNameEn())
-                    .lastNameEn(dto.getLastNameEn())
-                    .email(dto.getEmail())
-                    .rrn(dto.getRrn())
-                    .zip(dto.getZip())
-                    .address(dto.getAddr1())
-                    .deaddress(dto.getAddr2())
-                    .status("활성")
-                    .role(role)
-                    .build();
-        } else {
-            member = Member.builder()
-                    .memId(memId)
-                    .name(dto.getName())
-                    .firstNameEn(dto.getFirstNameEn())
-                    .lastNameEn(dto.getLastNameEn())
-                    .email(dto.getEmail())
-                    .rrn(dto.getRrn())
-                    .zip(dto.getZip())
-                    .address(dto.getAddr1())
-                    .deaddress(dto.getAddr2())
-                    .status("활성")
-                    .build();
-        }
-        memberRepository.save(member);
 
-        // 2️⃣ Account 저장
+        if (optionalMember.isPresent()) {
+            //기존 멤버: 엔티티의 전용 업데이트 메서드 호출
+            member = optionalMember.get();
+            member.updateApplicationInfo(
+                    dto.getName(),
+                    dto.getFirstNameEn(),
+                    dto.getLastNameEn(),
+                    dto.getEmail(),
+                    dto.getRrn(),
+                    dto.getAddr1(), // address
+                    dto.getAddr2(), // deaddress
+                    dto.getZip()    // zip
+            );
+            // @Transactional에 의해 메서드 종료 시 자동 반영됨 (Dirty Checking)
+
+        } else {
+            // 🌟 신규 멤버: Builder를 통해 객체 생성 🌟
+            member = Member.builder()
+                    .memId(memId)
+                    .name(dto.getName())
+                    .firstNameEn(dto.getFirstNameEn())
+                    .lastNameEn(dto.getLastNameEn())
+                    .email(dto.getEmail())
+                    .rrn(dto.getRrn())
+                    .zip(dto.getZip())
+                    .address(dto.getAddr1())
+                    .deaddress(dto.getAddr2())
+                    .status("활성")
+                    .role(guestRole) // 신규 멤버에게만 역할 할당
+                    .build();
+
+            memberRepository.save(member);
+        }
+
+        // Account 저장
         Account account = Account.builder()
                 .memId(memId)
                 .accountBank(dto.getAccountBank())
@@ -409,7 +417,7 @@ public class CardService {
                 .build();
         Account savedAccount = accountRepository.save(account);
 
-        // 3️⃣ MemberCard 저장
+        // MemberCard 저장
         MemberCard memberCard = MemberCard.builder()
                 .memId(memId)
                 .cardId(dto.getCardId())
@@ -419,7 +427,7 @@ public class CardService {
                 .build();
         memberCardRepository.save(memberCard);
 
-        // 4️⃣ Address 저장
+        // Address 저장 (새로운 배송지 또는 정보 저장)
         Address address = Address.builder()
                 .memId(memId)
                 .zip(dto.getZip())
@@ -427,6 +435,14 @@ public class CardService {
                 .addr2(dto.getAddr2())
                 .build();
         addressRepository.save(address);
+    }
+
+    // 인기카드 (PopularCardDTO) - MemberCardRepositoryd와 연결
+    public List<PopularCardDTO> getPopularCards() {
+        return memberCardRepository.findPopularCards()
+                .stream()
+                .limit(4)
+                .toList();
     }
 
 }
