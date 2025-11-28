@@ -24,13 +24,16 @@
             <div class="complete-icon">✓</div>
 
             <!-- 카드명 -->
-            <h1 class="complete-card-name">체크카드</h1>
+            <h1 class="complete-card-name" th:text="${cardItem.card.name}">체크카드</h1>
             <p class="complete-main-text">신청이 완료되었습니다.</p>
 
             <!-- 신청일시 -->
             <p class="complete-date">
                 신청일시
-                <span class="date-value">2025-11-17 14:32</span>
+                <span class="date-value"
+                      th:text="${applyDate != null ? #temporals.format(applyDate, 'yyyy-MM-dd HH:mm') : '날짜 정보 없음'}">
+                2025-11-26 10:30
+            </span>
                 <!-- 서버/템플릿 값으로 교체 -->
             </p>
 

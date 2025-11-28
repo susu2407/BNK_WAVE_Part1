@@ -17,6 +17,8 @@ public class HistoryDTO {
 
     private String account;
 
+    private String memId;
+
     private String branchName;
 
     private BigDecimal latitude;
