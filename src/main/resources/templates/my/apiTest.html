@@ -5,6 +5,35 @@
     <title>Kakao Map</title>
 </head>
 <body>
+<form id="askForm">
+    <label>질문(question)</label><br>
+    <input type="text" id="question" name="question" required>
+    <br><br>
+
+    <button type="submit">전송</button>
+</form>
+
+<h3>응답</h3>
+<pre id="response"></pre>
+
+
+<script>
+    document.getElementById("askForm").addEventListener("submit", async (e) => {
+        e.preventDefault();
+
+        const question = document.getElementById("question").value;
+
+        const response = await fetch("http://localhost:8000/ask2", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ question: question })
+        });
+
+        const data = await response.json();
+        document.getElementById("response").textContent = JSON.stringify(data, null, 2);
+    });
+</script>
+
 <div id="map" style="width:1000px;height:800px;"></div>
 <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=02766b043924c4c57b57f6ffcfdc6e95"></script>
 <script>

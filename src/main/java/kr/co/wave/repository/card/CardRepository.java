@@ -7,8 +7,10 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
+import org.springframework.http.ResponseEntity;
 
 import java.time.LocalDate;
+import java.util.List;
 
 public interface CardRepository extends JpaRepository<Card, Integer> {
 
@@ -56,8 +58,17 @@ public interface CardRepository extends JpaRepository<Card, Integer> {
             )
         )
     ORDER BY c.cardId DESC
-""")
+    """)
     Page<CardDTO> findCardAllBySearch2(@Param("searchType") String searchType,
                                       @Param("keyword") String keyword,
                                       Pageable pageable);
+
+    // 신용카드만
+    @Query("SELECT c FROM Card c WHERE c.type = '신용'")
+    List<Card> findByTypeCredit();
+
+    // 체크카드만
+    @Query("SELECT c FROM Card c WHERE c.type = '체크'")
+    List<Card> findByTypeCheck();
+
 }
