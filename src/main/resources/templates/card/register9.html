@@ -22,7 +22,7 @@
         <section class="addr-wrap">
             <div class="apply-progress"
                  data-total="8"
-                 data-step="8">
+                 data-step="7">
             </div>
             <h1 class="addr-title">카드 수령 주소 입력</h1>
 
@@ -132,12 +132,14 @@
             };
             console.log('배송지:', payload);
             alert('주소가 저장되었습니다.');
+        });
 
+        document.addEventListener('DOMContentLoaded', function () {
             const progress = document.querySelector('.apply-progress');
             if (!progress) return;
 
-            const total  = Number(progress.dataset.total || 8); // 기본 10단계
-            const step   = Number(progress.dataset.step  || 8);  // 현재 단계
+            const total = Number(progress.dataset.total || 8); // 기본 10단계
+            const step = Number(progress.dataset.step || 7);  // 현재 단계
 
             // 바 래퍼 생성
             const bar = document.createElement('div');
