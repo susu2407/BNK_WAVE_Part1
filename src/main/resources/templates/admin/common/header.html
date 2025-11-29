@@ -17,32 +17,28 @@
                 <img th:src="@{/images/search.svg}" alt="search-icon">
             </div>
             <div class="header-icons">
-                <a th:href="@{/admin}">
-                    <img th:src="@{/images/house.svg}" alt="home">
-                </a>
-                <a th:href="@{#}">
-                    <img th:src="@{/images/circle-user-round.svg}" alt="user">
-                </a>
-                <a th:href="@{#}">
-                    <img th:src="@{/images/log-out.svg}" alt="logout">
-                </a>
-            </div>
-            <section sec:authorize="isAuthenticated()" class="myp-session-bar">
-                <div class="myp-session-left">
+                <section sec:authorize="isAuthenticated()" class="myp-session-bar">
                     <!-- 실제 로그인 사용자 이름 바인딩 -->
                     <a th:href="@{/my/Profile}">
                         <span th:text="${#authentication.principal.userNickname} + '님'">유저이름님</span>
                     </a>
-                </div>
-                <div class="myp-session-right">
-                    <button type="button" class="btn-session-extend" id="btnExtend">
-                        로그인 연장
-                    </button>
                     <span class="session-timer" id="sessionTimer">
                         09:58
                     </span>
-                </div>
-            </section>
+                    <button type="button" class="btn-session-extend" id="btnExtend">
+                        <img th:src="@{/images/circle-plus.png}" alt="로그인연장" class="login-plus_icon">
+                    </button>
+
+                    <a th:href="@{/admin}">
+                        <img th:src="@{/images/house.svg}" alt="home">
+                    </a>
+
+                    <a th:href="@{#}">
+                        <img th:src="@{/images/log-out.svg}" alt="logout">
+                    </a>
+                </section>
+            </div>
+
         </div>
     </div>
 </header>

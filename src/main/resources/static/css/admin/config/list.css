@@ -1,0 +1,41 @@
+/*
+    내용 : 약관 목록 css
+*/
+/* ㅡㅡㅡ 활성화상태 ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ */
+.status-legend {
+    display: flex;
+    justify-content: center;
+    color: #888888;
+    font-weight: 400;
+    font-size: 12px;
+    gap: 1em;
+    margin: 0.5em;
+}
+
+.status-item {
+    display: flex;
+    align-items: center;
+    gap: 0.25em;
+}
+
+.status-dot {
+    display: inline-block;
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+}
+
+/* 활성 컬러 */
+.status-dot.active {
+    background-color: green;
+}
+
+/* 비활성 컬러 */
+.status-dot.inactive {
+    background-color: gray;
+}
+
+/* 퇴직 컬러 */
+.status-dot.retired {
+    background-color: red;
+}

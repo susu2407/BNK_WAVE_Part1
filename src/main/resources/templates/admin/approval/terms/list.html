@@ -13,7 +13,13 @@
 <div th:replace="~{admin/common/aside :: aside}"></div>
 <main>
     <div class="main-container">
-        <div th:replace="~{admin/common/mainHeader :: mainHeader}"></div>
+        <div class="page-header">
+            <link rel="stylesheet" th:href="@{/css/admin/common/mainHeader.css}">
+            <h1 class="page-title">승인관리</h1>
+            <nav class="page-breadcrumb">
+                관리자 &gt; 상품관리 &gt; 승인관리 > 약관승인
+            </nav>
+        </div>
         <div id="main-content">
 
             <!-- 탭 -->
@@ -55,15 +61,14 @@
                     <tr>
                         <th>No</th>
                         <th>약관 종류</th>
-                        <th>약관번호</th>
-                        <th>약관명/버전</th>
+                        <th>약관명</th>
                         <th>사유</th>
                         <th>요청자</th>
                         <th>요청일</th>
                         <th>결재자</th>
                         <th>결재일</th>
-                        <th>상태(요청/승인/반려)</th>
-                        <th>처리(승인버튼/상세보기버튼)</th>
+                        <th>상태</th>
+                        <th>처리</th>
                     </tr>
                     </thead>
                     <tbody>
@@ -71,9 +76,6 @@
                     <tr th:each="approval, stat : ${termsApprovalList.content}">
                         <td>[[${termsApprovalList.totalElements - (termsApprovalList.number * termsApprovalList.size + stat.index)}]]</td>
                         <td>종류</td>
-                        <td>
-                            [[${approval.termsId}]]
-                        </td>
                         <td>제목-버전</td>
                         <td>[[${approval.reason}]]</td>
                         <td>요청한 사람</td>
@@ -81,7 +83,6 @@
                         <td>결재한 사람</td>
                         <td>[[${#temporals.format(approval.approvedAt, 'yyyy-MM-dd')}]]</td>
                         <td>[[${approval.status}]]</td>
-
                         <td th:if="${approval.status == '대기'}">
                             <a th:href="@{/admin/approval/terms/approval(termsId=${approval.termsApprovalId})}">승인</a> <br>
                             <a th:href="@{/admin/approval/terms/rejection(termsId=${approval.termsApprovalId})}">반려</a> <br>
