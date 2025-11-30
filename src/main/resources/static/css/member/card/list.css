@@ -1,3 +1,9 @@
+@media (min-width: 1024px) {
+    main {
+        zoom: 125%;
+    }
+}
+
 /* ===== 본문 ===== */
 .main-content {
     max-width: 1080px;
@@ -158,11 +164,5 @@
 
     .card-actions {
         flex-direction: row;
-    }
-}
-
-@media (min-width: 1024px) {
-    html {
-        zoom: 125%;
     }
 }

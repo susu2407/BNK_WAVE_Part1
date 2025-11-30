@@ -11,6 +11,9 @@
     padding: 0;
 }
 
+a, span{text-decoration: none;
+    color: black;
+}
 body {
     font-family: 'Apple SD Gothic Neo', 'Spoqa', sans-serif, system-ui;
     min-height: 900px;
@@ -105,6 +108,7 @@ body {
     display: flex;
     align-items: center;
     font-size: 13px;
+    gap: 16px;
 }
 
 /* 검색창 – 밑줄형 디자인 */
