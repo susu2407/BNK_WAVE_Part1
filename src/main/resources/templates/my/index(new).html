@@ -371,10 +371,15 @@
                         </div>
                         <p class="benefit-bar-label">${b.label}</p>
                         <p class="benefit-bar-amount">
-                            ${used.toLocaleString()}원 / ${max.toLocaleString()}원
+                            <strong>${used.toLocaleString()}원</strong> / ${max.toLocaleString()}원
                         </p>
                     `;
                 benefitBarsEl.appendChild(bar);
+
+                // ★ 여기부터 애니메이션 리셋 + 재적용
+                benefitBarsEl.classList.remove('animate');   // 먼저 제거
+                void benefitBarsEl.offsetWidth;             // 리플로우로 강제 리셋
+                benefitBarsEl.classList.add('animate');     // 다시 추가 → 매번 애니메이션 실행
             });
         }
 
