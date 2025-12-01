@@ -23,7 +23,7 @@
     display: inline-flex;
     align-items: center;
     gap: 8px;
-    font-size: 24px;
+    font-size: 36px;
     font-weight: 600;
     letter-spacing: 0.02em;
 }
@@ -75,9 +75,10 @@
 }
 
 .summary-total-label {
-    font-size: 14px;
+    font-size: 16px;
     color: #666;
     margin-bottom: 8px;
+    font-weight: 500;
 }
 
 .summary-total-amount {
@@ -512,7 +513,7 @@
 }
 
 .payment-card-title {
-    font-size: 14px;
+    font-size: 18px;
     font-weight: 600;
 }
 
