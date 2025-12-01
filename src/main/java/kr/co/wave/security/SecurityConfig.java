@@ -99,10 +99,8 @@ public class    SecurityConfig {
         // 세션 타임아웃 설정: 20분
         http.sessionManagement(session -> session
                         .sessionCreationPolicy(SessionCreationPolicy.IF_REQUIRED)
-                        .invalidSessionUrl("/session-invalid")
                         .sessionFixation().changeSessionId() // 세션 고정 공격 방지 (권장)
                         .maximumSessions(1)
-                        .expiredUrl("/session-expired")
                 );
 
         return http.build();

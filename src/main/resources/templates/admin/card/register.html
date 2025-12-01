@@ -77,8 +77,8 @@
                                 <div class="form-flex-wrapper" >
                                     <select name="" id="" required>
                                         <option value="type" disabled selected hidden>타입 선택</option>
-                                        <option value="국내">국내전용</option>
-                                        <option value="해외">해외겸용</option>
+                                        <option name="region" value="국내">국내전용</option>
+                                        <option name="region" value="해외">해외겸용</option>
                                     </select>
                                     <div class="input-with-unit">
                                         <input type="text" name="annualFeeName" style="width: 300px"
@@ -177,6 +177,9 @@
                             </p>
                         </div>
                         <div class="section-content">
+                            <select name="category">
+                                <option value="" disabled selected hidden>카테고리 선택</option>
+                            </select>
                             <select name="termsId" required>
                                 <option value="" disabled selected hidden>약관 구분을 선택하세요.</option>
                                 <option th:each="item : ${warningList}" th:value="${item.termsId}" th:text="${item.title}">약관</option>
@@ -265,7 +268,8 @@
         // 필요한 경우 change 이벤트 트리거
         selectBox.dispatchEvent(new Event('change'));
     }
-    
+</script>
+<script>
     // input[type="file"]
     document.getElementById('termsFile').addEventListener('change', function() {
         const fileNameDisplay = document.getElementById('fileNameDisplay');

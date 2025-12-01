@@ -23,4 +23,7 @@ public class AnnualFee {
     @ManyToOne
     @JoinColumn(name = "CARD_ID")
     private Card card;
+
+    @Column(name="REGION")
+    private String region;
 }
