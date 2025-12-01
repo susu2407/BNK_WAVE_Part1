@@ -7,13 +7,13 @@
 </head>
 <body>
 <div th:replace="~{common/header :: header}"></div>
+
 <main>
     <div class="main-container">
         <div id="main-content">
             <div class="detail-wrap">
-                <section class="card-top">
-                    <!-- 왼쪽 카드 -->
 
+                <section class="card-top">
                     <div class="card-top-left">
                         <div class="card-preview">
                             <img th:src="@{${cardItem.card.background != null ? '/' + cardItem.card.background : '/' + cardItem.card.thumbnail}}"
@@ -21,42 +21,40 @@
                         </div>
                     </div>
 
-                    <!-- 오른쪽 설명 -->
                     <div class="card-top-right">
                         <div class="top-head">
                             <h1 class="card-title">
                                 [[${cardItem.card.name}]]<br>
                                 [[${cardItem.card.engName}]]
-                                 </h1>
+                            </h1>
                         </div>
                         <p class="card-sub" th:text="${cardItem.card.description}"></p>
 
                         <div class="top-benefits">
-                            <p th:each="b, stat : ${cardItem.benefitList}" th:if="${stat.index <4}">
-                            <!-- 혜택 카테고리 -->
+                            <p th:each="b, stat : ${cardItem.benefitList}" th:if="${stat.index < 4}">
                                 <span>[[${b.benefitCategory}]]</span>
-                                <strong>
-                                    [[${b.value}]] [[${b.unit}]] [[${b.benefitType}]]
-                                </strong>
+                                <strong>[[${b.value}]] [[${b.unit}]] [[${b.benefitType}]]</strong>
                             </p>
                         </div>
                     </div>
                 </section>
 
-                <!-- 연회비 박스 -->
                 <div class="annual-box">
                     <div class="annual-top">
                         <span class="annual-title">연회비</span>
                         <a href="javascript:void(0)" class="annual-arrow" id="openFee">›</a>
                     </div>
                     <ul class="annual-rows">
-                        <li th:each="fee:${cardItem.annualFeeList}">
-                            <span class="annual-type">[[${fee.annualName}]]</span>
+                        <li th:each="fee : ${cardItem.annualFeeList}" th:if="${fee != null and fee.annualName != null}">
+                            <span class="annual-type">
+                                <span th:if="${#strings.contains(fee.annualName, '국내전용')}"> </span>
+                                <span th:if="${#strings.contains(fee.annualName, '국내외겸용')}">  </span>
+                                [[${fee.annualName}]]
+                            </span>
                         </li>
                     </ul>
                 </div>
 
-                <!-- 카드 발급 유의사항 -->
                 <section class="card-notice">
                     <header class="card-notice-head" id="cardNoticeToggle">
                         <h3>카드발급 유의사항</h3>
@@ -64,7 +62,6 @@
                             <span class="tri"></span>
                         </button>
                     </header>
-
                     <div class="card-notice-body" id="cardNoticeBody">
                         <ul>
                             <li>연회비는 기본연회비와 서비스연회비를 합산해 카드별로 청구됩니다.</li>
@@ -75,11 +72,9 @@
                     </div>
                 </section>
 
-
-                <!-- 안내 박스 -->
                 <section class="benefit-section">
-                    <div class="benefit-grid">
-                        <article class="benefit-card" th:each="ben : ${cardItem.benefitList}">
+                    <div class="benefit-grid" th:each="ben : ${cardItem.benefitList}">
+                        <article class="benefit-card">
                             <h4>[[${ben.benefitCategory}]]</h4>
                             <ul>
                                 <li>[[${ben.benefitDescription}]]</li>
@@ -89,7 +84,6 @@
                     </div>
                 </section>
 
-                <!-- 카드 비교 섹션 -->
                 <section class="card-compare-wrap">
                     <div class="compare-title">
                         <h2>이 카드랑 비교해 보세요.</h2>
@@ -97,38 +91,28 @@
                     </div>
 
                     <div class="compare-body">
-                        <!-- 현재 카드 -->
                         <div class="compare-card current-card" id="currentCard">
                             <p class="label">현재 보고 있는 카드</p>
-
                             <div class="card-box">
-                                <!-- 왼쪽 썸네일 -->
                                 <div class="card-thumb">
                                     <img th:src="@{${cardItem.card.background != null ? '/' + cardItem.card.background : '/' + cardItem.card.thumbnail}}"
-                                         th:alt="${cardItem.card.name}"
-                                         class="card-img">
+                                         th:alt="${cardItem.card.name}" class="card-img">
                                 </div>
-
-                                <!-- 오른쪽 텍스트 -->
                                 <div class="card-info">
                                     <h3 class="card-name">[[${cardItem.card.name}]]</h3>
                                     <p class="card-benefit">
-                                    <span th:each="ben, stat : ${cardItem.benefitList}">
-                                        [[${ben.benefitCategory}]]
-                                        <span th:unless="${stat.last}">, </span>
-                                    </span>
+                                        <span th:each="ben, stat : ${cardItem.benefitList}">
+                                            [[${ben.benefitCategory}]]
+                                            <span th:unless="${stat.last}">, </span>
+                                        </span>
                                     </p>
                                 </div>
                             </div>
-
-                            <span id="currentCardBenefitsData" style="display: none;"
-                                  th:data-benefits-str="${cardItem.categoryString}"></span>
+                            <span id="currentCardBenefitsData" style="display: none;" th:data-benefits-str="${cardItem.categoryString}"></span>
                         </div>
-
 
                         <div class="compare-plus">+</div>
 
-                        <!-- 비교 카드 -->
                         <div class="compare-card target-card" id="targetCard">
                             <p class="label">비교할 카드 선택</p>
                             <button class="card-box empty" id="openModalBtn" type="button">
@@ -137,7 +121,6 @@
                         </div>
                     </div>
 
-                    <!-- 카드 비교 결과 섹션 -->
                     <section class="benefit-compare" id="benefitCompare" style="display: none;">
                         <div class="benefit-compare-grid">
                             <div class="benefit-column" id="currentBenefits">
@@ -158,8 +141,6 @@
                     </section>
                 </section>
 
-
-                <!-- 부가 서비스 변경 섹션 -->
                 <section class="card-notice" id="extraService">
                     <header class="card-notice-head">
                         <h3>부가서비스 변경 가능 사유</h3>
@@ -167,105 +148,70 @@
                             <span class="tri"></span>
                         </button>
                     </header>
-
                     <div class="card-notice-body">
-                        <p class="notice-text">
-                            * 카드를 이용하는 경우 제공되는 포인트 및 할인혜택 등의 부가서비스는 카드 신규 출시 이후 다음 사유 중 어느 하나에 해당하는 경우 외에는 변경할 수 없습니다. (단,
-                            회원의 권익을 증진하거나 부담을 완화하는 경우는 제외)
-                            카드사가 부가서비스를 변경하는 경우에는 변경 사유, 변경 내용을 다음에 정하는 기간에 따라 서면교부, 우편 또는 전자우편, 전화 또는 팩스, 휴대폰 메시지 또는 이에 준하는
-                            전자적 의사표시 중 서로 다른 2가지 이상의 방법으로 고지하여 드립니다.
-                        </p>
+                        <p class="notice-text">* 카드 제공 부가서비스 변경 관련 안내...</p>
                         <ol class="notice-list">
                             <li>① 카드사의 휴업·파산·경영상의 위기 등에 따른 불가피한 경우 : 사유발생 즉시</li>
                             <li>② 제휴업체의 휴업·파산·경영상의 위기로 인해 불가피하게 해당 부가서비스를 축소·변경하는 경우 : 사유발생 즉시</li>
                             <li>③ 제휴업체와의 계약 해지로 인해 동일한 부가서비스 제공이 곤란한 경우 : 사유발생 즉시</li>
-                            <li>④ 부가서비스를 3년 이상 제공한 상태에서 해당 부가서비스로 인해 상품의 수익성이 현저히 낮아진 경우 : 부가서비스 변경 6개월 전부터 매월</li>
+                            <li>④ 부가서비스를 3년 이상 제공한 상태에서 상품 수익성이 낮아진 경우 : 변경 6개월 전부터 매월</li>
                         </ol>
                     </div>
                 </section>
 
-                <!-- 필수 안내사항 섹션 -->
                 <section class="must-guide">
                     <h3>필수 안내 사항</h3>
                     <ul>
-                        <li>
-                            연체이자율 : 회원별·이용상품별 정상이자율 + 3%p (최고 연 20.0%)
-                            <ul>
-                                <li>연체 발생 시점에 정상 이자율이 없는 경우 아래와 같이 적용</li>
-                                <li>① 일시불 거래 연체 시 : 거래 발생 시점의 최소 기간(2개월) 유이자할부 이자율</li>
-                                <li>② 무이자할부 거래 연체 시 : 거래 발생 시점의 동일한 할부 계약기간 유이자할부 이자율</li>
-                                <li>③ 그 외의 경우 : 상법상 상사법정이율과 상호금융 가계자금대출금리 중 높은 이자율</li>
-                                <li>※ 가계자금대출금리 : 한국은행에서 매월 발표하는 가장 최근의 비은행 금융기관 가중평균대출금리(신규 대출 기준)</li>
-                            </ul>
-                        </li>
-                        <li>금융상품 이용 전 상품설명서, 약관을 통해 이용조건을 확인해 주시기 바랍니다.</li>
-                        <li>필요 이상으로 신용카드를 발급 및 이용하실 경우 개인신용평점, 이용한도 등에 영향을 미칠 수 있습니다.</li>
-                        <li>상환 능력에 비해 신용카드 사용액이 과도할 경우 귀하의 개인신용평점이 하락할 수 있습니다.</li>
-                        <li>개인신용평점 하락 시 금융거래 관련 불이익이 발생할 수 있습니다.</li>
-                        <li>일정 기간 원리금을 연체할 경우, 모든 원리금을 변제할 의무가 발생할 수 있습니다.</li>
-                        <li>금융소비자는 해당 상품 또는 서비스에 대해 설명을 받을 권리가 있습니다.</li>
-                        <li>신용카드 남용은 가계경제에 위험이 됩니다.</li>
-                        <li>심의필 : 여신금융협회 심의필 제 2025 – Ch1 – 1444020</li>
-                        <li>카드 출시일자 : 2025-07-02</li>
+                        <li>연체이자율 : 회원별·이용상품별 정상이자율 + 3%p (최고 연 20.0%)</li>
+                        <li>금융상품 이용 전 상품설명서, 약관 확인</li>
+                        <li>신용카드 남용은 가계경제에 위험</li>
                     </ul>
                 </section>
 
-                <!-- 하단 고정 버튼 -->
                 <div class="floating-apply">
-
                     <form th:action="@{/card/register1}" method="get">
                         <input type="hidden" name="cardId" th:value="${cardItem.card.cardId}">
-                    <button type="submit" class="btn-main">
-                        카드신청
-                    </button>
+                        <button type="submit" class="btn-main">카드신청</button>
                     </form>
                     <button type="button" class="btn-sub">뒤로가기</button>
                 </div>
+
             </div>
         </div>
     </div>
 </main>
-<div class="fee-modal" id="feeModal">
-    <!-- 연회비 모달창-->
-    <div class="fee-modal-dim" id="feeDim"></div>
 
+<div class="fee-modal" id="feeModal">
+    <div class="fee-modal-dim" id="feeDim"></div>
     <div class="fee-modal-box">
         <div class="fee-modal-header">
             <h2>연회비</h2>
             <button type="button" class="fee-modal-close" id="feeClose">✕</button>
         </div>
-
-        <div class="fee-modal-body" th:each="fee : ${cardItem.annualFeeList}">
-            <div class="fee-item">
-                <h3>[[${fee.annualName}]]</h3>
-<!--                <p class="fee-sub">(기본연회비 100,000원 + 제휴연회비 200,000원)</p>-->
-<!--                <p class="fee-sub">가족카드 100,000원(기본연회비 0원 + 제휴연회비 100,000원)</p>-->
+        <div class="fee-modal-body" th:each="fee, iterStat : ${cardItem.annualFeeList}">
+            <div class="fee-item" th:if="${fee != null}">
+                <h3 class="fee-title">
+                    <span th:if="${iterStat.count == 1}"> </span>
+                    <span th:if="${iterStat.count == 2}"> </span>
+                    [[${fee.annualName}]]
+                </h3>
+                <div class="fee-line"></div>
             </div>
-
-            <div class="fee-line"></div>
-
-            <div class="fee-item">
-<!--                <h3>국내전용 300,000원</h3>-->
-<!--                <p class="fee-sub">(기본연회비 100,000원 + 제휴연회비 200,000원)</p>-->
-<!--                <p class="fee-sub">가족카드 100,000원(기본연회비 0원 + 제휴연회비 100,000원)</p>-->
-            </div>
-
-            <ul class="fee-notice">
-                <li>카드 연회비(기본연회비 + 제휴연회비)는 카드 발급 시 선청구되며, 보유 카드별로 청구</li>
-                <li>기본연회비는 카드의 발행, 배송 등 발급에 소요된 비용으로, 발급 첫 해에 카드 해지 시에도 반환되지 않음</li>
-            </ul>
         </div>
+        <ul class="fee-notice">
+            <li>카드 연회비(기본연회비 + 제휴연회비)는 카드 발급 시 선청구되며, 보유 카드별로 청구됨</li>
+            <li>기본연회비는 카드 발행, 배송 등 발급에 소요된 비용으로, 발급 첫 해에 해지해도 반환되지 않음</li>
+        </ul>
     </div>
 </div>
 
-<div class="card-modal-overlay" id="cardModal"><!-- 카드비교 모달 -->
+<div class="card-modal-overlay" id="cardModal">
     <div class="card-modal">
         <div class="card-modal-header">
             <h3>비교할 카드 선택</h3>
             <button class="close-modal" id="closeModalBtn" type="button">×</button>
         </div>
         <div class="card-modal-body">
-            <!-- 카드 1 -->
             <button class="modal-card-item"
                     th:each="compareCard : ${compareCards}"
                     th:data-card-name="${compareCard.card.name}"
@@ -273,13 +219,12 @@
                     th:data-card-img="@{${compareCard.card.background != null ? '/' + compareCard.card.background : '/' + compareCard.card.thumbnail}}">
                 <div class="modal-card-thumb">
                     <img th:src="@{${compareCard.card.background != null ? '/' + compareCard.card.background : '/' + compareCard.card.thumbnail}}"
-                         th:alt="${compareCard.card.name}" />
+                         th:alt="${compareCard.card.name}"/>
                 </div>
                 <div class="modal-card-info">
                     <span class="modal-card-name" th:text="${compareCard.card.name}">삼성카드 탭탭 O</span>
                     <span class="modal-card-benefit" th:text="${compareCard.categoryString}">커피/스트리밍 특화</span>
                 </div>
-
                 <div style="display: none;" class="benefit-details">
                     <span th:each="ben : ${compareCard.benefitList}"
                           th:data-category="${ben.benefitCategory}"
@@ -289,192 +234,107 @@
         </div>
     </div>
 </div>
+
 <div th:replace="~{common/footer :: footer}"></div>
-</body>
 
-<script> // 헤더 푸터 연결
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        fetch('../common/header.html')
+            .then(res => res.text())
+            .then(html => document.getElementById('header').innerHTML = html);
 
-document.addEventListener('DOMContentLoaded', function () {
-    // header 로드
-    fetch('../common/header.html')
-        .then(res => res.text())
-        .then(html => {
-            document.getElementById('header').innerHTML = html;
+        fetch('../common/footer.html')
+            .then(res => res.text())
+            .then(html => document.getElementById('footer').innerHTML = html);
+    });
+</script>
 
-            // 스크롤시 헤더 고정 클래스
-            const headerEl = document.querySelector('.header');
-            window.addEventListener('scroll', () => {
-                if (window.scrollY > 10) {
-                    headerEl.classList.add('scrolled');
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        const openBtn = document.getElementById('openFee');
+        const modal = document.getElementById('feeModal');
+        const dim = document.getElementById('feeDim');
+        const closeBtn = document.getElementById('feeClose');
+
+        if (openBtn) openBtn.addEventListener('click', () => modal.classList.add('show'));
+        [dim, closeBtn].forEach(el => el.addEventListener('click', () => modal.classList.remove('show')));
+    });
+</script>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        const noticeSections = document.querySelectorAll('.card-notice');
+        noticeSections.forEach(section => {
+            const head = section.querySelector('.card-notice-head');
+            const body = section.querySelector('.card-notice-body');
+            const btn = section.querySelector('.card-notice-btn');
+
+            head.addEventListener('click', function () {
+                const opened = body.style.maxHeight && body.style.maxHeight !== '0px';
+                if (opened) {
+                    body.style.maxHeight = '0px';
+                    btn.classList.remove('active');
+                    btn.setAttribute('aria-expanded', 'false');
                 } else {
-                    headerEl.classList.remove('scrolled');
+                    body.style.maxHeight = body.scrollHeight + 'px';
+                    btn.classList.add('active');
+                    btn.setAttribute('aria-expanded', 'true');
                 }
             });
         });
-
-    // footer 로드
-    fetch('../common/footer.html')
-        .then(res => res.text())
-        .then(html => document.getElementById('footer').innerHTML = html);
-});
-</script>
-
-<script> // 모달창 JS
-document.addEventListener('DOMContentLoaded', function () {
-    const openBtn = document.getElementById('openFee');
-    const modal = document.getElementById('feeModal');
-    const dim = document.getElementById('feeDim');
-    const closeBtn = document.getElementById('feeClose');
-
-    if (openBtn) {
-        openBtn.addEventListener('click', () => {
-            modal.classList.add('show');
-        });
-    }
-
-    [dim, closeBtn].forEach(el => {
-        el.addEventListener('click', () => {
-            modal.classList.remove('show');
-        });
     });
-});
 </script>
 
-<script> // 카드 유의사항 / 부가서비스 아코디언 JS
-document.addEventListener('DOMContentLoaded', function () {
-    // 페이지에 있는 모든 카드 유의사항/부가서비스 아코디언을 다 잡는다
-    const noticeSections = document.querySelectorAll('.card-notice');
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        const modal = document.getElementById('cardModal');
+        const openBtn = document.getElementById('openModalBtn');
+        const closeBtn = document.getElementById('closeModalBtn');
+        const targetBox = document.querySelector('#targetCard .card-box');
+        const targetBenefitsUl = document.querySelector('#targetBenefits .benefit-list');
+        const benefitCompareSec = document.getElementById('benefitCompare');
 
-    noticeSections.forEach(section => {
-        const head = section.querySelector('.card-notice-head');
-        const body = section.querySelector('.card-notice-body');
-        const btn = section.querySelector('.card-notice-btn');
+        function renderCardBox(boxEl, data) {
+            const {img, name, benefit} = data;
+            const thumbHtml = img
+                ? `<div class="card-thumb"><img src="${img}" alt="${name || ''}" class="card-img"></div>`
+                : `<div class="card-thumb card-thumb-text">${(name || 'C').charAt(0)}</div>`;
+            boxEl.classList.remove('empty');
+            boxEl.innerHTML = `${thumbHtml}<div class="card-info">${name ? `<h3 class="card-name">${name}</h3>` : ''}${benefit ? `<p class="card-benefit">${benefit}</p>` : ''}</div>`;
+        }
 
-        head.addEventListener('click', function () {
-            const opened = body.style.maxHeight && body.style.maxHeight !== '0px';
+        if (openBtn) openBtn.addEventListener('click', () => modal.style.display = 'flex');
+        if (closeBtn) closeBtn.addEventListener('click', () => modal.style.display = 'none');
 
-            if (opened) {
-                body.style.maxHeight = '0px';
-                btn.classList.remove('active');
-                btn.setAttribute('aria-expanded', 'false');
-            } else {
-                body.style.maxHeight = body.scrollHeight + 'px';
-                btn.classList.add('active');
-                btn.setAttribute('aria-expanded', 'true');
-            }
-        });
-    });
-});
-</script>
+        if (modal) {
+            modal.addEventListener('click', function (e) {
+                if (e.target === modal) return modal.style.display = 'none';
+                const item = e.target.closest('.modal-card-item');
+                if (!item) return;
 
-<script> // 카드 비교 모달+결과창 JS
-document.addEventListener('DOMContentLoaded', function () {
+                const name = item.dataset.cardName;
+                const benefit = item.dataset.cardBenefit;
+                const img = item.dataset.cardImg;
+                renderCardBox(targetBox, {img, name, benefit});
 
-    /* ===== 요소 가져오기 ===== */
-    const modal = document.getElementById('cardModal');
-    const openBtn = document.getElementById('openModalBtn');
-    const closeBtn = document.getElementById('closeModalBtn');
+                const benefitSpans = item.querySelectorAll('.benefit-details span');
+                targetBenefitsUl.innerHTML = '';
+                if (benefitSpans.length > 0) {
+                    benefitSpans.forEach(span => {
+                        const li = document.createElement('li');
+                        li.textContent = `${span.dataset.category}: ${span.dataset.desc}`;
+                        targetBenefitsUl.appendChild(li);
+                    });
+                } else {
+                    targetBenefitsUl.innerHTML = '<li class="placeholder">혜택 정보가 없습니다.</li>';
+                }
 
-    const targetBox = document.querySelector('#targetCard .card-box');
-    const currentBenefitsUl = document.querySelector('#currentBenefits .benefit-list');
-    const targetBenefitsUl = document.querySelector('#targetBenefits .benefit-list');
-    const benefitCompareSec = document.getElementById('benefitCompare');
-
-    /* ===== 공통 함수 ===== */
-    // 카드 박스 렌더링 (오른쪽 비교 카드용)
-    function renderCardBox(boxEl, data) {
-        const { img, name, benefit } = data;
-
-        // 왼쪽 썸네일 HTML
-        const thumbHtml = img
-            ? `<div class="card-thumb">
-               <img src="${img}" alt="${name || ''}" class="card-img">
-           </div>`
-            : `<div class="card-thumb card-thumb-text">
-               ${(name || 'C').charAt(0)}
-           </div>`;
-
-        boxEl.classList.remove('empty');
-
-        boxEl.innerHTML = `
-        ${thumbHtml}
-        <div class="card-info">
-            ${name ? `<h3 class="card-name">${name}</h3>` : ''}
-            ${benefit ? `<p class="card-benefit">${benefit}</p>` : ''}
-        </div>
-    `;
-    }
-
-
-    // ❌ 삭제: renderBenefits 함수 - 더 이상 사용하지 않음 (hidden 데이터 직접 읽기로 변경)
-    // function renderBenefits(listEl, benefitsStr) { ... }
-
-    /* ===== 모달 열기/닫기 ===== */
-    if (openBtn) {
-        openBtn.addEventListener('click', () => {
-            modal.style.display = 'flex';
-        });
-    }
-
-    if (closeBtn) {
-        closeBtn.addEventListener('click', () => {
-            modal.style.display = 'none';
-        });
-    }
-
-    /* ===== 모달에서 카드 선택 ===== */
-    if (modal) {
-        modal.addEventListener('click', function (e) {
-            // 배경 클릭 시 닫기
-            if (e.target === modal) {
+                if (benefitCompareSec) benefitCompareSec.style.display = 'block';
                 modal.style.display = 'none';
-                return;
-            }
-
-            const item = e.target.closest('.modal-card-item');
-            if (!item) return;
-
-            // 카드 기본 정보 가져오기
-            const name = item.dataset.cardName;
-            const benefit = item.dataset.cardBenefit; // categoryString (카페,대중교통 등)
-            const img = item.dataset.cardImg;
-
-            // 오른쪽 카드 박스 채우기
-            renderCardBox(targetBox, { img, name, benefit });
-
-            // ✅ 추가: hidden 영역에서 상세 혜택 정보 가져오기
-            const benefitSpans = item.querySelectorAll('.benefit-details span');
-            targetBenefitsUl.innerHTML = '';
-
-            if (benefitSpans.length > 0) {
-                benefitSpans.forEach(span => {
-                    const category = span.dataset.category;
-                    const desc = span.dataset.desc;
-
-                    const li = document.createElement('li');
-                    li.textContent = `${category}: ${desc}`;
-                    targetBenefitsUl.appendChild(li);
-                });
-            } else {
-                targetBenefitsUl.innerHTML = '<li class="placeholder">혜택 정보가 없습니다.</li>';
-            }
-
-            // ❌ 삭제: renderBenefits 호출 - 위의 코드로 대체
-            // renderBenefits(targetBenefitsUl, benefitsStr);
-
-            // 비교 섹션 보여주기
-            if (benefitCompareSec) {
-                benefitCompareSec.style.display = 'block';
-            }
-
-            // 모달 닫기
-            modal.style.display = 'none';
-        });
-    }
-
-    // - currentBox 관련 코드 모두 제거 (Thymeleaf에서 이미 처리)
-    // - currentCardBenefitsData 관련 코드 제거
-
-});
+            });
+        }
+    });
 </script>
+
+</body>
 </html>
