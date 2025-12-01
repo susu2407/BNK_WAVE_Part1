@@ -99,21 +99,32 @@
                     <div class="compare-body">
                         <!-- 현재 카드 -->
                         <div class="compare-card current-card" id="currentCard">
-                        <p class="label">현재 보고 있는 카드</p>
+                            <p class="label">현재 보고 있는 카드</p>
 
-                        <div class="card-box">
+                            <div class="card-box">
+                                <!-- 왼쪽 썸네일 -->
+                                <div class="card-thumb">
+                                    <img th:src="@{${cardItem.card.background != null ? '/' + cardItem.card.background : '/' + cardItem.card.thumbnail}}"
+                                         th:alt="${cardItem.card.name}"
+                                         class="card-img">
+                                </div>
 
-                            <img th:src="@{${cardItem.card.background != null ? '/' + cardItem.card.background : '/' + cardItem.card.thumbnail}}"
-                                 th:alt="${cardItem.card.name}"
-                                 class="card-img"/> <h3 class="card-name">[[${cardItem.card.name}]]</h3>
+                                <!-- 오른쪽 텍스트 -->
+                                <div class="card-info">
+                                    <h3 class="card-name">[[${cardItem.card.name}]]</h3>
+                                    <p class="card-benefit">
+                                    <span th:each="ben, stat : ${cardItem.benefitList}">
+                                        [[${ben.benefitCategory}]]
+                                        <span th:unless="${stat.last}">, </span>
+                                    </span>
+                                    </p>
+                                </div>
+                            </div>
 
-                            <p class="card-benefit">
-                                <span th:each="ben, stat : ${cardItem.benefitList}">[[${ben.benefitCategory}]]<span th:unless="${stat.last}">, </span>
-                                </span>
-                            </p>
-                        </div> <span id="currentCardBenefitsData" style="display: none;"
-                                     th:data-benefits-str="${cardItem.categoryString}"></span>
-                    </div>
+                            <span id="currentCardBenefitsData" style="display: none;"
+                                  th:data-benefits-str="${cardItem.categoryString}"></span>
+                        </div>
+
 
                         <div class="compare-plus">+</div>
 
@@ -373,17 +384,27 @@ document.addEventListener('DOMContentLoaded', function () {
     // 카드 박스 렌더링 (오른쪽 비교 카드용)
     function renderCardBox(boxEl, data) {
         const { img, name, benefit } = data;
+
+        // 왼쪽 썸네일 HTML
         const thumbHtml = img
-            ? `<img src="${img}" alt="${name || ''}" class="card-img">`
-            : `<div class="card-thumb">${(name || 'C').charAt(0)}</div>`;
+            ? `<div class="card-thumb">
+               <img src="${img}" alt="${name || ''}" class="card-img">
+           </div>`
+            : `<div class="card-thumb card-thumb-text">
+               ${(name || 'C').charAt(0)}
+           </div>`;
 
         boxEl.classList.remove('empty');
+
         boxEl.innerHTML = `
-            ${thumbHtml}
+        ${thumbHtml}
+        <div class="card-info">
             ${name ? `<h3 class="card-name">${name}</h3>` : ''}
             ${benefit ? `<p class="card-benefit">${benefit}</p>` : ''}
-        `;
+        </div>
+    `;
     }
+
 
     // ❌ 삭제: renderBenefits 함수 - 더 이상 사용하지 않음 (hidden 데이터 직접 읽기로 변경)
     // function renderBenefits(listEl, benefitsStr) { ... }

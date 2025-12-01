@@ -4,10 +4,14 @@
     }
 }
 
+.main-container{
+    margin-top: 120px;
+}
+
 /* 전체 폭 */
 .main-content {
     max-width: 800px;
-    margin: 120px auto;
+    margin: auto;
     padding: 0 10px;
 }
 
@@ -449,8 +453,11 @@
     padding: 16px;
     min-height: 120px;
     border: none;
-    text-align: left;
     width: 100%;
+    display: flex;
+    align-items: center;
+    gap: 30px;
+    text-align: left;
 }
 
 .card-box.empty {
@@ -461,25 +468,54 @@
     cursor: pointer;
 }
 
+/* 왼쪽 썸네일 박스 */
 .card-thumb {
-    width: 50px;
-    height: 50px;
+    width: 60px;
+    height: 60px;
     border-radius: 12px;
     background: #e8f0ff;
-    display: grid;
-    place-items: center;
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
     font-weight: 600;
-    margin-bottom: 12px;
+    font-size: 18px;
+    color: #111;
+}
+
+/* 텍스트 썸네일용 (이미지 없을 때) */
+.card-thumb-text {
+    background: #f3f4f6;
+}
+
+/* 카드 이미지 */
+.card-img {
+    width: 100%;
+    height: 100%;
+    border-radius: 12px;
+    object-fit: cover;
+}
+
+/* 오른쪽 텍스트 영역 */
+.card-info {
+    flex: 1;
+    min-width: 0;
 }
 
 .card-name {
+    margin: 0 0 4px;
     font-size: 15px;
-    margin-bottom: 3px;
+    font-weight: 600;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 
 .card-benefit {
-    font-size: 13px;
+    margin: 0;
+    font-size: 12px;
     color: #666;
+    line-height: 1.4;
 }
 
 .compare-plus {
@@ -588,7 +624,8 @@
 
 .card-img {
     width: 70px;
-    height: auto;
+    height: 110px;
+    margin-top: 15px;
     border-radius: 8px;
     margin-bottom: 8px;
     background: #eee;
