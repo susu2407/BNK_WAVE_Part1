@@ -3,6 +3,11 @@
     이름 : 이수연
     내용 : 약관 등록 CSS
 */
+.main-container {
+    width: 1200px;
+    margin: 0 auto;
+}
+
 form {
     width: 1000px;
     margin: 0 auto;

@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>마이페이지</title>
+    <title>WAVE CARD</title>
     <link rel="stylesheet" th:href="@{/css/member/my/index.css}">
 </head>
 
@@ -27,7 +27,8 @@
                     </p>
 
                     <div class="myp-greeting-card-info">
-                        <p class="myp-greeting-card-name">NICHIYA 체크카드</p>
+                        <p class="myp-greeting-card-name">레제 체크카드
+                            <span class="myp-greeting-card-number">4***-****-****-470*</span></p>
                         <a th:href="@{/my/OwnCard}" class="myp-greeting-link">
                             보유 카드 보기
                         </a>
@@ -57,7 +58,7 @@
                                 <div class="myp-card-sample card-color-1"></div>
                             </div>
                             <div class="myp-card-text">
-                                <p class="myp-card-name">NICHIYA 체크카드</p>
+                                <p class="myp-card-name">레제 체크카드</p>
                                 <p class="myp-card-benefit-label">이번 달 카드 혜택 금액</p>
                                 <p class="myp-card-benefit"><strong>35,000</strong>원 할인</p>
                             </div>
@@ -210,11 +211,11 @@
                 <li>
                     <a href="#">
                         <span class="menu-icon">💸</span>
-                        결제계좌 변경
+                        결제계좌 등록
                     </a>
                 </li>
                 <li>
-                    <a href="#">
+                    <a th:href="@{/my/ProfileEdit}">
                         <span class="menu-icon">👤</span>
                         개인정보 변경
                     </a>
@@ -250,21 +251,21 @@
             <ul class="reco-service-list">
                 <li>
                     <a href="#" class="reco-item-link">
-                        <div class="reco-icon"></div>
+<!--                        <div class="reco-icon"></div>-->
                         <span class="reco-text">분할납부 서비스</span>
                         <span class="reco-arrow">›</span>
                     </a>
                 </li>
                 <li>
                     <a href="#" class="reco-item-link">
-                        <div class="reco-icon"></div>
+<!--                        <div class="reco-icon"></div>-->
                         <span class="reco-text">마케팅수신동의</span>
                         <span class="reco-arrow">›</span>
                     </a>
                 </li>
                 <li>
                     <a href="#" class="reco-item-link">
-                        <div class="reco-icon"></div>
+<!--                        <div class="reco-icon"></div>-->
                         <span class="reco-text">기프트카드</span>
                         <span class="reco-arrow">›</span>
                     </a>

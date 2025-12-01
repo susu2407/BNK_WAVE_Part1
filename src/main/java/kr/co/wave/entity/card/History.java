@@ -1,6 +1,7 @@
 package kr.co.wave.entity.card;
 
 import jakarta.persistence.*;
+import kr.co.wave.entity.member.Member;
 import lombok.*;
 
 import java.math.BigDecimal;
@@ -26,6 +27,10 @@ public class History {
     @ManyToOne
     @JoinColumn(name = "ACCOUNT_ID")
     private Account account;
+
+    @ManyToOne
+    @JoinColumn(name ="MEM_ID")
+    private Member member;
 
     @Column(name="BRANCH_NAME")
     private String branchName;

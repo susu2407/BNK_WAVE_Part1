@@ -97,17 +97,7 @@
             </li>
         </ul>
         <div class="util">
-            <form th:action="@{/card/list}" method="get">
-                <div class="search-box">
-                    <input type="text"
-                           name="keyword"
-                           th:value="${keyword}"
-                           placeholder="검색어를 입력해 주세요.">
-                    <button type="submit" class="search-ico" aria-label="검색">
-                        <img th:src="@{/images/search.png}">
-                    </button>
-                </div>
-            </form>
+
             <!-- ▼ 예전 디자인 그대로 세션바 옮겨오기 ▼ -->
             <section sec:authorize="isAuthenticated()" class="myp-session-bar">
                 <div class="myp-session-left">
@@ -127,6 +117,18 @@
                     </span>
                 </div>
             </section>
+            <form th:action="@{/card/list}" method="get">
+                <div class="search-box">
+                    <input type="text"
+                           name="keyword"
+                           th:value="${keyword}"
+                           placeholder="검색어를 입력해 주세요.">
+                    <button type="submit" class="search-ico" aria-label="검색">
+                        <img th:src="@{/images/search.png}">
+                    </button>
+                </div>
+            </form>
+
         </div>
     </div>
 </header>

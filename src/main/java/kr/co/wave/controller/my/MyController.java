@@ -1,7 +1,9 @@
 package kr.co.wave.controller.my;
 
 import kr.co.wave.entity.card.History;
+import kr.co.wave.service.card.CardService;
 import kr.co.wave.service.card.HistoryService;
+import kr.co.wave.service.member.MemberService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -14,6 +16,9 @@ import java.util.List;
 public class MyController {
 
     private final HistoryService historyService;
+    private final CardService cardService;
+    private final MemberService memberService;
+
 
     @GetMapping({"/my","/my/"})
     public String myPage() {
@@ -37,6 +42,7 @@ public class MyController {
 
     @GetMapping({"/my/RecentHistory"})
     public String RecentHistoryPage(){
+
         return "my/RecentHistory";
     }
 

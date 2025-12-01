@@ -71,6 +71,12 @@ document.addEventListener('DOMContentLoaded', function () {
     menuTitles.forEach(function (menuTitle) {
         menuTitle.addEventListener('click', function (e) {
             e.preventDefault();
+
+            // 토글 메뉴를 열기 전에, 고정되지 않았다면 무조건 확장 상태로 전환
+            if (!asideSwitch.checked) {
+                body.classList.add('sb-expanded');
+            }
+
             // .menu-title 바로 다음 요소가 아니라, html 구조상, A태그의 부모 li를 찾고, 그 다음 형제요소(ul.submenu)를 찾음
             const submenu = this.parentElement.querySelector('.submenu');
 
