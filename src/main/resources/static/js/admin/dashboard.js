@@ -162,11 +162,11 @@ const loadDoughnutChart = async (month = null, direction = null) => {
         const context = document.getElementById('doughnutChart').getContext('2d');
 
         const backgroundColors = [
-            'rgba(255, 99, 132, 0.8)', // 기업체크
-            'rgba(54, 162, 235, 0.8)', // 기업신용
-            'rgba(255, 206, 86, 0.8)', // 개인체크
-            'rgba(75, 192, 192, 0.8)', // 개인신용
-            'rgba(153, 102, 255, 0.8)' // 프리미엄
+            'rgb(199,93,68)', // 기업체크
+            'rgb(192,40,0)', // 기업신용
+            'rgb(240,199,202)', // 개인체크
+            'rgb(234,200,192)', // 개인신용
+            'rgb(215,146,131)' // 프리미엄
         ];
 
         const chartConfig = {
@@ -181,13 +181,21 @@ const loadDoughnutChart = async (month = null, direction = null) => {
             },
             options: {
                 responsive: true,
+
                 plugins: {
                     legend: {
                         position: 'right', // 범례를 오른쪽에 표시
+                        labels: {
+                            padding: 20
+                        }
                     },
-                    title: {
-                        display: true,
-                        text: '상품별 발급 비율 (현재 월 기준)'
+                    datalabels: {
+                        formatter: (value, context) => {
+                            const label = context.chart.data.labels[context.dataIndex]; // 'lavels' -> 'labels'로 수정
+                            return `${label}: ${value.toLocaleString()}건`;
+                        },
+                        color: 'black',
+                        font: {weight: 'bold', size: 14},
                     }
                 }
             }

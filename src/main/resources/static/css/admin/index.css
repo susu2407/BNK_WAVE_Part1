@@ -63,23 +63,47 @@
 /* 중간 그래프 영역: 2열 구성, 상단 4열 전체 차지 */
 .chart-bar {
     grid-column: span 6; /* 1:1 (12 / 2 = 6칸씩 차지) */
-    background: #eee;
+    background: white;
     padding: 1rem;
     height: 390px;
 }
 
 .chart-donut {
     grid-column: span 6 ; /* 1:1 (12 / 2 = 6칸씩 차지) */
-    background: #eee;
+    background: white;
     padding: 1.5rem;
     height: 390px;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    text-align: center;
 }
+.chart-top {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+}
+
+/* 차트 부분 꾸미기 ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ */
+/* 차트 컨트롤 영역 - 월 기간 이동  */
+.chart-controls {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    margin-top: 0.5rem;
+    gap: 20px;
+}
+
+
+
 
 /* 하단 정보 영역: 데스크톱에서는 3개 항목이 4열을 유연하게 분할 */
 .info-list {
     /* 하단 3개 항목이 4열을 차지하도록 비율 설정 */
     grid-column: span 4 / 3;
-    background: #f9f9f9;
+    background: white;
     padding: 1rem;
     min-height: 200px;
     border: 1px solid #ddd;
@@ -146,24 +170,108 @@
     }
 }
 
-/* 기본 카드 스타일 */
-.card {
-    background-color: #ffffff;
-    border-radius: 0.75rem;
-    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
-    padding: 1.5rem;
+/* ㅡㅡㅡ 추가 ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ*/
+/* 목록 카드 제목 스타일 및 구분선 */
+.custom-list-card h5 {
+    font-weight: bold;
+    font-size: 1.25rem; /* text-xl */
+    color: #1f2937; /* text-gray-800 */
+    margin-bottom: 1rem;
+    padding-bottom: 0.75rem;
+    border-bottom: 2px solid #e5e7eb; /* 제목과 리스트 사이 선 (separator) */
 }
-/* 대시보드 배경 */
-body {
-    background-color: #f3f4f6;
-    font-family: 'Inter', sans-serif;
+
+.custom-list-card ul {
+    list-style: none; /* 기본 리스트 스타일 제거 */
+    padding: 0;
+    margin-top: 0;
+    font-size: 0.875rem; /* text-sm */
+    line-height: 1.5;
+    /* space-y-2 대신 margin-bottom으로 간격 조정 */
 }
-/* 차트 컨트롤 영역 */
-.chart-controls {
+
+/* 목록 항목 (li) 스타일: Flexbox와 간격 조정 */
+.list-item-row {
     display: flex;
+    justify-content: space-between;
     align-items: center;
-    justify-content: flex-end;
+    padding: 0.75rem 0.5rem;
+    margin-bottom: 0.5rem; /* li 항목 간격 */
+    border-radius: 0.5rem;
+    cursor: pointer;
+    transition: background-color 0.2s;
+    border: 1px solid #f3f4f6; /* 미세한 경계선 */
+}
+
+/* 호버 효과: 승인대기 요청 목록 */
+.list-item-row.approval-hover:hover {
+    background-color: #eff6ff; /* blue-50 */
+}
+
+/* 호버 효과: 상품 정보 수정 요청 목록 */
+.list-item-row.product-hover:hover {
+    background-color: #ecfdf5; /* green-50 */
+}
+
+/* 긴급 태그 색상 */
+.emergency {
+    color: #ef4444; /* red-500 */
+    font-weight: 600;
+    font-size: 0.75rem; /* text-xs */
+}
+.normal {
+    color: #6b7280; /* text-gray-500 */
+    font-weight: 500;
+    font-size: 0.75rem; /* text-xs */
+}
+
+/* 개별 span 요소 스타일링 */
+.list-item-row span {
+    /* 기본 텍스트 스타일 */
+    color: #374151; /* text-gray-700 */
+    font-weight: 500; /* font-medium */
+}
+
+/* 요청 제목/상품명 (가장 긴 부분) */
+.list-item-row span:nth-child(1) {
+    flex-grow: 1;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    max-width: 65%; /* 긴 제목이 공간을 많이 차지하도록 */
+}
+
+/* 긴급/일반 태그 */
+.list-item-row span:nth-child(2) {
+    min-width: 40px;
+    text-align: right;
+    margin-left: 0.5rem;
+    margin-right: 1rem;
+}
+
+/* 날짜 */
+.list-item-row span:nth-child(3) {
+    min-width: 70px;
+    text-align: right;
+    color: #6b7280; /* text-gray-500 */
+    font-size: 0.75rem; /* text-xs */
+}
+
+/* 더 보기 링크 스타일 */
+.view-more {
+    display: flex;
+    justify-content: center;
+    padding-top: 1.25rem;
     margin-top: 0.5rem;
+    border-top: 1px solid #f3f4f6;
+}
+.view-more a {
+    color: #2563eb; /* blue-600 */
+    font-weight: 500;
+    transition: color 0.2s;
+}
+.view-more a:hover {
+    color: #1e40af; /* blue-800 */
 }
 
 

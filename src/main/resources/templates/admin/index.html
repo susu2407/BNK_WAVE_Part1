@@ -71,107 +71,108 @@
 
                 <!-- 중간 그래프 영역 -->
                 <div class="chart-bar">
+                    <h3>상품 발급별 추이</h3>
                     <canvas id="stackedChart"></canvas>
                 </div>
                 <div class="chart-donut">
-                    <button id="prevMonthBtn" class="btn btn-sm btn-outline-secondary">◀</button>
-
-                    <span id="currentDoughnutMonth" class="mx-2 font-weight-bold">로딩 중...</span>
-
-                    <button id="nextMonthBtn" class="btn btn-sm btn-outline-secondary">▶</button>
-
+                    <div class="chart-top">
+                        <h3>상품별 발급 추이</h3>
+                        <div class="chart-controls">
+                            <button id="prevMonthBtn" >◀</button>
+                            <span id="currentDoughnutMonth">로딩 중...</span>
+                            <button id="nextMonthBtn">▶</button>
+                        </div>
+                    </div>
                     <canvas id="doughnutChart"></canvas>
                 </div>
 
                 <!-- 하단 정보 영역 -->
                 <div class="info-list">
-                    승인 대기 요청 목록
                     <!-- 3-A. 승인대기 요청 목록 -->
-                    <div class="card">
-                        <h5 class="font-bold text-xl text-gray-800 mb-4 border-b pb-3">승인대기 요청 목록 (총 5건)</h5>
-                        <ul class="space-y-2">
+                    <div class="card custom-list-card">
+                        <h5>승인대기 요청 목록</h5>
+                        <ul>
                             <!-- 더미 데이터 1 -->
-                            <li class="flex justify-between items-center text-sm p-3 rounded-lg hover:bg-blue-50 transition-colors cursor-pointer border border-gray-100">
-                                <span class="truncate font-medium text-gray-700">김철수 (개인신용) - 한도 증액 요청</span>
-                                <span class="text-xs text-red-500 font-semibold">긴급</span>
-                                <span class="text-xs text-gray-500">2025.11.01</span>
+                            <li class="list-item-row approval-hover">
+                                <span>김철수 (개인신용) - 한도 증액 요청</span>
+                                <span class="emergency">긴급</span>
+                                <span>2025.11.01</span>
                             </li>
                             <!-- 더미 데이터 2 -->
-                            <li class="flex justify-between items-center text-sm p-3 rounded-lg hover:bg-blue-50 transition-colors cursor-pointer border border-gray-100">
-                                <span class="truncate font-medium text-gray-700">박영희 (기업체크) - 신규 발급 대기</span>
-                                <span class="text-xs text-gray-500">일반</span>
-                                <span class="text-xs text-gray-500">2025.10.30</span>
+                            <li class="list-item-row approval-hover">
+                                <span>박영희 (기업체크) - 신규 발급 대기</span>
+                                <span class="normal">일반</span>
+                                <span>2025.10.30</span>
                             </li>
                             <!-- 더미 데이터 3 -->
-                            <li class="flex justify-between items-center text-sm p-3 rounded-lg hover:bg-blue-50 transition-colors cursor-pointer border border-gray-100">
-                                <span class="truncate font-medium text-gray-700">이지민 (프리미엄) - 분실 재발급 요청</span>
-                                <span class="text-xs text-gray-500">일반</span>
-                                <span class="text-xs text-gray-500">2025.10.29</span>
+                            <li class="list-item-row approval-hover">
+                                <span>이지민 (프리미엄) - 분실 재발급 요청</span>
+                                <span class="normal">일반</span>
+                                <span>2025.10.29</span>
                             </li>
                             <!-- 더미 데이터 4 -->
-                            <li class="flex justify-between items-center text-sm p-3 rounded-lg hover:bg-blue-50 transition-colors cursor-pointer border border-gray-100">
-                                <span class="truncate font-medium text-gray-700">최민호 (개인체크) - 해지 신청 대기</span>
-                                <span class="text-xs text-gray-500">일반</span>
-                                <span class="text-xs text-gray-500">2025.10.25</span>
+                            <li class="list-item-row approval-hover">
+                                <span>최민호 (개인체크) - 해지 신청 대기</span>
+                                <span class="normal">일반</span>
+                                <span>2025.10.25</span>
                             </li>
                             <!-- 더미 데이터 5 -->
-                            <li class="flex justify-between items-center text-sm p-3 rounded-lg hover:bg-blue-50 transition-colors cursor-pointer border border-gray-100">
-                                <span class="truncate font-medium text-gray-700">정우성 (기업신용) - 담당자 변경 요청</span>
-                                <span class="text-xs text-red-500 font-semibold">긴급</span>
-                                <span class="text-xs text-gray-500">2025.10.22</span>
+                            <li class="list-item-row approval-hover">
+                                <span>정우성 (기업신용) - 담당자 변경 요청</span>
+                                <span class="emergency">긴급</span>
+                                <span>2025.10.22</span>
                             </li>
                         </ul>
                         <!-- 더 보기 링크 -->
-                        <div class="mt-5 text-center pt-2 border-t border-gray-100">
-                            <a href="#" class="text-sm text-blue-600 hover:text-blue-800 font-medium transition-colors">전체 요청 목록 보기 &raquo;</a>
+                        <div class="view-more">
+                            <a th:href="@{/admin/approval/card/list}">전체 요청 목록 보기 &raquo;</a>
                         </div>
                     </div>
                 </div>
                 <div class="info-list">
-                    상품 정보 수정 요청
                     <!-- 3-B. 상품 정보 수정 요청 목록 -->
-                    <div class="card">
-                        <h5 class="font-bold text-xl text-gray-800 mb-4 border-b pb-3">상품 정보 수정 요청 목록 (총 5건)</h5>
-                        <ul class="space-y-2">
+                    <div class="card custom-list-card">
+                        <h5>상품 정보 수정 요청 목록</h5>
+                        <ul>
                             <!-- 더미 데이터 1 -->
-                            <li class="flex justify-between items-center text-sm p-3 rounded-lg hover:bg-green-50 transition-colors cursor-pointer border border-gray-100">
-                                <span class="truncate font-medium text-gray-700">Wave Corp Platinum - 금리 조건 수정</span>
-                                <span class="text-xs text-red-500 font-semibold">긴급</span>
-                                <span class="text-xs text-gray-500">2025.11.02</span>
+                            <li class="list-item-row product-hover">
+                                <span>Wave Corp Platinum - 금리 조건 수정</span>
+                                <span class="emergency">긴급</span>
+                                <span>2025.11.02</span>
                             </li>
                             <!-- 더미 데이터 2 -->
-                            <li class="flex justify-between items-center text-sm p-3 rounded-lg hover:bg-green-50 transition-colors cursor-pointer border border-gray-100">
-                                <span class="truncate font-medium text-gray-700">스마트 체크 1.0 - 카드 디자인 변경</span>
-                                <span class="text-xs text-gray-500">일반</span>
-                                <span class="text-xs text-gray-500">2025.10.28</span>
+                            <li class="list-item-row product-hover">
+                                <span>스마트 체크 1.0 - 카드 디자인 변경</span>
+                                <span class="normal">일반</span>
+                                <span>2025.10.28</span>
                             </li>
                             <!-- 더미 데이터 3 -->
-                            <li class="flex justify-between items-center text-sm p-3 rounded-lg hover:bg-green-50 transition-colors cursor-pointer border border-gray-100">
-                                <span class="truncate font-medium text-gray-700">무제한 마일리지 카드 - 약관 업데이트</span>
-                                <span class="text-xs text-gray-500">일반</span>
-                                <span class="text-xs text-gray-500">2025.10.26</span>
+                            <li class="list-item-row product-hover">
+                                <span>무제한 마일리지 카드 - 약관 업데이트</span>
+                                <span class="normal">일반</span>
+                                <span>2025.10.26</span>
                             </li>
                             <!-- 더미 데이터 4 -->
-                            <li class="flex justify-between items-center text-sm p-3 rounded-lg hover:bg-green-50 transition-colors cursor-pointer border border-gray-100">
-                                <span class="truncate font-medium text-gray-700">기업 비즈니스 카드 - 혜택 추가 요청</span>
-                                <span class="text-xs text-red-500 font-semibold">긴급</span>
-                                <span class="text-xs text-gray-500">2025.10.20</span>
+                            <li class="list-item-row product-hover">
+                                <span>기업 비즈니스 카드 - 혜택 추가 요청</span>
+                                <span class="emergency">긴급</span>
+                                <span>2025.10.20</span>
                             </li>
                             <!-- 더미 데이터 5 -->
-                            <li class="flex justify-between items-center text-sm p-3 rounded-lg hover:bg-green-50 transition-colors cursor-pointer border border-gray-100">
-                                <span class="truncate font-medium text-gray-700">대학생 후불 체크 - 수수료 정책 변경</span>
-                                <span class="text-xs text-gray-500">일반</span>
-                                <span class="text-xs text-gray-500">2025.10.15</span>
+                            <li class="list-item-row product-hover">
+                                <span>대학생 후불 체크 - 수수료 정책 변경</span>
+                                <span class="normal">일반</span>
+                                <span>2025.10.15</span>
                             </li>
                         </ul>
                         <!-- 더 보기 링크 -->
-                        <div class="mt-5 text-center pt-2 border-t border-gray-100">
-                            <a href="#" class="text-sm text-blue-600 hover:text-blue-800 font-medium transition-colors">전체 요청 목록 보기 &raquo;</a>
+                        <div class="view-more">
+                            <a th:href="@{/admin/card/list}">전체 요청 목록 보기 &raquo;</a>
                         </div>
                     </div>
                 </div>
                 <div class="info-list">
-                    바로가기 아이콘
+                    바로가기 아이콘 <br>
                     <a th:href="@{/admin/approval/member/cardList}">상품가입승인</a> <br>
                     <a th:href="@{/admin/card/list}">상품목록</a> <br>
                     <a th:href="@{/admin/config/terms/list}">약관목록</a> <br>
