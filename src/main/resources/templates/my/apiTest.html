@@ -5,38 +5,19 @@
     <title>WAVE CARD</title>
 </head>
 <body>
-<form id="askForm">
-    <label>질문(question)</label><br>
-    <input type="text" id="question" name="question" required>
-    <br><br>
 
-    <button type="submit">전송</button>
-</form>
-
-<h3>응답</h3>
-<pre id="response"></pre>
-
-
-<script>
-    document.getElementById("askForm").addEventListener("submit", async (e) => {
-        e.preventDefault();
-
-        const question = document.getElementById("question").value;
-
-        const response = await fetch("http://localhost:8000/ask2", {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({ question: question })
-        });
-
-        const data = await response.json();
-        document.getElementById("response").textContent = JSON.stringify(data, null, 2);
-    });
-</script>
+<div class="search-container">
+    <label>기간 검색:</label>
+    <input type="date" id="startDate">
+    <span>~</span>
+    <input type="date" id="endDate">
+    <button onclick="filterByDate()">검색</button>
+    <button onclick="resetFilter()">전체보기</button>
+</div>
 
 <div id="map" style="width:1000px;height:800px;"></div>
 <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=02766b043924c4c57b57f6ffcfdc6e95"></script>
-<script>
+<script th:inline="javascript">
     var container = document.getElementById('map');
     var options = {
         center: new kakao.maps.LatLng(33.450701, 126.570667),
@@ -45,52 +26,118 @@
 
     var map = new kakao.maps.Map(container, options);
 
+    // Thymeleaf로 historyList를 JavaScript 배열로 변환
+    var allLocations = [];
+    /*[# th:each="history : ${historyList}"]*/
+    allLocations.push({
+        lat: /*[[${history.latitude}]]*/ 0,
+        lng: /*[[${history.longtitude}]]*/ 0,
+        paymentAt: /*[[${history.paymentAt}]]*/ ''
+    });
+    /*[/]*/
 
-    var center = {lat: 33.451000, lng: 126.570667}; // 하트 중심
-    var locations = [];
+    var currentOverlays = [];
+    var currentPolyline = null;
 
-    for (var t = 0; t <= Math.PI*2; t += 0.4) {
-        // 하트 수식 (0~2π)
-        var x = 16 * Math.pow(Math.sin(t), 3);
-        var y = 13 * Math.cos(t) - 5 * Math.cos(2*t) - 2 * Math.cos(3*t) - Math.cos(4*t);
+    // 지도에 표시하는 함수
+    function displayLocations(locations) {
+        // 기존 오버레이와 폴리라인 제거
+        currentOverlays.forEach(function(overlay) {
+            overlay.setMap(null);
+        });
+        currentOverlays = [];
 
-        // 지도용으로 좌표 스케일/위치 변환
-        var lat = center.lat + y * 0.0005; // 0.0005는 스케일 조절
-        var lng = center.lng + x * 0.0005;
+        if (currentPolyline) {
+            currentPolyline.setMap(null);
+        }
 
-        locations.push({lat: lat, lng: lng});
+        // 첫 번째 위치가 있으면 지도 중심을 첫 번째 위치로 이동
+        if (locations.length > 0) {
+            map.setCenter(new kakao.maps.LatLng(locations[0].lat, locations[0].lng));
+        }
+
+        // 마커 찍기 (순서 표시용 커스텀 오버레이)
+        for (var i = 0; i < locations.length; i++) {
+            var content = '<div style="padding:4px 8px; background:#4a90e2; color:white; border-radius:4px; font-weight:bold;">' + (i+1) + '</div>';
+
+            var customOverlay = new kakao.maps.CustomOverlay({
+                position: new kakao.maps.LatLng(locations[i].lat, locations[i].lng),
+                content: content,
+                yAnchor: 1
+            });
+
+            customOverlay.setMap(map);
+            currentOverlays.push(customOverlay);
+        }
+
+        // 폴리라인 그리기
+        if (locations.length > 1) {
+            var linePath = locations.map(function(loc) {
+                return new kakao.maps.LatLng(loc.lat, loc.lng);
+            });
+
+            currentPolyline = new kakao.maps.Polyline({
+                path: linePath,
+                strokeWeight: 3,
+                strokeColor: '#FF0000',
+                strokeOpacity: 0.7,
+                strokeStyle: 'solid'
+            });
+
+            currentPolyline.setMap(map);
+        }
     }
 
-    // 마커 찍기 (순서 표시)
-    // 마커 찍기 (순서 표시용 커스텀 오버레이)
-    for (var i = 0; i < locations.length; i++) {
-        var content = '<div style="padding:4px 8px; background:#4a90e2; color:white; border-radius:4px;">' + (i+1) + '</div>';
+    // 날짜 필터링 함수
+    function filterByDate() {
+        var startDate = document.getElementById('startDate').value;
+        var endDate = document.getElementById('endDate').value;
 
-        var customOverlay = new kakao.maps.CustomOverlay({
-            position: new kakao.maps.LatLng(locations[i].lat, locations[i].lng),
-            content: content,
-            yAnchor: 1
+        if (!startDate || !endDate) {
+            alert('시작일과 종료일을 모두 선택해주세요.');
+            return;
+        }
+
+        var start = new Date(startDate);
+        var end = new Date(endDate);
+        end.setHours(23, 59, 59, 999); // 종료일의 끝 시간까지 포함
+
+        var filteredLocations = allLocations.filter(function(loc) {
+            var paymentDate = new Date(loc.paymentAt);
+            return paymentDate >= start && paymentDate <= end;
         });
 
-        customOverlay.setMap(map);
+        displayLocations(filteredLocations);
+        updateTable(filteredLocations);
+
+        if (filteredLocations.length === 0) {
+            alert('해당 기간에 결제 내역이 없습니다.');
+        }
     }
 
-    // 폴리라인 그리기
-    var linePath = locations.map(function(loc) {
-        return new kakao.maps.LatLng(loc.lat, loc.lng);
-    });
+    // 전체보기 함수
+    function resetFilter() {
+        document.getElementById('startDate').value = '';
+        document.getElementById('endDate').value = '';
+        displayLocations(allLocations);
+        updateTable(allLocations);
+    }
 
-    var polyline = new kakao.maps.Polyline({
-        path: linePath,        // 선을 구성하는 좌표배열
-        strokeWeight: 3,       // 선 두께
-        strokeColor: '#FF0000',// 선 색
-        strokeOpacity: 0.7,    // 불투명도
-        strokeStyle: 'solid'   // 선 스타일
-    });
+    // 테이블 업데이트 함수
+    function updateTable(locations) {
+        var tbody = document.getElementById('historyTableBody');
+        tbody.innerHTML = '';
 
-    polyline.setMap(map); // 지도에 선 표시
+        locations.forEach(function(loc) {
+            var row = tbody.insertRow();
+            row.insertCell(0).textContent = loc.lat;
+            row.insertCell(1).textContent = loc.lng;
+            row.insertCell(2).textContent = loc.paymentAt;
+        });
+    }
 
-</script>
+    // 초기 로드 시 전체 데이터 표시
+    displayLocations(allLocations);
 </script>
 </body>
 </html>

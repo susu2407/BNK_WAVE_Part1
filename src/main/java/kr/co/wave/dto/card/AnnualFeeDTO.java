@@ -14,4 +14,6 @@ public class AnnualFeeDTO {
     private String annualName;
 
     private String cardId;
+
+    private String region;
 }
