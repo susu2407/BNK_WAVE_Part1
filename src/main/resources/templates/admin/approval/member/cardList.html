@@ -56,35 +56,131 @@
 
             <!-- 본문 -->
             <div class="content">
-                <table>
+                <table cellspacing="0" cellpadding="5">
                     <thead>
-                        <tr>
-                            <th>No</th>
-                            <th>신청번호</th> <!-- 신청 건 고유번호(없으면 제외) -->
-                            <th>고객명</th>
-                            <th>고객ID</th> <!-- 정렬용 -->
-                            <th>결제/계좌 정보</th>
-                            <th>신청일</th> <!-- 고객이 신청한 날짜, 정렬용 -->
-                            <th>결재일</th>
-                            <th>상태</th> <!-- 승인대기/승인/반려, 반려일 때에는 상태의 '반려'가 클릭되어 '상세보기(반려 사유)'를 볼 수 있도록? 되면 좋을 것 같은데 어때요? -->
-                            <th>승인/반려</th> <!-- (반려시, 고객에게 보낼 사유 선택되도록하면 좋을 것 같은데 어때요? -->
-                        </tr>
+                    <tr>
+                        <th>No</th>
+                        <th>신청번호</th>
+                        <th>고객명</th>
+                        <th>고객ID</th>
+                        <th>결제/계좌 정보</th>
+                        <th>신청일</th>
+                        <th>결재일</th>
+                        <th>상태</th>
+                        <th>승인/반려</th>
+                    </tr>
                     </thead>
                     <tbody>
-                        <tr>
-                            <td>1</td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                        </tr>
+                    <tr>
+                        <td>1</td>
+                        <td>20251201-001</td>
+                        <td>홍길동</td>
+                        <td>hong01</td>
+                        <td>신용카드 (1234-****-****-5678)</td>
+                        <td>2025-12-01</td>
+                        <td>2025-12-02</td>
+                        <td>승인</td>
+
+                    </tr>
+                    <tr>
+                        <td>2</td>
+                        <td>20251201-002</td>
+                        <td>김철수</td>
+                        <td>kim02</td>
+                        <td>신용카드 (2345-****-****-6789)</td>
+                        <td>2025-12-01</td>
+                        <td>2025-12-02</td>
+                        <td>반려</td>
+                        <td><button>승인</button></td>
+                    </tr>
+                    <tr>
+                        <td>3</td>
+                        <td>20251201-003</td>
+                        <td>이영희</td>
+                        <td>lee03</td>
+                        <td>신용카드 (3456-****-****-7890)</td>
+                        <td>2025-12-01</td>
+                        <td>2025-12-03</td>
+                        <td>승인대기</td>
+                        <td><button>승인</button> <button>반려</button></td>
+                    </tr>
+                    <tr>
+                        <td>4</td>
+                        <td>20251201-004</td>
+                        <td>박민수</td>
+                        <td>park04</td>
+                        <td>신용카드 (4567-****-****-8901)</td>
+                        <td>2025-12-01</td>
+                        <td>2025-12-04</td>
+                        <td>승인</td>
+                    </tr>
+                    <tr>
+                        <td>5</td>
+                        <td>20251201-005</td>
+                        <td>최수지</td>
+                        <td>choi05</td>
+                        <td>신용카드 (5678-****-****-9012)</td>
+                        <td>2025-12-01</td>
+                        <td>2025-12-05</td>
+                        <td>반려</td>
+                        <td><button>승인</button></td>
+                    </tr>
+                    <tr>
+                        <td>6</td>
+                        <td>20251201-006</td>
+                        <td>강현우</td>
+                        <td>kang06</td>
+                        <td>신용카드 (6789-****-****-0123)</td>
+                        <td>2025-12-01</td>
+                        <td>2025-12-06</td>
+                        <td>승인대기</td>
+                        <td><button>승인</button> <button>반려</button></td>
+                    </tr>
+                    <tr>
+                        <td>7</td>
+                        <td>20251201-007</td>
+                        <td>정다은</td>
+                        <td>jung07</td>
+                        <td>신용카드 (7890-****-****-1234)</td>
+                        <td>2025-12-01</td>
+                        <td>2025-12-07</td>
+                        <td>승인</td>
+                    </tr>
+                    <tr>
+                        <td>8</td>
+                        <td>20251201-008</td>
+                        <td>한지민</td>
+                        <td>han08</td>
+                        <td>신용카드 (8901-****-****-2345)</td>
+                        <td>2025-12-01</td>
+                        <td>2025-12-08</td>
+                        <td>반려</td>
+                        <td><button>승인</button> </td>
+                    </tr>
+                    <tr>
+                        <td>9</td>
+                        <td>20251201-009</td>
+                        <td>윤호</td>
+                        <td>yoon09</td>
+                        <td>신용카드 (9012-****-****-3456)</td>
+                        <td>2025-12-01</td>
+                        <td>2025-12-09</td>
+                        <td>승인대기</td>
+                        <td><button>승인</button> <button>반려</button></td>
+                    </tr>
+                    <tr>
+                        <td>10</td>
+                        <td>20251201-010</td>
+                        <td>서지훈</td>
+                        <td>seo10</td>
+                        <td>신용카드 (0123-****-****-4567)</td>
+                        <td>2025-12-01</td>
+                        <td>2025-12-10</td>
+                        <td>승인</td>
+                    </tr>
                     </tbody>
                 </table>
-            </div>  <!-- content, 본문 -->
+            </div> <!-- content, 본문 -->
 
         </div> <!-- mian-content -->
     </div> <!-- main-container -->
