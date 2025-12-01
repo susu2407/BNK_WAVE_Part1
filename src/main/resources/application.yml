@@ -3,7 +3,7 @@ server:
   servlet:
     context-path: /wave
     session:
-      timeout: 20m
+      timeout: 1m
 
 spring:
   web:

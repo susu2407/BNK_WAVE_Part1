@@ -494,6 +494,86 @@ public class CardService {
         return randomCardList;
     }
 
+
+    // 카드 전체 가져오기 (혜택, 연회비 포함) // admin 용
+    @Transactional
+    public List<CardWithInfoDTO> findCardAllWhereCredit() {
+
+        // DB에서 검색 + 페이징된 카드 목록 가져오기
+        List<CardDTO> cardList = cardRepository.findCardAllWhereCredit();
+
+        // 각 카드에 혜택 / 연회비 정보 붙이기
+        List<CardWithInfoDTO> adminCardList = new ArrayList<>();
+
+        for (CardDTO cardDTO : cardList) {
+            CardWithInfoDTO dto = new CardWithInfoDTO();
+
+            // 카드 기본정보
+            dto.setCard(cardDTO);
+
+            // 혜택 목록
+            List<Benefit> benefits = benefitRepository.findByCard_CardId(cardDTO.getCardId());
+            dto.setBenefitList(benefits);
+
+            List<String> categoryList = benefits.stream()
+                    .map(Benefit::getBenefitCategory)
+                    .toList();
+            dto.setCategoryString(String.join(",", categoryList));
+
+
+            List<AnnualFee> annualFees = annualFeeRepository.findByCard_CardId(cardDTO.getCardId());
+            dto.setAnnualFeeList(annualFees);
+
+            CardApprovalDTO cardApprovalDTO = cardApprovalRepository.findCardApprovalPendingByCardId(cardDTO.getCardId());
+            if (cardApprovalDTO != null) {
+                dto.setApprovalStatus("결재진행중");
+            } else dto.setApprovalStatus("");
+
+            adminCardList.add(dto);
+        }
+
+        return adminCardList;
+    }
+
+    // 카드 전체 가져오기 (혜택, 연회비 포함) // admin 용
+    @Transactional
+    public List<CardWithInfoDTO> findCardAllWhereCheck() {
+
+        // DB에서 검색 + 페이징된 카드 목록 가져오기
+        List<CardDTO> cardList = cardRepository.findCardAllWhereCheck();
+
+        // 각 카드에 혜택 / 연회비 정보 붙이기
+        List<CardWithInfoDTO> adminCardList = new ArrayList<>();
+
+        for (CardDTO cardDTO : cardList) {
+            CardWithInfoDTO dto = new CardWithInfoDTO();
+
+            // 카드 기본정보
+            dto.setCard(cardDTO);
+
+            // 혜택 목록
+            List<Benefit> benefits = benefitRepository.findByCard_CardId(cardDTO.getCardId());
+            dto.setBenefitList(benefits);
+
+            List<String> categoryList = benefits.stream()
+                    .map(Benefit::getBenefitCategory)
+                    .toList();
+            dto.setCategoryString(String.join(",", categoryList));
+
+
+            List<AnnualFee> annualFees = annualFeeRepository.findByCard_CardId(cardDTO.getCardId());
+            dto.setAnnualFeeList(annualFees);
+
+            CardApprovalDTO cardApprovalDTO = cardApprovalRepository.findCardApprovalPendingByCardId(cardDTO.getCardId());
+            if (cardApprovalDTO != null) {
+                dto.setApprovalStatus("결재진행중");
+            } else dto.setApprovalStatus("");
+
+            adminCardList.add(dto);
+        }
+
+        return adminCardList;
+    }
 }
 
 
