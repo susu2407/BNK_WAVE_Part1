@@ -233,8 +233,8 @@
 }
 
 .owned-card-thumb {
-    width: 72px;
-    height: 110px;
+    width: 95px;
+    height: 135px;
     border-radius: 10px;
     background: linear-gradient(135deg, #4d9fff, #e84c6a);
     flex-shrink: 0;
