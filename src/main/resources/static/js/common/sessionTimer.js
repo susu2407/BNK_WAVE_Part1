@@ -121,7 +121,7 @@ async function extendSession() {
 // 세션 만료 처리
 function handleSessionExpired() {
     alert('세션이 만료되었습니다. 다시 로그인해주세요.');
-    window.location.href = `${window.BASE_URL}/?session=expired`;
+    window.location.href = `${window.BASE_URL}?session=expired`;
 }
 
 // 알림 표시 함수들
