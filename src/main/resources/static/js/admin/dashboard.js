@@ -57,6 +57,22 @@ const loadStackedChart = async () => {
 
         console.log("실제 API 응답 구조 (할당 후):", chartData);
 
+        const colors = {
+            '모바일': 'rgba(200, 92, 92, 0.8)',
+            '웹': 'rgba(146, 180, 242, 0.8)',
+            '오프라인': 'rgba(255, 210, 157, 0.8)'
+        };
+
+        chartData.datasets.forEach(dataset => {
+            if (colors[dataset.label]) {
+                // 'backgroundColor' 속성에 정의된 색상을 할당합니다.
+                dataset.backgroundColor = colors[dataset.label];
+                // 필요하다면 테두리 색상도 함께 설정할 수 있습니다.
+                dataset.borderColor = colors[dataset.label].replace('0.8', '1'); // 불투명하게
+                dataset.borderWidth = 1;
+            }
+        });
+
         // 데이터가 비어 있는지 확인 (Service에서 emptyList()를 반환한 경우)
         if (chartData.labels.length === 0) {
             document.getElementById('stackedChart')
@@ -70,11 +86,12 @@ const loadStackedChart = async () => {
         new Chart(context, {
            type: 'bar',
            data: {
-               labels: chartData.labels,
-               datasets : chartData.datasets
+                labels: chartData.labels,
+                datasets : chartData.datasets
            },
             options: {
-               responsive: true,
+                responsive: true,
+                maintainAspectRatio: false,
                 scales: {
                    x: {
                        stacked: true,   // x축을 쌓아서 표시 (Stacked Column)
@@ -85,10 +102,12 @@ const loadStackedChart = async () => {
                     }
                 },
                 plugins: {
-                   title: {
-                       display: true,
-                       text: '월별 상품 발급 추이'
-                   }
+                    legend: {
+                        position: 'right', // 범례를 오른쪽에 표시
+                        labels: {
+                            padding: 20
+                        }
+                    }
                 }
             }
         });
@@ -162,11 +181,11 @@ const loadDoughnutChart = async (month = null, direction = null) => {
         const context = document.getElementById('doughnutChart').getContext('2d');
 
         const backgroundColors = [
-            'rgb(199,93,68)', // 기업체크
-            'rgb(192,40,0)', // 기업신용
-            'rgb(240,199,202)', // 개인체크
-            'rgb(234,200,192)', // 개인신용
-            'rgb(215,146,131)' // 프리미엄
+            'rgb(199,93,68)',    // 기업체크
+            'rgb(192,40,0)',     // 기업신용
+            'rgb(240,199,202)',  // 개인체크
+            'rgb(234,200,192)',  // 개인신용
+            'rgb(215,146,131)'   // 프리미엄
         ];
 
         const chartConfig = {
@@ -181,21 +200,13 @@ const loadDoughnutChart = async (month = null, direction = null) => {
             },
             options: {
                 responsive: true,
-
+                maintainAspectRatio: false,
                 plugins: {
                     legend: {
                         position: 'right', // 범례를 오른쪽에 표시
                         labels: {
                             padding: 20
                         }
-                    },
-                    datalabels: {
-                        formatter: (value, context) => {
-                            const label = context.chart.data.labels[context.dataIndex]; // 'lavels' -> 'labels'로 수정
-                            return `${label}: ${value.toLocaleString()}건`;
-                        },
-                        color: 'black',
-                        font: {weight: 'bold', size: 14},
                     }
                 }
             }
