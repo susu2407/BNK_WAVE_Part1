@@ -148,7 +148,17 @@
     width: 40px;
     height: 64px;
     border-radius: 8px;
-    background: linear-gradient(135deg, #111, #444);
+    overflow: hidden;      /* 이미지 튀어나오지 않게 */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: none;      /* 기존 gradient 제거 */
+
+}
+.owned-card-thumb {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;     /* 비율 맞게 꽉 차게 */
 }
 
 .card-selected-info {
