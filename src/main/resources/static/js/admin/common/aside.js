@@ -9,13 +9,24 @@ document.addEventListener('DOMContentLoaded', function () {
     const asideSwitch = document.querySelector('.aside-switch input[type="checkbox"]');
     const menuTitles = Array.from(document.querySelectorAll('.menu-title'));
 
+    // 'sidebarFixedState' 키로 저장된 값을 가져옵니다. (값이 없으면 null)
+    const savedState = localStorage.getItem('sidebarFixedState');
+    // localStorage에는 'true' 또는 'false' 문자열로 저장되므로 비교합니다.
+    const isChecked = savedState === 'true';
+
+    if (asideSwitch) {
+        asideSwitch.checked = isChecked; // 스위치 on(확장 고정)용:Switch의 checked 상태를 복원된 상태로 설정
+    }
+
     // 스위치 상태를 확인하여 aside 초기 상태를 설정
     if(asideSwitch && asideSwitch.checked) {
         body.classList.add('sb-expanded');
         body.classList.add('sb-pinned');
+        aside.classList.add('sb-fixed'); // 스위치 on(확장 고정)용:aside에 sb-fixed 클래스도 적용 (마우스 오버 방해용)
     } else {
         body.classList.remove('sb-expanded');
         body.classList.remove('sb-pinned');
+        aside.classList.remove('sb-fixed');
     }
 
     // ---- 1. 사이드바 확장/축소 및 고정 기능 ----
@@ -24,6 +35,9 @@ document.addEventListener('DOMContentLoaded', function () {
     if (asideSwitch) {
         asideSwitch.addEventListener('change', function () {
             console.log('스위치 클릭 이벤트 발생');
+
+            localStorage.setItem('sidebarFixedState', this.checked); // 스위치 on(확장 고정)용-switch 상태 저장
+
             if (this.checked) {
                 body.classList.add('sb-expanded');  // 사이드바 너비 확장 (애니메이션)
                 body.classList.add('sb-pinned');    // 메인 콘텐츠 밀림 활성화 (고정 상태)
