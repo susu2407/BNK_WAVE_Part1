@@ -72,7 +72,9 @@
                 <!-- 중간 그래프 영역 -->
                 <div class="chart-bar">
                     <h3>상품 발급별 추이</h3>
-                    <canvas id="stackedChart"></canvas>
+                    <div style="height: 320px; padding: 10px; justify-content: center; text-align: center;">
+                        <canvas id="stackedChart"></canvas>
+                    </div>
                 </div>
                 <div class="chart-donut">
                     <div class="chart-top">
@@ -83,7 +85,9 @@
                             <button id="nextMonthBtn">▶</button>
                         </div>
                     </div>
-                    <canvas id="doughnutChart"></canvas>
+                    <div style="height: 320px; padding: 10px; justify-content: center; text-align: center">
+                        <canvas id="doughnutChart"></canvas>
+                    </div>
                 </div>
 
                 <!-- 하단 정보 영역 -->
@@ -171,12 +175,24 @@
                         </div>
                     </div>
                 </div>
-                <div class="info-list">
-                    바로가기 아이콘 <br>
-                    <a th:href="@{/admin/approval/member/cardList}">상품가입승인</a> <br>
-                    <a th:href="@{/admin/card/list}">상품목록</a> <br>
-                    <a th:href="@{/admin/config/terms/list}">약관목록</a> <br>
-                    <a th:href="@{/admin/member/list}">고객관리</a>
+                <div class="info-list go-fast-link">
+                    <h5>바로가기</h5>
+                    <a th:href="@{/admin/approval/member/cardList}">
+                        <img th:src="@{/images/arrow-left-to-line.png}" alt="바로가기">
+                        <span>상품가입승인</span>
+                    </a> <br>
+                    <a th:href="@{/admin/card/list}">
+                        <img th:src="@{/images/arrow-left-to-line.png}" alt="바로가기">
+                        <span>상품목록</span>
+                    </a> <br>
+                    <a th:href="@{/admin/config/terms/list}">
+                        <img th:src="@{/images/arrow-left-to-line.png}" alt="바로가기">
+                        <span>약관목록</span>
+                    </a> <br>
+                    <a th:href="@{/admin/member/list}">
+                        <img th:src="@{/images/arrow-left-to-line.png}" alt="바로가기">
+                        <span>고객관리</span>
+                    </a>
                 </div>
             </div>
         </div>

@@ -67,8 +67,10 @@
 /* ㅡㅡㅡ 기본설정 table CSS ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ */
 .basic-table {border: none;}
 .basic-table th,
-.basid-table td {text-align: left;}
+.basic-table td {text-align: left;}
+
 .basic-table th {width: 190px;}
+
 .btn-td {
     display: flex;
     justify-content: flex-end;
@@ -114,6 +116,11 @@
     height: auto;    /* 세로는 비율에 따라 자동 조절 */
     object-fit: contain;  /* 혹시 비율 어긋난 이미지여도 영역 안에 맞게 */
     display: block;
+}
+
+
+.table-aline-left {
+    text-align: left;
 }
 /* ㅡㅡㅡ register CSS  ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ*/
 
