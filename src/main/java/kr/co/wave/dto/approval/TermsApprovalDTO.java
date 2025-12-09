@@ -17,6 +17,8 @@ public class TermsApprovalDTO {
 
     private int termsId;
 
+    private String title;
+
     private String reason;
 
     private String status; // 결재 상태 (대기, 승인, 반려)

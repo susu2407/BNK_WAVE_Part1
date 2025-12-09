@@ -36,7 +36,7 @@
                     <div class="kpi-info">
                         <div class="kpi-count-name">
                             <span class="kpi-num" id="approval-requests-value">2</span><br>
-                            <span>승인 요청 건수</span>
+                            <span>이번 달 승인 요청 건수</span>
                         </div>
                         <img th:src="@{/images/credit-card.svg}" alt="kpi-icon">
                     </div>
@@ -48,7 +48,7 @@
                     <div class="kpi-info">
                         <div class="kpi-count-name">
                             <span class="kpi-num" id="issue-completed-value">2</span><br>
-                            <span>발급 완료 건수</span>
+                            <span>이번 달 발급 완료 건수</span>
                         </div>
                         <img th:src="@{/images/clipboard-check.svg}" alt="kpi-icon">
                     </div>
@@ -60,7 +60,7 @@
                     <div class="kpi-info">
                         <div class="kpi-count-name">
                             <span class="kpi-num" id="selling-products-value">2</span><br>
-                            <span>판매 중인 상품수</span>
+                            <span>이번 달 판매 중인 상품수</span>
                         </div>
                         <img th:src="@{/images/play.svg}" alt="kpi-icon">
                     </div>
@@ -71,14 +71,14 @@
 
                 <!-- 중간 그래프 영역 -->
                 <div class="chart-bar">
-                    <h3>상품 발급별 추이</h3>
+                    <h3>월별 상품 발급별 추이</h3>
                     <div style="height: 320px; padding: 10px; justify-content: center; text-align: center;">
                         <canvas id="stackedChart"></canvas>
                     </div>
                 </div>
                 <div class="chart-donut">
                     <div class="chart-top">
-                        <h3>상품별 발급 추이</h3>
+                        <h3>월별 상품별 발급 추이</h3>
                         <div class="chart-controls">
                             <button id="prevMonthBtn" >◀</button>
                             <span id="currentDoughnutMonth">로딩 중...</span>

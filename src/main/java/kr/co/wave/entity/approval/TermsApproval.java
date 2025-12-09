@@ -24,6 +24,9 @@ public class TermsApproval {
     @Column(name="TERMS_ID")
     private int termsId;
 
+    @Column(name="TITLE")
+    private String title;
+
     @Column
     private String reason;
 

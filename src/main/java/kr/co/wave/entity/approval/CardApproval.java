@@ -20,7 +20,7 @@ public class CardApproval {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int approvalId;
 
-    @Column
+    @Column(name="CARDID")
     private int cardId;
 
     @Column
@@ -41,5 +41,9 @@ public class CardApproval {
 
     public void toggleStatus(String status) {
         this.status = status;
+    }
+
+    public void setApprovedAt(LocalDateTime approvedAt) {
+        this.approvedAt = approvedAt;
     }
 }
