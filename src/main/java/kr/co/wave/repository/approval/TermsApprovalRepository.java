@@ -15,7 +15,7 @@ public interface TermsApprovalRepository extends JpaRepository<TermsApproval, In
     @Query(
             value = """
                       select new kr.co.wave.dto.approval.TermsApprovalDTO(
-                         ta.termsApprovalId, ta.termsId, ta.reason, ta.status, ta.requestedAt, ta.approvedAt
+                         ta.termsApprovalId, ta.termsId, ta.title, ta.reason, ta.status, ta.requestedAt, ta.approvedAt
                       )
                       from TermsApproval ta
                       where
@@ -36,7 +36,7 @@ public interface TermsApprovalRepository extends JpaRepository<TermsApproval, In
 
     @Query("""
         select new kr.co.wave.dto.approval.TermsApprovalDTO(
-            ta.termsApprovalId, ta.termsId, ta.reason, ta.status, ta.requestedAt, ta.approvedAt
+            ta.termsApprovalId, ta.termsId, ta.title, ta.reason, ta.status, ta.requestedAt, ta.approvedAt
         )
         from TermsApproval ta
         where ta.termsId = :termsId and ta.status = '대기'

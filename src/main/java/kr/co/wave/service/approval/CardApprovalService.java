@@ -18,6 +18,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -51,6 +52,7 @@ public class CardApprovalService {
         if(OptionalCardApproval.isPresent()){
             CardApproval cardApproval = OptionalCardApproval.get();
             cardApproval.toggleStatus("승인");
+            cardApproval.setApprovedAt(LocalDateTime.now());
 
             Optional<Card> OptionalCard = cardRepository.findById(cardApproval.getCardId());
 
@@ -69,6 +71,7 @@ public class CardApprovalService {
         if(OptionalCardApproval.isPresent()){
             CardApproval cardApproval = OptionalCardApproval.get();
             cardApproval.toggleStatus("반려");
+            cardApproval.setApprovedAt(LocalDateTime.now());
 
             Optional<Card> OptionalCard = cardRepository.findById(cardApproval.getCardId());
 

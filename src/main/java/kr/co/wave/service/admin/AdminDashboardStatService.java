@@ -101,7 +101,6 @@ public class AdminDashboardStatService {
                 .datasets(datasets)
                 .build();
     }
-
     // 3. Doughnut Chart 데이터 조회 및 가공
 
     // 상품 분류 레이블은 고정값이므로 상수로 정의

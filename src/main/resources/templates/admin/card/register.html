@@ -158,11 +158,11 @@
                             <p>상품에 사용될 카드 이미지와 홍보용 이미지를 업로드합니다. 고객이 보는 주요 시각 요소입니다.</p>
                         </div>
                         <div class="section-content">
-                            <label for="thumbnail"></label>
-                            <div class="file-upload-wrapper">
-                                <label class="custom-file-label">파일 선택</label>
+                            <label for="termsFile"></label>
+                            <div class="file-upload-wrapper" >
+                                <label for="termsFile" class="custom-file-label">파일 선택</label>
                                 <span id="fileNameDisplay">선택된 파일 없음</span>
-                                <input type="file" name="thumbnail"  id="thumbnail" accept="image/*" required>
+                                <input type="file" name="thumbnail"  id="termsFile" accept="image/*" required>
                             </div>
                         </div>
                     </section>
@@ -177,9 +177,6 @@
                             </p>
                         </div>
                         <div class="section-content">
-                            <select name="category">
-                                <option value="" disabled selected hidden>카테고리 선택</option>
-                            </select>
                             <select name="termsId" required>
                                 <option value="" disabled selected hidden>약관 구분을 선택하세요.</option>
                                 <option th:each="item : ${warningList}" th:value="${item.termsId}" th:text="${item.title}">약관</option>
